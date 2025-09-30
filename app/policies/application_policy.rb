@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
+    # raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
     @user = user
     @record = record
   end
@@ -43,7 +43,7 @@ class ApplicationPolicy
     attr_reader :user, :scope, :instances
 
     def initialize(user, scope)
-      raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
+      # raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
       @user = user
       @scope = scope
     end

@@ -1,8 +1,8 @@
-<%# <div avatar>  %>
-    <%# if current_user.avatar.present?
-        <%= image_tag current_user.avatar.variant(resize_to_limit: [100, 100]), class: 'image'
-    <% else
+<div avatar>
+    <% if Current.user.methods.include? :avatar %>
+        <%= image_tag Current.user.avatar.variant(resize_to_limit: [100, 100]), class: 'image' %>
+    <% else %>
         <i class="bi bi-person-fill default-image"></i>
     <% end %>
-    <%# <i class="bi bi-person-fill default-image"></i>
-</div> %>
+</div>
+

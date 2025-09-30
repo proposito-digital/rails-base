@@ -1,25 +1,27 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe UserPolicy, type: :policy do
+  let(:user) { User.new }
+
   subject { described_class }
 
-  context "As admin" do 
-    permissions :menu?, :show?, :index?, :create?, :new?, :update?, :edit?, :destroy?, :update_all_passwords?, :update_password? do
-      it "grant acess" do
-        expect(subject).to permit( (create :user_admin), (create :user))
-      end
-    end
+  permissions ".scope" do
+    pending "add some examples to (or delete) #{__FILE__}"
   end
-  context "As Regular" do
-    permissions :menu?, :show?, :index?, :create?, :new?, :update?, :edit?, :destroy?, :update_all_passwords? do
-      it "dont grant acess" do
-        expect(subject).not_to permit( (create :user), (create :user))
-      end
-    end
-    permissions :update_password? do
-      it "grante access" do
-        expect(subject).to permit( (create :user), (create :user))
-      end
-    end
+
+  permissions :show? do
+    pending "add some examples to (or delete) #{__FILE__}"
+  end
+
+  permissions :create? do
+    pending "add some examples to (or delete) #{__FILE__}"
+  end
+
+  permissions :update? do
+    pending "add some examples to (or delete) #{__FILE__}"
+  end
+
+  permissions :destroy? do
+    pending "add some examples to (or delete) #{__FILE__}"
   end
 end

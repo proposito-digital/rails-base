@@ -1,9 +1,0 @@
-<%= link_to raw("<div class='font-black'><span class=\"bi bi-chevron-left\"></span> "+translate_view_shared("back")+"</div>"), :back %>
-<div show-header mb=1>
-  <div class="left">
-    <h3 font-size=2 weight=8><%= " #{instance.name} " %></h3>
-  </div>
-  <div class="right">
-    <%= link_to raw("<span class='bi bi-pencil-square' ></span> &nbsp;"+translate_view_shared("edit")+""), instance_edit_path(instance), class: 'btn medium' %>
-  </div>
-</div>

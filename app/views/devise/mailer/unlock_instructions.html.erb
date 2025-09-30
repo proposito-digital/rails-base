@@ -1,7 +1,0 @@
-<p><%=t("emails.unlock_instructions.title", locale: locale, email: @resource.email)%>!</p>
-
-<p><%=t("emails.unlock_instructions.unsucessfully_sign_ups", locale: locale)%></p>
-
-<p><%=t("emails.unlock_instructions.link_below", locale: locale)%></p>
-
-<p><%= link_to t("emails.unlock_instructions.link", locale: locale), unlock_url(@resource, unlock_token: @token) %></p>

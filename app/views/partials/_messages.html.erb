@@ -1,0 +1,19 @@
+<% if flash.count > 0 %>
+  <% flash.each do |type, message| %>
+  <div class="alert alert-<%=  flash_type(type) %> alert-dismissible fade show" role="alert">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% end %>
+<% end %>
+
+<% if defined?(resource) && resource.errors.full_messages.size != 0 %>
+  <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+    <ul>
+      <% resource.errors.each do |item| %>
+        <li><strong><%= item.attribute %>: </strong><%= item.message %></li>
+      <% end %>
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>

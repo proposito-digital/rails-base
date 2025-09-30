@@ -1,8 +1,0 @@
-<div class="row">
-	<% instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, value| %>
-	  <div class="mb-3">
-      <%= form.label name, class: 'form-label' %> 
-      <%= form.text_field name, class: 'form-control', id: "#{instance.class.name.downcase}_#{name}"  %>
-		</div> 
-	<% end %>
-</div>

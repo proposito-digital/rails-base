@@ -21,30 +21,12 @@
           <a class="nav-link" href="#">Link</a>
         </li> -->
         <span class="navbar-text">
-          <%=t('tenants.single')%>:
         </span>
-        <% if current_user.admin? %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><%= current_tenant.present? ? current_tenant.name  : 'Todos' %></a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown05">
-              <li>
-                <a class="dropdown-item" href="<%= disable_current_tenant_admin_tenants_path(id: current_user.tenant_id)%>" data-turbo-method="patch">Todos</a>
-              </li>
-              <li>
-              <% Tenant.all.each do | tenant| %>
-                <a class="dropdown-item" href="<%= change_current_tenant_admin_tenant_path(tenant.id)%>" data-turbo-method="patch">
-                  <%= tenant.name%>
-                </a>
-              <% end %>
-              </li>
-            </ul>
-          </li>
-        <% end %>
       </ul>
       <%= render partial: 'layouts/admin/language_select' %>
       <%= render 'layouts/admin/user_profile' %>
     </div>
   </div>
 </header>
-<%= render partial: 'admin/users/change_password'%>
+<%#= render partial: 'admin/users/change_password'%>
 

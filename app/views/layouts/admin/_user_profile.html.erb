@@ -1,11 +1,11 @@
 <ul class="navbar-nav">
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><%= current_user.name %></a>
-    <%= render 'layouts/admin/shared/avatar' %>
+    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><%= Current.user.email_address %></a>
+    <%#= render 'layouts/admin/shared/avatar' %>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" href="<%= edit_admin_user_path(current_user.id) %>"> <%=translate_view_application_shared("user_profile.edit_profile")%></a>
+      <a class="dropdown-item" href="<%= edit_admin_user_path(Current.user.id) %>"> <%=translate_view_application_shared("user_profile.edit_profile")%></a>
       <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-change-password"><%=translate_view_application_shared("user_profile.change_password")%></a>
-      <%= link_to translate_view_application_shared("user_profile.exit"), destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+      <%= link_to translate_view_application_shared("user_profile.exit"), session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
     </ul>
   </li>
 </ul>

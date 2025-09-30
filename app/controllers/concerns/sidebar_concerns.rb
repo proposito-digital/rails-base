@@ -1,61 +1,59 @@
-require 'active_support/concern'
+require "active_support/concern"
 
 module SidebarConcerns
-	extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
   include Translations::TranslationsViewHelper
 
- 	included do
+   included do
     def set_menu
       @menu = [
       {
-        name: translate_view_application_shared('sidebar_menu.home'),
-        icon: 'bi bi-house-door',
+        name: translate_view_application_shared("sidebar_menu.home"),
+        icon: "bi bi-house-door",
         policy: :dashboard,
-        url: { controller: 'dashboard', action: 'index' },
-        active: controller_path == 'admin/dashboard'
+        url: { controller: "dashboard", action: "index" },
+        active: controller_path == "admin/dashboard"
       },
       {
-        name: t('users.plural'),
-        icon: 'bi bi-person',
+        name: t("users.plural"),
+        icon: "bi bi-person",
         policy: :user,
-        url: { controller: 'users', action: 'index' },
-        active: controller_path == 'admin/users'
+        url: { controller: "users", action: "index" },
+        active: controller_path == "admin/users"
       },
       {
-        name: t('tenants.plural'),
-        icon: 'bi bi-people',
-        policy: :tenant,
-        url: { controller: 'tenants', action: 'index' },
-        active: controller_path == 'admin/tenants'
-      },
-      # Submenu Example
-      # {
-      #   name: 'Tenants',
-      #   icon: 'bi bi-people',
-      #   id_collapse: 'tenant-collapse',
-      #   policy: :tenant,
-      #   url: { controller: 'tenants', action: 'index' },
-      #   active: (controller_path == "admin/users" || controller_path == 'admin/dashboard' ) ,
-      #   items: [
-      #       {
-      #         name: 'Categorias de exames',
-      #         icon: 'bi bi-card-list',
-      #         policy: :tenant,
-      #         url: { controller: 'tenants', action: 'index' },
-      #         active: (controller_path == "admin/users")
-      #       },
-      #       {
-      #         name: 'Início',
-      #         icon: 'bi bi-house-door',
-      #         policy: :dashboard,
-      #         url: { controller: 'dashboard', action: 'index' },
-      #         active: controller_path == 'admin/dashboard'
-      #       },
-      #   ]
-      # }
+        name: t("dogs.plural"),
+        icon: "bi bi-dog",
+        policy: :dog,
+        url: { controller: "dogs", action: "index" },
+        active: controller_path == "admin/dogs"
+      }
+        # Submenu Example
+        # {
+        #   name: translate_view_application_shared("sidebar_menu.home"),
+        #   icon: "bi bi-house-door",
+        #   policy: :dashboard,
+        #   url: { controller: "dashboard", action: "index" },
+        #   id_collapse: "tenant-collapse",
+        #   active: (controller_path == "admin/users" || controller_path == "admin/users"),
+        #   items: [
+        #       {
+        #         name: t("users.plural"),
+        #         icon: "bi bi-person",
+        #         policy: :user,
+        #         url: { controller: "users", action: "index" },
+        #         active: controller_path == "admin/users"
+        #       },
+        #       {
+        #         name: t("users.plural"),
+        #         icon: "bi bi-person",
+        #         policy: :user,
+        #         url: { controller: "users", action: "index" },
+        #         active: controller_path == "admin/users"
+        #       }
+        #   ]
+        # }
       ]
     end
-	end
-
+  end
 end
-

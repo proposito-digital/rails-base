@@ -1,0 +1,21 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "sessions/style" %>
+<% end %>
+<div class="login-container">
+  <%= render 'partials/messages' %>
+  <div class="text-center">
+    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
+    <p class="text-muted">Forgot your password?</p>
+  </div>
+  <%= form_with url: passwords_path do |form| %>
+    <div clas>
+      <label for="email" class="form-label">E-mail</label>
+      <%= form.email_field :email_address, class: "form-control rounded", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+    </div>
+    <div class="d-flex justify-content-between mb-3 form-text">
+      <a class="link">Don't have an account?</a>
+      <%= link_to "login?", new_session_path %>
+    </div>
+    <%= form.submit "Send E-mail reset instructions", class: "btn btn-primary" %>
+  <% end %>
+</div>

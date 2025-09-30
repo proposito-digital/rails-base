@@ -1,107 +1,97 @@
-# frozen_string_literal: true
+source "https://rubygems.org"
 
-source 'http://rubygems.org'
+# Command to update gems -> bundle install
+# Applications GEMS
 
-#-------------------- Applications Gems - Put here apllications gems -----------
+# Rails Base GEMS
+# Integrate Dart Sass with the asset pipeline in Rails. [https://github.com/rails/dartsass-rails]
+gem "dartsass-rails", "0.5.1"
+# Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
+gem "pundit", "2.4.0"
+# Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
+gem "discard", "1.4.0"
+# Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
+gem "pagy", "9.2.2"
+# Rails default GEMS
+# Ruby on Rails [https://rubyonrails.org/]
+gem "rails", "8.0.2.1"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", "2.2.0"
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", "6.4.3"
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem "jbuilder"
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+gem "bcrypt", "3.1.20"
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem [https://github.com/tzinfo/tzinfo]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# IMPORTANTE [TODO] - HOJE O RAILS/PUMA SERVER OS ASSETS DEIXANDO A PARADA MAIS LENTA. MUDAR ISSO PARA O NGIX DO DOKKU
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
 
-#-------------------- Base Gems - Updated libs 03/2022 -------------------------
-# command to update gems -> docker-compose run app bundle install
-
-ruby '3.2.2'
-# Rails framework
-gem 'rails', '7.1.2'
-# New way to import jS 
-gem 'importmap-rails', '2.0.1'
-# server assets like images
-gem 'sprockets-rails', '3.4.2', :require => 'sprockets/railtie'
-# process SCSS files
-gem "sassc-rails", '2.1.2'
-# Upgrading from Rails UJS / Turbolinks to Turbo
-gem 'turbo-rails', '1.5.0'
-# main authorization lib
-gem 'devise', '4.9.3'
-# Pundit provides a set of helpers which guide you in leveraging regular Ruby classes and object oriented design patterns to build a simple, robust and scalable authorization system.
-gem 'pundit', '2.3.1'
-# A simple ActiveRecord mixin to add conventions for flagging records as discarded.
-gem 'discard', '1.3.0'
-# Use postgres
-gem 'pg', '1.5.4'
-# Pagination lig - ESTUDAR TROCAR PARA https://github.com/kaminari/kaminari
-gem 'will_paginate', '4.0.0'
-# This is a JSON implementation as a Ruby extension in C.
-gem 'json', '2.7.1'
-# ActiveModel::Serializers allows you to generate your JSON in an object-oriented and convention-driven manner.
-gem 'active_model_serializers', '0.10.14'
-# SDoc is an HTML template built on top of the RDoc documentation generator for Ruby code. COMMAND: sdoc projectdir
-gem 'sdoc', '2.6.1', group: :doc
-# An ActiveRecord plugin for managing lists.
-gem 'acts_as_list', '1.1.0'
-#High-level wrapper for processing images for the web with ImageMagick or libvips.
-gem 'image_processing', '1.12.2'
-#Multi-tanancy gem acts_as_tenant
-gem 'acts_as_tenant', '0.6.1'
-#A Ruby client that tries to match Redis' API one-to-one, while still providing an idiomatic interface
-gem 'redis', '5.0.8'
-#Simple, efficient background processing for Ruby.
-gem 'sidekiq', '7.2.0'
-# To Fix mimemagic problem
-gem 'mimemagic', '0.4.3'
-# Great Ruby debugging companion: pretty print Ruby objects to visualize their structure.
-gem 'awesome_print', '1.9.2'
-# A fast, safe and extensible Markdown to (X)HTML parser
-gem 'redcarpet', '3.6.0'
-#--------------------------------------------------------------------------------
-
+# Reduces boot times through caching; required in config/boot.rb [https://github.com/Shopify/bootsnap]
+gem "bootsnap", require: false
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem "kamal", require: false
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '11.1.3'
-  # factory_bot provides a framework and DSL for defining and using factories - less error-prone, more explicit, and all-around easier to work with than fixtures.
-  gem 'factory_bot_rails', '6.4.3'
-  # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
-  gem 'faker', '3.2.3'
-end
-
-group :test do
-  # SimpleCov is a code coverage analysis tool for Ruby.
-  gem 'simplecov', '0.22.0', :require => false, :group => :test
-  # testing framework for Rails
-  gem 'rspec-rails', '6.1.0'
-  # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners that test common Rails functionality. These tests would otherwise be much longer, more complex, and error-prone.
-  gem 'shoulda-matchers', '6.0.0'
-  # A set of RSpec matchers for testing Pundit authorisation policies. The matcher syntax was inspired by this excellent blog post from Thunderbolt Labs.
-  gem 'pundit-matchers', '3.1.2'
-  # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
-  gem 'capybara', '3.39.2'
-  # Adds realtime console.log output to Capybara + Selenium + Chromedriver
-  # fork from original project to avoid deprecating warnning
-  gem 'capybara-chromedriver-logger', git: 'https://github.com/Proposito-Digital/capybara-chromedriver-logger'
-  # WebDriver is a tool for writing automated tests of websites. It aims to mimic the behaviour of a real user, and as such interacts with the HTML of the application.
-  gem 'selenium-webdriver', '4.16.0'
-  # Strategies for cleaning databases. Can be used to ensure a clean slate for testing.
-  gem 'database_cleaner', '2.0.2'
+  # Applications GEMS
+  # Rails Base GEMS
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console. [https://github.com/deivid-rodriguez/byebug]
+  gem "byebug", "11.1.3"
+  # factory_bot is a fixtures replacement with a straightforward definition syntax. [https://github.com/thoughtbot/factory_bot_rails]
+  gem "factory_bot_rails", "6.4.4"
+  # Faker helps you generate realistic test data. [https://github.com/faker-ruby/faker]
+  gem "faker", "3.5.1"
+  # Rails default GEMS
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
-  # to degubar
-  # gem 'meta_request'
-  # required to solargraph - Modern concurrency tools
-  gem 'concurrent-ruby'
-  # auto complete ruby comand with documentation.
-  gem 'solargraph'
-  # code quality analizer.
-  gem 'rubocop'
-  # Ruby on Rails 3/4/5 model and controller UML class diagram generator. Originally based on the 'railroad' plugin and contributions of many others. (`brew install graphviz` before use!)
-  gem 'railroady'
-  # Better Errors replaces the standard Rails error page with a much better and more useful error page. It is also usable outside of Rails in any Rack app as Rack middleware.
-  gem "better_errors"
-  # Provides the Binding#of_caller method. Using binding_of_caller we can grab bindings from higher up the call stack and evaluate code in that context. Allows access to bindings arbitrarily far up the call stack, not limited to just the immediate caller. Recommended for use only in debugging situations. Do not use this in production apps.
-  gem "binding_of_caller"
+  # Applications GEMS
+  # Rails Base GEMS
+  # Rails default GEMS
+  # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "web-console"
 end
 
-group :production, :teste do
-  # production weBundlerb server
-  gem 'puma', '6.4.2'
+group :test do
+  # Applications GEMS
+  # Rails Base GEMS
+  # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
+  gem "simplecov", "0.22.0"
+  # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
+  gem "rspec-rails", "7.1.0"
+  # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
+  gem "shoulda-matchers", "6.4.0"
+  # A set of RSpec matchers for testing Pundit policies. [https://github.com/pundit-community/pundit-matchers]
+  gem "pundit-matchers", "3.1.2"
+  # Adds realtime console.log output to Capybara + Selenium + Chromedriver
+  # fork from original project to avoid deprecating warnning
+  gem "capybara-chromedriver-logger", git: "https://github.com/Proposito-Digital/capybara-chromedriver-logger"
+  # Can be used to ensure a clean slate for testing. [https://github.com/DatabaseCleaner/database_cleaner]
+  gem "database_cleaner", "2.1.0"
+  # Rails default GEMS
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
+  gem "selenium-webdriver"
 end

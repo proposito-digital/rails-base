@@ -1,0 +1,33 @@
+<% content_for :stylesheet do %>
+    <%#= stylesheet_link_tag 'show' %>
+<% end %>
+<!-- BEGIN SHOW PAGE -->
+<div class="row">
+  <div class="col">
+    <%= link_to raw("<div class='btn p-0 text-black'><span class=\"bi bi-chevron-left\"></span> "+translate_view_shared("back")+"</div>"), instances_index_path %>
+    <div class="d-flex justify-content-between mt-2">
+      <div>
+        <h3><%= "#{model_singular_translation} - #{@instance.id}" %></h3>
+      </div>
+      <div>
+        <%= link_to raw("<span><span class='bi bi-pencil-square' ></span> &nbsp;"+translate_view_shared("edit")+"</span>"), instance_edit_path(@instance), class: 'btn btn-primary'%>
+      </div>
+    </div>
+  </div>
+  <fieldset disabled>
+    <%= form_for @instance, url: '', method: '' do |f| %>
+      <div class="row">
+      <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, value| %>
+        <div class="mb-3">
+          <%= f.label name, attribute_translation(model_singular_name_to_translate(@instance), name), class: 'form-label' %>
+          <%= f.text_field name, class: 'form-control', id: "#{model_field_id(@instance, name)}" %>
+        </div> 
+      <% end %>
+    </div>
+    <% end %>
+  </fieldset>
+</div>
+<!-- END SHOW PAGE -->
+
+
+

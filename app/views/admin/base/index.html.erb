@@ -1,0 +1,81 @@
+<% content_for :stylesheet do %>
+    <%#= stylesheet_link_tag 'index' %>
+<% end %>
+<!-- BEGIN INDEX AREA -->
+<div class="row">
+  <%#= link_to raw("<div class='btn p-0 font-black'><span class=\"bi bi-chevron-left\"></span>"+translate_view_shared("back")+"</div>"), admin_dashboard_index_path %>
+
+  <div class="d-flex justify-content-between mt-2">
+    <div>
+      <h1><%= model_plural_translation %></h1>
+    </div>
+    <div>
+      <a class='btn btn-primary' href="<%= instance_new_path %>"><i class="bi bi-plus"></i>&nbsp;<%=translate_view_shared('add', model_name: model_singular_translation)%></a> 
+    </div>
+  </div>
+</div>
+<% if @instances.nil? %>
+  <div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold"><%=translate_view_index('no_instances', { model_name: model_plural_translation.downcase})%></h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4"> <%=translate_view_index('new_instance', { model_name: model_singular_translation.downcase})%></p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a class='btn btn-primary btn-lg px-4 gap-3' href="<%= instance_new_path %>"><i class="bi bi-plus"></i><%=translate_view_index('new_button', model_name: model_singular_translation.downcase )%></a> 
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="row my-3">
+    <form id="form_search" action=<%= instances_index_path %> method="get">
+      <div class="input-group flex-nowrap">
+        <input type="search" id="input-search" class="form-control" name="term" value="<%= params[:term] %>" placeholder="<%=translate_view_shared('search_placeholder', model_name: model_plural_translation.downcase)%>" aria-label="Search" aria-describedby="Search field">
+        <button type="submit" class="input-group-text bi bi-search" ></button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <% model_column_names.excluding('id', 'deleted_at').take(5).each do |attribute| %>
+              <th class=t-center><b><%= sort_link("#{model_plural_name_to_sort}.#{attribute}", attribute_translation(model_singular_name, attribute))%></b></th>
+            <% end %>
+            <th wrap-btn-table>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody >
+          <% @instances.each do | instance| %>
+            <tr id='tr_<%= "#{instance.class.name}_#{instance.id}"%>'>
+              <% instance.attributes.excluding('id', 'deleted_at').take(5).each do |name, value| %>
+                <td class=" t-center">
+									<% if(value.instance_of? ActiveSupport::TimeWithZone) %>
+										<%= translate_datetime_format_default(value, "dt_at") %>
+									<% else %>
+										<%= value %>
+									<% end %>
+                </td>
+              <% end %>
+              <td wrap-btn-table>
+                <div>
+                  <!-- SHOW ACTION -->
+                  <%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon:"bi bi-eye", title: translate_view_shared('show')%>
+                  <!-- EDIT ACTION -->
+                  <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon:"bi bi-pencil-square", title: translate_view_shared('edit')%>
+                  <!-- REMOVE ACTION -->
+                  <%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon:"bi bi-trash", title: translate_view_shared('remove'), modal_id: "modal_destroy_#{instance.id}" %>
+                </div>
+              </td>
+            </tr>
+            <%= render partial: 'modal_destroy', locals: { instance: instance, url: instance_remove_path(instance), model_name: model_singular_translation } %>
+          <% end %>
+        </tbody>
+      </table>
+      <%== pagy_info(@pagy) %>
+      <div data-controller="pagy-initializer">
+        <%== pagy_bootstrap_combo_nav_js(@pagy) if @pagy.pages > 1 %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- END INDEX AREA -->

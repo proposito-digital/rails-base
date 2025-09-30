@@ -1,0 +1,42 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "#{params[:controller]}/style" %>
+  <%= stylesheet_link_tag "#{params[:controller]}/show-password-toggle.min" %>
+<% end %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag "#{params[:controller]}/show-password-toggle" %>
+<% end %>
+<div class="login-container">
+  <%= render 'partials/messages' %>
+  <div class="text-center">
+    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
+    <p class="text-muted">Welcome Back</p>
+    <%# <button class="btn btn-outline-dark btn-block w-100 mb-3">
+      <img src="https://imgur.com/48gnd0M.png" alt="Google Icon" class="me-2" style="width: 10%;">
+      Sign in with Google
+    </button> %>
+  </div>
+  <%# <div class="d-flex align-items-center mb-3">
+    <hr class="flex-grow-1">
+    <span class="mx-2 text-muted">or</span>
+    <hr class="flex-grow-1">
+  </div> %>
+  <%= form_with url: session_path do |form| %>
+    <div>
+      <label for="email" class="form-label">E-mail</label>
+      <%= form.email_field :email_address,  class: "form-control rounded", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <div class="input-group">
+        <%= form.password_field :password, class: "form-control rounded", spellcheck: false, autocorrect: :off, autocapitalize: :off, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
+        <button id="toggle-password" class="d-none" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+        </button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between mb-3 form-text">
+      <a class="link">Don't have an account?</a>
+      <%= link_to "Forgot password?", new_password_path %>
+    </div>
+    <%= form.submit "Sign in", class: "btn btn-primary" %>
+  <% end %>
+</div>

@@ -1,0 +1,31 @@
+<% content_for :stylesheet do %>
+    <%#= stylesheet_link_tag 'edit' %>
+<% end %>
+<!-- BEGIN EDIT PAGE -->
+<div class="row">
+  <div class="col">
+    <%= link_to raw("<div class='btn p-0 text-black'><span class=\"bi bi-chevron-left\"></span> "+translate_view_shared("back")+"</div>"), instances_index_path %>
+    <div class="d-flex justify-content-between mt-2">
+      <div>
+        <h3><%= "#{model_singular_translation} - #{@instance.id}" %></h3>
+      </div>
+      <div>
+        <a href=<%= "#{instance_show_path(@instance)}"%> class="btn btn-outline-secondary" ><%=translate_view_shared("show")%></a>
+        <button type="submit" @click="submitForm('<%= 'edit_' + @instance.class.name.underscore.sub("/", "_") + '_' + @instance.id.to_s %>')" class="btn btn-primary"><%=translate_view_shared("save")%></button>
+      </div>
+    </div>
+  </div>
+  <%= form_for @instance, url: instance_update_path(@instance), method: 'patch' do |f| %>
+    <%= render partial: 'form_errors' %>
+    <div class="row">
+      <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, value| %>
+        <div class="mb-3">
+          <%= f.label name, attribute_translation(model_singular_name_to_translate(@instance), name), class: 'form-label' %>
+          <%= f.text_field name, class: 'form-control', id: "#{model_field_id(@instance, name)}" %>
+        </div> 
+      <% end %>
+    </div>
+    <%= f.submit %>
+  <% end %>
+</div>
+<!-- END EDIT PAGE -->

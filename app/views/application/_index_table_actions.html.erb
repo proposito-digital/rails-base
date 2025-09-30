@@ -1,7 +1,0 @@
-<!-- SHOW ACTION -->
-<%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon:"bi bi-eye", title: translate_view_shared('show')%>
-<!-- EDIT ACTION -->
-<%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon:"bi bi-pencil-square", title: translate_view_shared('edit')%>
-<!-- REMOVE ACTION -->
-<%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon:"bi bi-trash", title: translate_view_shared('remove'), modal_id: "modal_destroy_#{instance.id}" %>
-

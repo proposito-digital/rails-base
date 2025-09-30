@@ -1,7 +1,0 @@
-<% content_for :stylesheet do %>
-    <%= stylesheet_link_tag 'index' %>
-<% end %>
-<!-- BEGIN INDEX AREA -->
-<%= render partial: 'index_header' %>
-<%= render partial: 'index_table', locals: {instances: @instances} %>
-<!-- END INDEX AREA -->

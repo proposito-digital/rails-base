@@ -1,4 +1,33 @@
----
+# Files in the config/locales directory are used for internationalization and
+# are automatically loaded by Rails. If you want to use locales other than
+# English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more about the API, please read the Rails Internationalization guide
+# at https://guides.rubyonrails.org/i18n.html.
+#
+# Be aware that YAML interprets the following case-insensitive strings as
+# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
+# must be quoted to be interpreted as strings. For example:
+#
+#     en:
+#       "yes": yup
+#       enabled: "ON"
+
+
 en:
   language_name: "English"
   flag_icon: flag-icon-us
@@ -301,74 +330,7 @@ en:
 
 
 
-  devise:
-    confirmations:
-      confirmed: 'You account has been confirmed successfully. You are logged'
-      send_instructions: 'In a few minutes, you will receive an email message with instructions to account verification.'
-      send_paranoid_instructions: 'If your email address is signed up, you will receive a message with instructions to your account verification.'
-    failure:
-      already_authenticated: 'You are already authenticated'
-      inactive: 'Your account has not yet been activated.'
-      invalid: 'E-mail or password are invalid.'
-      invalid_token: 'The authentication token is invalid'
-      locked: 'Your account is locked'
-      not_found_in_database: 'E-mail or password are invalid.'
-      timeout: 'Your session is over. Please, log in again to continue.'
-      unauthenticated: 'To continue, login or sign up'
-      unconfirmed: 'Before continue, verify your account'
-    mailer:
-      confirmation_instructions:
-        subject: 'Confirmation instructions'
-      reset_password_instructions:
-        subject: 'Reset password instructions'
-      unlock_instructions:
-        subject: 'Unlock instructions'
-    omniauth_callbacks:
-      failure: 'Unable to authenticate with %{kind} because %{reason}".'
-      success: 'Authenticated successfully with %{kind} account.'
-    passwords:
-      no_token: "You can access this page through a password reset email message. If you are acessing by e-mail, verify if the URL is completed correctly"
-      send_instructions: 'In a few minutes, you will receive a email message with instructions to change your password'
-      send_paranoid_instructions: 'If you email address is registered, you will receive a password reset link by e-mail'
-      updated: 'Your password has been changed successfully. You are logged'
-      updated_not_active: 'Your password has been changed successfully.'
-    registrations:
-      destroyed: 'Goodbye! Your account has been cancelled successfully. We hope see you again soon!'
-      signed_up: 'Logged in sucessfully. If you have not been authorized, the confirmation will be sent by email'
-      signed_up_but_inactive: 'You has been registered, however, unable to login because your account has not been activated'
-      signed_up_but_locked: 'You has been registered successfully. however, unable to login because your account is locked.'
-      signed_up_but_unconfirmed: 'A message with confirmation link has been sent to you email address. Please, access confirmation link to confirm your account.'
-      update_needs_confirmation: 'You updated your account successfully, but your new email address need to be confirmed. Please, go to your new e-mail account and click on confirmation link.'
-      updated: 'Your account has been updated successfully'
-    sessions:
-      user:
-        signed_in: 'Your signed in successfully'
-        signed_out: 'Your signed out successfully'
-    unlocks:
-      send_instructions: 'In a few minutes, you will receive an email message with instructions to unlock your account'
-      send_paranoid_instructions: 'If your account exists, you will receive an email message with instructions to unlock your account in a few minutes'
-      unlocked: 'Your account has been unlocked successfully. Log in to continue'
-    errors:
-      messages:
-        already_confirmed: "Has already been confirmed"
-        confirmation_period_expired: "Need to be confirmed until %{period}, please, request a new"
-        expired: "It is expired, please, request a new"
-        not_found: "It is not found"
-        not_locked: "It is not locked"
-        not_saved:
-          one: "Unable to save %{resource}: one error"
-          other: "Unable to save %{resource}: %{count} error"
-  will_paginate:
-    previous_label: "Previous"
-    next_label: "Next"
-    page_gap: "&hellip;"
-    page_entries_info:
-      single_page_html:
-        zero:  "No records found"
-        one:   "Only one record found"
-        other: "Showing all the %{count} records found"
-      multi_page: "Showing records: %{from} to %{to} from %{count}"
-      multi_page_html: "Showing records: %{from} to %{to} from %{count}"
+  
   controllers:
     generic:
       create:
@@ -447,25 +409,7 @@ en:
           new:
             tenant_placeholder: 'Select user tenant'
             role_placeholder: 'Select user role'
-    devise:
-      sessions:
-        actions:
-          new:
-            title: Rails Base Login
-            subtitle: "Fill your email and password to login"
-            forgot_password: "Forgot password?"
-            login: "Login"
-      passwords:
-        actions:
-          new:
-            title: "Password recovery"
-            subtitle: "Fill your e-mail to receive instructions about password recovery"
-    custom_devise:
-      registrations:
-        actions:
-          new:
-            title: "Rails Base sign up"
-            has_registration: "Has registration? Click here!"
+    
     pages:
       actions:
         home:

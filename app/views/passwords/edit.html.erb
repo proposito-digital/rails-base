@@ -1,0 +1,25 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "sessions/style" %>
+<% end %>
+<div class="login-container">
+  <%= render 'partials/messages' %>
+  <div class="text-center">
+    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
+    <p class="text-muted">Update your password</p>
+  </div>
+  <%= form_with url: password_path(params[:token]), method: :put do |form| %>
+    <div clas>
+      <label for="email" class="form-label">Password</label>
+       <%= form.password_field :password, required: true, class: "form-control rounded", autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
+    </div>
+    <div clas>
+      <label for="email" class="form-label">Password Confirmation</label>
+       <%= form.password_field :password_confirmation, required: true, class: "form-control rounded",  autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
+    </div>    
+    <div class="d-flex justify-content-between mb-3 form-text">
+      <a class="link">Don't have an account?</a>
+      <%= link_to "login?", new_session_path %>
+    </div>
+    <%= form.submit "Reset Password", class: "btn btn-primary" %>
+  <% end %>
+</div>

@@ -1,8 +1,0 @@
-<% if resource.errors.full_messages.size != 0 %>
-    <div class="text-center">
-        <h4 mb=0>Aviso</h4>
-        <% resource.errors.full_messages.each do |error| %>
-            <%= error %><br>
-        <% end %>
-    </div>
-<% end %>

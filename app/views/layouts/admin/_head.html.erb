@@ -10,12 +10,13 @@
     <%= favicon_link_tag 'favicon.png' %>
 
     <!-- BEGIN STYLES -->
-    <%= stylesheet_link_tag 'styles', media: 'all', 'data-turbo-track': 'reload'%>
+    <!-- LOADING APPLICATION CSS -->
+    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
     <!-- BEGIN PAGE LEVEL STYLES -->
     <%= yield :stylesheet %>
     <!-- END PAGE LEVEL STYLES -->
     <!-- END STYLES -->
-    
+
     <!-- BEGIN SCRIPTS -->
     <%= javascript_importmap_tags %>
     <!-- BEGIN PAGE SPECIFIC SCRIPTS -->

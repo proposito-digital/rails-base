@@ -1,6 +1,8 @@
-Style/Documentation:
-  Enabled: false
-Layout/EndOfLine:
-  EnforcedStyle: crlf
-Style/Lambda:
-  EnforcedStyle: literal
+# Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
