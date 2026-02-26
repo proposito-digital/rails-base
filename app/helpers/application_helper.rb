@@ -1,6 +1,5 @@
 module ApplicationHelper
   include Pundit::Authorization
-  include Pagy::Frontend
   include Translations::TranslationsHelper
   include PathHelper
   include PolicyHelper

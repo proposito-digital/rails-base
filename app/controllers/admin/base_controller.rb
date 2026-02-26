@@ -1,10 +1,10 @@
 class Admin::BaseController < ApplicationController
-  include Pagy::Backend
+  include Pagy::Method
   include Translations::TranslationFlashMessages
   include SidebarConcerns
   include Pundit::Authorization
+  before_action { Pagy::I18n.locale = params[:locale] }
   before_action :set_menu # SidebarConcerns
-
   before_action :set_model_class
   before_action :set_instance_and_authorize, only: %i[ show edit update destroy ]
 

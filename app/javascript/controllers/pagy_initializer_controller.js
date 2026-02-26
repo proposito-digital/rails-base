@@ -3,6 +3,6 @@ import Pagy from "lib/pagy_lib"  // if using sprockets, you can remove above lin
 
 export default class extends Controller {
   connect() {
-    Pagy.init(this.element)
-  }
+    window.addEventListener("turbolinks:load", Pagy.init)
+   }
 }
