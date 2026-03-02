@@ -5,6 +5,7 @@
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
 *.identifier
+/coverage
 
 # Ignore bundler config.
 /.bundle

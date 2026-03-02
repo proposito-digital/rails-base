@@ -4,8 +4,6 @@ source "https://rubygems.org"
 # Applications GEMS
 
 # Rails Base GEMS
-gem "rails", "8.1.2"
-# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 # Integrate Dart Sass with the asset pipeline in Rails. [https://github.com/rails/dartsass-rails]
 gem "dartsass-rails", "0.5.1"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
@@ -15,6 +13,7 @@ gem "discard", "1.4.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
 gem "pagy", "43.3.0"
 # Rails default GEMS
+gem "rails", "8.1.2"
 # Ruby on Rails [https://rubyonrails.org/]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
@@ -94,6 +93,6 @@ group :test do
   gem "database_cleaner", "2.1.0"
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
+  gem "capybara", "3.40.0"
+  gem "selenium-webdriver", "4.41.0"
 end

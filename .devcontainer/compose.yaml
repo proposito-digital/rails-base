@@ -1,4 +1,4 @@
-name: "rails_lab"
+name: "rails_base"
 
 services:
   rails-app:
@@ -21,7 +21,8 @@ services:
     - selenium
 
   selenium:
-    image: selenium/standalone-chromium
+    image: selenium/standalone-chrome
     restart: unless-stopped
+    shm_size: "1gb"
 
   

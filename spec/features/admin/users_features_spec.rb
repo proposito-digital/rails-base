@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe "integration teste for user", :type => :feature do
+describe "integration teste for user", type: :feature do
   let(:user) { create(:user) }
 
   before(:each) do
-    sign_in user
+    sign_in_via_ui user
   end
 
   it "access index page" do
     user = create(:user)
-    visit admin_users_path  
+    visit admin_users_path
     expect(page).to have_content user.name
   end
 
@@ -30,8 +30,8 @@ describe "integration teste for user", :type => :feature do
       click_link 'Editar'
     end
     within(".edit_user") do
-      fill_in'user[name]', with: '#change_here'
-    end    
+      fill_in 'user[name]', with: '#change_here'
+    end
     click_button 'Salvar'
     expect(page).to have_content 'foi atualizado com sucesso.'
   end
@@ -42,7 +42,7 @@ describe "integration teste for user", :type => :feature do
     within("#tr_User_#{user.id}") do
       click_link 'Visualizar'
     end
-    expect(page).to have_xpath("//input[@value='#{user.name}']") 
+    expect(page).to have_xpath("//input[@value='#{user.name}']")
   end
 
   it "delete user" do
@@ -52,7 +52,7 @@ describe "integration teste for user", :type => :feature do
     within("#tr_User_#{users.first.id}") do
       find("a[title='Remover']").click
     end
-    within("#modal_destroy_#{users.first.id}") do 
+    within("#modal_destroy_#{users.first.id}") do
       click_link('Remover')
     end
     expect(page).to have_content 'foi removido com sucesso.'
@@ -64,11 +64,11 @@ describe "integration teste for user", :type => :feature do
     users = User.all()
     visit admin_users_path
     within("#form_search") do
-      fill_in 'term' , with: users.last.name
+      fill_in 'term', with: users.last.name
     end
     find("input[name=term]").native.send_keys :enter
     expect(page).to have_no_content users.first.name
-    Capybara.use_default_driver 
+    Capybara.use_default_driver
   end
 
   it "paginate user" do
@@ -76,7 +76,7 @@ describe "integration teste for user", :type => :feature do
     users = User.all()
 
     visit admin_users_path
-    
+
     find('#page_next').click
     expect(page).to have_content users.first.name
 
@@ -85,7 +85,7 @@ describe "integration teste for user", :type => :feature do
   end
 
   it "ordenation user" do
-    names = ('a'..'j').to_a.map{|letter| {name: letter} }
+    names = ('a'..'j').to_a.map { |letter| { name: letter } }
     names.map { |name| create(:user, name) }
     users = User.all()
 
@@ -93,14 +93,12 @@ describe "integration teste for user", :type => :feature do
 
     expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
 
-    click_link 'Name' #change_here
+    click_link 'Name' # change_here
     expect(page).to have_current_path(admin_users_path(sort_direction: 'asc', sort_column: 'users.name'))
     expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'a')
-    
-    click_link 'Name' #change_here
+
+    click_link 'Name' # change_here
     expect(page).to have_current_path(admin_users_path(sort_direction: 'desc', sort_column: 'users.name'))
     expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
-    
   end
-
 end
