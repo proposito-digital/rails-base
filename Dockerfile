@@ -8,20 +8,22 @@ RUN apt-get clean
 RUN apt-get update
 RUN apt-get install -y git-all
 RUN apt-get install -y build-essential
-RUN apt-get install -y libpq-dev libnotify-bin xosd-bin nano curl wget unzip
+RUN apt-get install -y libpq-dev libnotify-bin xosd-bin nano curl wget unzip gnupg
 
 # Chrome
-# This is a complete list of versions https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-stable
-ARG CHROME_VERSION="119.0.6045.105-1"
-RUN wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
-RUN dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb; apt-get -fy install
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-linux.gpg
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get update && apt-get install -y google-chrome-stable
 # Chrome Driver list of versions https://googlechromelabs.github.io/chrome-for-testing/
-ARG CHROME_DRIVER_VERSION="119.0.6045.105"
-RUN wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip
-RUN unzip chromedriver-linux64.zip
-RUN mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
-RUN chown root:root /usr/bin/chromedriver
-RUN chmod +x /usr/bin/chromedriver
+RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}') \
+    && CHROME_MAJOR=${CHROME_VERSION%%.*} \
+    && CHROME_DRIVER_VERSION=$(curl -fsSL "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_MAJOR}") \
+    && wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip" \
+    && unzip chromedriver-linux64.zip \
+    && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
+    && chown root:root /usr/bin/chromedriver \
+    && chmod +x /usr/bin/chromedriver \
+    && rm -rf chromedriver-linux64.zip chromedriver-linux64
 
 # install posgtres client
 ARG POSTGRESQL_VERSION="16"
@@ -83,4 +85,4 @@ CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 # CMD [ "config/containers/app_cmd.sh" ]
 
 # Command to acess de container
-# docker exec -it railsbase_app_1 /bin/bash
+# docker exec -it rails-base-app-1 /bin/bash
