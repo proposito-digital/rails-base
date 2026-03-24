@@ -87,7 +87,7 @@ $ docker-compose up
 ~~~
 ### Acess the container app
 ~~~bash
-$  docker exec -it rails-base_app_1 /bin/bash
+$  docker exec -it rails-base-app-1 /bin/bash
 ~~~
 ### Initialize database and seed it
 ~~~bash
@@ -103,7 +103,7 @@ $ docker-compose run app rails db:migrate
 ~~~
 ### At linux change all created files from root to your linux user
 ~~~bash
-sudo chown -R linux_user_name:linux_user_name rails-base/
+sudo chown -R $USER:$USER rails-base/
 ~~~
 ### If you want add fields to filter in controller
 ~~~ruby
@@ -122,7 +122,7 @@ end
 
 ### Edit the lang file and add the translations
 ~~~ruby
-#rails_base\config\locales\pt-BR.yml
+#rails-base/config/locales/pt-BR.yml
 pt-BR:
   dogs:
     single: "Cachorro"
@@ -130,7 +130,7 @@ pt-BR:
 ~~~
 
 ~~~ruby
-#rails_base\config\locales\pt-BR.yml
+#rails-base/config/locales/pt-BR.yml
 pt-BR:
   activerecord:
     attributes:
