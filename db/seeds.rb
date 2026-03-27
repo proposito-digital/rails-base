@@ -7,3 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+return unless Rails.env.development?
+
+[
+  { email_address: "test@test.com", password: "test@123" },
+  { email_address: "dev@dev.com", password: "test@123" }
+].each do |attributes|
+  User.find_or_create_by!(email_address: attributes[:email_address]) do |user|
+    user.password = attributes[:password]
+    user.password_confirmation = attributes[:password]
+  end
+end
