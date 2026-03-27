@@ -20,6 +20,12 @@ In terminal use run the project for development with this command:
 $ ./bin/dev
 ~~~
 
+If the command above fails with a "Permission denied" error, run the command below to fix the permissions and try again:
+
+~~~bash
+$ chmod +x ./bin/dev
+~~~
+
 this run Procfile.dev fit at root directory and will run:
 
 web: bin/rails server -p 3000
