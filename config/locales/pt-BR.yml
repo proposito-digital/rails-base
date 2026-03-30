@@ -275,6 +275,9 @@ pt-br:
       permission: 'Permissão'
       role: 'Perfil'
       entity_category: 'Categoria de Módulos'
+      dog: 
+        one: 'Cachorro'
+        other: 'Cachorros'
     attributes:
       user:
         name: "Nome"
@@ -283,6 +286,11 @@ pt-br:
         password_confirmation: "Confirmação da Senha"
         role: "Perfil"
         last_sign_in_at: "Último login"
+      dog:
+        name: "Nome"
+        age: "Idade"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       role:
         name: "Nome"
       permission: 
@@ -445,3 +453,6 @@ pt-br:
   users_admin:
     single: 'Administrador'
     plural: 'Administradores'
+  dogs:
+    single: 'Cachorro'
+    plural: 'Cachorros'
