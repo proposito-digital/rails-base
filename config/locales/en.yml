@@ -293,6 +293,11 @@ en:
         password_confirmation: "Password Confirmation"
         role: "Role"
         last_sign_in_at: "Last sign in at"
+      dog:
+        name: "Name"
+        age: "Age"
+        created_at: "Created at"
+        updated_at: "Updated at"
       role:
         name: "Name"
       permission: 
@@ -459,3 +464,6 @@ en:
   users_admin:
     single: 'Admin'
     plural: 'Admins'
+  dogs:
+    single: 'Dog'
+    plural: 'Dogs'
