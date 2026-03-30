@@ -1,42 +1,34 @@
-<% content_for :stylesheet do %>
-  <%= stylesheet_link_tag "#{params[:controller]}/style" %>
-  <%= stylesheet_link_tag "#{params[:controller]}/show-password-toggle.min" %>
-<% end %>
-<% content_for :javascript do %>
-  <%= javascript_include_tag "#{params[:controller]}/show-password-toggle" %>
-<% end %>
-<div class="login-container">
-  <%= render 'partials/messages' %>
-  <div class="text-center">
-    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
-    <p class="text-muted">Welcome Back</p>
-    <%# <button class="btn btn-outline-dark btn-block w-100 mb-3">
-      <img src="https://imgur.com/48gnd0M.png" alt="Google Icon" class="me-2" style="width: 10%;">
-      Sign in with Google
-    </button> %>
-  </div>
-  <%# <div class="d-flex align-items-center mb-3">
-    <hr class="flex-grow-1">
-    <span class="mx-2 text-muted">or</span>
-    <hr class="flex-grow-1">
-  </div> %>
-  <%= form_with url: session_path do |form| %>
-    <div>
-      <label for="email" class="form-label">E-mail</label>
-      <%= form.email_field :email_address,  class: "form-control rounded", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-4 py-10">
+  <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+    <%= render 'partials/messages' %>
+
+    <div class="text-center">
+      <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
+      <p class="text-sm text-slate-500">Welcome Back</p>
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <div class="input-group">
-        <%= form.password_field :password, class: "form-control rounded", spellcheck: false, autocorrect: :off, autocapitalize: :off, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-        <button id="toggle-password" class="d-none" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen.">
-        </button>
+
+    <%= form_with url: session_path, class: "mt-6 space-y-4" do |form| %>
+      <div>
+        <label for="email" class="form-label">E-mail</label>
+        <%= form.email_field :email_address, class: "form-control", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %>
       </div>
-    </div>
-    <div class="d-flex justify-content-between mb-3 form-text">
-      <a class="link">Don't have an account?</a>
-      <%= link_to "Forgot password?", new_password_path %>
-    </div>
-    <%= form.submit "Sign in", class: "btn btn-primary" %>
-  <% end %>
+
+      <div data-controller="password-toggle">
+        <label for="password" class="form-label">Password</label>
+        <div class="relative">
+          <%= form.password_field :password, class: "form-control pr-10", data: { password_toggle_target: "input" }, spellcheck: false, autocorrect: :off, autocapitalize: :off, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %>
+
+          <button type="button" class="absolute inset-y-0 right-0 inline-flex items-center justify-center px-3 text-slate-500 hover:text-slate-700" data-action="password-toggle#toggle" aria-label="Mostrar senha"> <i class="bi bi-eye" data-password-toggle-target="icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-sm">
+        <a class="text-slate-400">Don't have an account?</a>
+        <%= link_to "Forgot password?", new_password_path, class: "font-medium" %>
+      </div>
+
+      <%= form.submit "Sign in", class: "btn-primary w-full" %>
+    <% end %>
+  </div>
 </div>

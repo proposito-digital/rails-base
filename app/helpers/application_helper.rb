@@ -17,15 +17,13 @@ module ApplicationHelper
     file = File.read("VERSION") + Rails.env[0, 3]
   end
 
-  def action_button(href: nil, style: nil, data_placement: "top", instance: nil, action: nil, title: nil, data_method: nil, data_toggle: nil, data_target: nil, icon: nil, context_instance: nil)
+  def action_button(href: nil, style: nil, data_placement: "top", instance: nil, action: nil, title: nil, data_method: nil, icon: nil, context_instance: nil)
     properties = []
 
     css_class, properties, policy_error = check_policy_to_button(instance, action, properties, href, title, context_instance)
 
     properties << "data-placement='#{data_placement}'" if data_placement.present?
     properties << "data-method='#{data_method}'" if data_method.present?
-    properties << "data-toggle='#{data_toggle}'" if data_toggle.present?
-    properties << "data-target='##{data_target}'" if data_target.present?
     policy_error ? properties << "href='javascript:void(0)'" : properties << "href='#{href}'" if href.present?
 
     i = []
@@ -40,7 +38,7 @@ module ApplicationHelper
     css_class, properties, policy_error = check_policy_to_button(instance, action, properties, href, title, context_instance)
 
     if not policy_error
-      properties << "data-bs-toggle=\"modal\" data-bs-target=\"##{modal_id}\""
+      properties << "data-hs-overlay=\"##{modal_id}\""
       i = []
       i << "class='#{icon}'" if icon.present?
       i << "style='#{style}'" if style.present?
@@ -87,6 +85,21 @@ module ApplicationHelper
       "primary"
     else
       ""
+    end
+  end
+
+  def flash_banner_class(type)
+    case flash_type(type)
+    when "success"
+      "border-emerald-200 bg-emerald-50 text-emerald-800"
+    when "warning"
+      "border-amber-200 bg-amber-50 text-amber-800"
+    when "danger"
+      "border-red-200 bg-red-50 text-red-800"
+    when "primary"
+      "border-blue-200 bg-blue-50 text-blue-800"
+    else
+      "border-slate-200 bg-slate-50 text-slate-800"
     end
   end
 

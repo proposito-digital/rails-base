@@ -1,18 +1,25 @@
-<!-- Button trigger modal -->
-<div class="modal" id="modal_destroy_<%=instance.id%>">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><%=translate_view_destroy('title_modal', model_name: model_singular_translation.downcase)%></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div id="modal_destroy_<%= instance.id %>" class="hs-overlay pointer-events-none fixed inset-0 z-[80] hidden overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="modal-destroy-label-<%= instance.id %>">
+  <div class="m-3 mt-16 flex min-h-[calc(100%-3.5rem)] items-center justify-center">
+    <div class="pointer-events-auto w-full max-w-lg rounded-xl border border-slate-200 bg-white shadow-xl">
+      <div class="flex items-start justify-between border-b border-slate-200 px-4 py-3">
+        <h5 id="modal-destroy-label-<%= instance.id %>" class="text-base font-semibold text-slate-900">
+          <%= translate_view_destroy('title_modal', model_name: model_singular_translation.downcase) %>
+        </h5>
+        <button type="button" class="flash-close" data-hs-overlay="#modal_destroy_<%= instance.id %>" aria-label="Close">
+          <i class="bi bi-x-lg text-xs"></i>
+        </button>
       </div>
-        <div class="modal-body">
-          <p><h4><%=translate_view_destroy('subtitle_modal', model_name: model_singular_translation.downcase)%></h4></p>
-        </div>
-        <div class="d-flex justify-content-between modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%=translate_view_shared('cancel')%></button>
-          <%= link_to translate_view_shared('remove'), url, data: { turbo_method: :delete }, class: "btn btn-danger" %>
-        </div>
+
+      <div class="px-4 py-4 text-slate-700">
+        <p class="text-sm"><%= translate_view_destroy('subtitle_modal', model_name: model_singular_translation.downcase) %></p>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 border-t border-slate-200 px-4 py-3">
+        <button type="button" class="btn-secondary" data-hs-overlay="#modal_destroy_<%= instance.id %>">
+          <%= translate_view_shared('cancel') %>
+        </button>
+        <%= link_to translate_view_shared('remove'), url, data: { turbo_method: :delete }, class: "btn-danger" %>
+      </div>
     </div>
   </div>
 </div>

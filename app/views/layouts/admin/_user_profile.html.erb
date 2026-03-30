@@ -1,11 +1,16 @@
-<ul class="navbar-nav">
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><%= Current.user.email_address %></a>
-    <%#= render 'layouts/admin/shared/avatar' %>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" href="<%= edit_admin_user_path(Current.user.id) %>"> <%=translate_view_application_shared("user_profile.edit_profile")%></a>
-      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-change-password"><%=translate_view_application_shared("user_profile.change_password")%></a>
-      <%= link_to translate_view_application_shared("user_profile.exit"), session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
-    </ul>
-  </li>
-</ul>
+<div class="hs-dropdown relative inline-flex [--placement:bottom-right]">
+  <button id="user-profile-dropdown" type="button" class="hs-dropdown-toggle inline-flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white"> <%= Current.user.email_address %>
+    <i class="bi bi-chevron-down text-xs"></i>
+  </button>
+
+  <div class="hs-dropdown-menu absolute right-0 z-20 mt-2 hidden min-w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg">
+    <a class="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100" href="<%= edit_admin_user_path(Current.user.id) %>">
+      <%= translate_view_application_shared("user_profile.edit_profile") %>
+    </a>
+
+    <button type="button" class="block w-full rounded-md px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100" data-hs-overlay="#modal-change-password"> <%= translate_view_application_shared("user_profile.change_password") %>
+    </button>
+
+    <%= link_to translate_view_application_shared("user_profile.exit"), session_path, data: { turbo_method: :delete }, class: "block rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50" %>
+  </div>
+</div>

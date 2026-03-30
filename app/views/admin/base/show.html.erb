@@ -1,33 +1,32 @@
 <% content_for :stylesheet do %>
-    <%#= stylesheet_link_tag 'show' %>
+  <%#= stylesheet_link_tag 'show' %>
 <% end %>
-<!-- BEGIN SHOW PAGE -->
-<div class="row">
-  <div class="col">
-    <%= link_to raw("<div class='btn p-0 text-black'><span class=\"bi bi-chevron-left\"></span> "+translate_view_shared("back")+"</div>"), instances_index_path %>
-    <div class="d-flex justify-content-between mt-2">
-      <div>
-        <h3><%= "#{model_singular_translation} - #{@instance.id}" %></h3>
-      </div>
-      <div>
-        <%= link_to raw("<span><span class='bi bi-pencil-square' ></span> &nbsp;"+translate_view_shared("edit")+"</span>"), instance_edit_path(@instance), class: 'btn btn-primary'%>
-      </div>
-    </div>
-  </div>
-  <fieldset disabled>
-    <%= form_for @instance, url: '', method: '' do |f| %>
-      <div class="row">
-      <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, value| %>
-        <div class="mb-3">
-          <%= f.label name, attribute_translation(model_singular_name_to_translate(@instance), name), class: 'form-label' %>
-          <%= f.text_field name, class: 'form-control', id: "#{model_field_id(@instance, name)}" %>
-        </div> 
+
+<div class="mx-auto max-w-5xl space-y-4">
+  <%= link_to instances_index_path, class: "inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900" do %>
+    <span class="bi bi-chevron-left"></span>
+    <%= translate_view_shared("back") %>
+  <% end %>
+
+  <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <h3 class="text-lg font-semibold text-slate-800"><%= "#{model_singular_translation} - #{@instance.id}" %></h3>
+      <%= link_to instance_edit_path(@instance), class: 'btn-primary' do %>
+        <span class="bi bi-pencil-square mr-2"></span><%= translate_view_shared("edit") %>
       <% end %>
     </div>
-    <% end %>
-  </fieldset>
+
+    <fieldset disabled>
+      <%= form_for @instance, url: '', method: '' do |f| %>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, _value| %>
+            <div>
+              <%= f.label name, attribute_translation(model_singular_name_to_translate(@instance), name), class: 'form-label' %>
+              <%= f.text_field name, class: 'form-control', id: "#{model_field_id(@instance, name)}" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </fieldset>
+  </div>
 </div>
-<!-- END SHOW PAGE -->
-
-
-
