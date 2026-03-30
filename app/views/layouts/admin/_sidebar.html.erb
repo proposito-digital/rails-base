@@ -1,27 +1,41 @@
-<nav id="sidebar" class="d-md-block bg-light sidebar d-none p-0 vh-91" data-controller="sidebar" style="height: 91vh;">
-  <div class="sidebar-toogle-container d-flex justify-content-end mt-4">
-    <button type="button" id="toggle-sidebar-button" data-action="sidebar#toggle" data-sidebar-target="toggleButton" aria-expanded="true" aria-label="Recolher menu lateral">
-      <i class="bi bi-list button-icon-outline-hidden"></i>
+<nav id="sidebar" class="hidden h-[91vh] shrink-0 md:block" data-controller="sidebar">
+  <div class="flex justify-end px-3 pt-4">
+    <button type="button"
+            id="toggle-sidebar-button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-transparent"
+            data-action="sidebar#toggle"
+            data-sidebar-target="toggleButton"
+            aria-expanded="true"
+            aria-label="Recolher menu lateral">
+      <i class="bi bi-list text-xl"></i>
     </button>
   </div>
-  <div class="p-4 pt-5 mt-5">
-    <ul class="list-unstyled mb-5">
+
+  <div class="px-3 pb-4 pt-8">
+    <ul class="space-y-1">
       <% @menu.each do |menu_item| %>
         <% if policy(menu_item[:policy]).menu? %>
-          <li class="nav-item mt-1">
+          <li>
             <% if menu_item.key?(:items) %>
-              <a class="nav-link dropdown-toggle <%= menu_item[:active] ? 'active' : '' %>"  data-bs-toggle="collapse" data-bs-target="#<%= menu_item[:id_collapse] %>" aria-expanded="false" role="button">
-                <i class="bi <%= menu_item[:icon] %>"></i>
-                <span class="item-name"><%= menu_item[:name] %></span>
-              </a>
-              <div class="collapse <%= 'show' if menu_item[:active] %>" id="<%= menu_item[:id_collapse] %>" style="">
-                <ul class="list-unstyled collapse show "  id="pageSubmenu">
+              <button class="sidebar-link flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium <%= menu_item[:active] ? 'active' : '' %>"
+                      type="button"
+                      data-hs-collapse="#<%= menu_item[:id_collapse] %>"
+                      aria-controls="<%= menu_item[:id_collapse] %>"
+                      aria-expanded="<%= menu_item[:active] ? 'true' : 'false' %>">
+                <i class="<%= menu_item[:icon] %> text-lg"></i>
+                <span class="item-name ml-3 flex-1 truncate"><%= menu_item[:name] %></span>
+                <i class="bi bi-chevron-down sidebar-toggle-arrow text-xs"></i>
+              </button>
+
+              <div class="hs-collapse <%= menu_item[:active] ? '' : 'hidden' %>" id="<%= menu_item[:id_collapse] %>">
+                <ul class="sidebar-submenu mt-1 space-y-1 pl-8">
                   <% menu_item[:items].each do |submenu| %>
                     <% if policy(submenu[:policy]).menu? %>
                       <li>
-                        <a href="<%= url_for(submenu[:url]) %>" class="nav-link <%= submenu[:active]  ? 'active' : '' %> mt-1">
-                          <i class="bi <%= submenu[:icon] %>"></i>
-                          <span class="item-name"><%= submenu[:name] %></span>
+                        <a href="<%= url_for(submenu[:url]) %>"
+                           class="sidebar-link flex items-center rounded-lg px-3 py-2 text-sm <%= submenu[:active] ? 'active' : '' %>">
+                          <i class="<%= submenu[:icon] %> text-base"></i>
+                          <span class="item-name ml-3 truncate"><%= submenu[:name] %></span>
                         </a>
                       </li>
                     <% end %>
@@ -29,10 +43,11 @@
                 </ul>
               </div>
             <% else %>
-              <a class="nav-link <%= menu_item[:active] ? 'active' : '' %>" aria-current="page" href="<%= url_for(menu_item[:url])  if menu_item[:url].present? %>">
-                <i class="bi <%= menu_item[:icon] %>"></i>
-                <span data-feather="home"></span>
-                <span class="item-name"><%= menu_item[:name] %></span>
+              <a class="sidebar-link flex items-center rounded-lg px-3 py-2 text-sm font-medium <%= menu_item[:active] ? 'active' : '' %>"
+                 aria-current="page"
+                 href="<%= url_for(menu_item[:url]) if menu_item[:url].present? %>">
+                <i class="<%= menu_item[:icon] %> text-lg"></i>
+                <span class="item-name ml-3 truncate"><%= menu_item[:name] %></span>
               </a>
             <% end %>
           </li>

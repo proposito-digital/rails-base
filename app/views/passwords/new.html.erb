@@ -1,21 +1,30 @@
-<% content_for :stylesheet do %>
-  <%= stylesheet_link_tag "sessions/style" %>
-<% end %>
-<div class="login-container">
-  <%= render 'partials/messages' %>
-  <div class="text-center">
-    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
-    <p class="text-muted">Forgot your password?</p>
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-4 py-10">
+  <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+    <%= render 'partials/messages' %>
+
+    <div class="text-center">
+      <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
+      <p class="text-sm text-slate-500">Forgot your password?</p>
+    </div>
+
+    <%= form_with url: passwords_path, class: "mt-6 space-y-4" do |form| %>
+      <div>
+        <label for="email" class="form-label">E-mail</label>
+        <%= form.email_field :email_address,
+          class: "form-control",
+          required: true,
+          autofocus: true,
+          autocomplete: "username",
+          placeholder: "Enter your email address",
+          value: params[:email_address] %>
+      </div>
+
+      <div class="flex items-center justify-between text-sm">
+        <a class="text-slate-400">Don't have an account?</a>
+        <%= link_to "login?", new_session_path, class: "font-medium" %>
+      </div>
+
+      <%= form.submit "Send E-mail reset instructions", class: "btn-primary w-full" %>
+    <% end %>
   </div>
-  <%= form_with url: passwords_path do |form| %>
-    <div clas>
-      <label for="email" class="form-label">E-mail</label>
-      <%= form.email_field :email_address, class: "form-control rounded", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-    </div>
-    <div class="d-flex justify-content-between mb-3 form-text">
-      <a class="link">Don't have an account?</a>
-      <%= link_to "login?", new_session_path %>
-    </div>
-    <%= form.submit "Send E-mail reset instructions", class: "btn btn-primary" %>
-  <% end %>
 </div>

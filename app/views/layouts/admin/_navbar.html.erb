@@ -1,32 +1,23 @@
-<header class="navbar navbar-expand-md sticky-top navbar-light flex-md-nowrap p-0 shadow">
-  <div class="container-fluid">
-    <a href="/admin" class="navbar-brand col-md-3 col-lg-2 me-0 px-0">
-      <%= image_tag 'logo-white.png', alt: "[Nome do Projeto]", id: "navbar-logo"%>
+<header class="sticky top-0 z-50 border-b border-white/10 bg-[var(--background-navbar)] shadow-sm">
+  <div class="flex items-center justify-between gap-4 px-4 py-2 md:px-6">
+    <a href="/admin" class="shrink-0">
+      <%= image_tag 'logo-white.png', alt: "[Nome do Projeto]", id: "navbar-logo", class: "object-contain" %>
     </a>
-    <!-- # Snippet if you want text title
-     <a href="/admin" class="navbar-brand">
-      RAILS BASE
-    </a>
-    -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#HeaderNavbar" aria-controls="HeaderNavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+
+    <button class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-white hover:bg-white/10 md:hidden"
+            type="button"
+            data-hs-collapse="#header-navbar"
+            aria-controls="header-navbar"
+            aria-label="Toggle navigation">
+      <i class="bi bi-list text-xl"></i>
     </button>
-    <div class="collapse navbar-collapse" id="HeaderNavbar">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- # Snippet if you want add more nav itens
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li> -->
-        <span class="navbar-text">
-        </span>
-      </ul>
-      <%= render partial: 'layouts/admin/language_select' %>
-      <%= render 'layouts/admin/user_profile' %>
+
+    <div id="header-navbar" class="hs-collapse hidden w-full grow md:block md:w-auto">
+      <div class="mt-3 flex flex-col gap-3 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-2">
+        <%= render partial: 'layouts/admin/language_select' %>
+        <%= render 'layouts/admin/user_profile' %>
+      </div>
     </div>
   </div>
 </header>
 <%#= render partial: 'admin/users/change_password'%>
-
