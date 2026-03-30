@@ -5,18 +5,19 @@
   <!-- END HEAD -->
   <body>
     <!-- BEGIN ADMIN CONTENT -->
-    <div id="appAdmin" v-cloak>
+    <div id="appAdmin" v-cloak class="min-h-screen bg-slate-100">
       <!-- BEGIN NAVBAR -->
       <%= render 'layouts/admin/navbar' %>
       <!-- END NAVBAR -->
-      <div class="d-flex">
+      <div class="flex">
         <!-- BEGIN SIDEBAR -->
         <%= render 'layouts/admin/sidebar' %>
         <!-- END SIDEBAR -->
-        <div class="px-5 vh-91 w-100" style="height: 91vh;overflow-y: scroll;">
+
+        <div class="h-[91vh] w-full overflow-y-auto px-4 py-4 md:px-6 lg:px-8">
           <%= render "layouts/admin/messages" %>
           <!-- BEGIN MAIN CONTENT -->
-          <main class="pt-3">
+          <main class="pt-2">
             <%= yield %>
             <%= render "layouts/admin/footer" %>
           </main>

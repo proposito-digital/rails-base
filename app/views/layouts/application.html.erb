@@ -17,21 +17,19 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    
     <!-- BEGIN STYLES -->
-    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <!-- BEGIN PAGE LEVEL STYLES -->
     <%= yield :stylesheet %>
     <!-- END PAGE LEVEL STYLES -->
     <!-- END STYLES -->
-    
+
     <!-- BEGIN SCRIPTS -->
     <%= javascript_importmap_tags %>
     <!-- END SCRIPTS -->
-
   </head>
 
-  <body>
+  <body class="min-h-screen bg-slate-100 text-zinc-900 antialiased">
     <%= yield %>
   </body>
   <!-- BEGIN PAGE SPECIFIC SCRIPTS -->
