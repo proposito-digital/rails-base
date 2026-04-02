@@ -1,10 +1,13 @@
 <% if @instance.errors.any? %>
-  <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-    <ul>
+  <% error_id = "form_errors_#{@instance.class.name.underscore}_#{@instance.id || 'new'}" %>
+  <div id="<%= error_id %>" class="mt-2 flex items-start justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+    <ul class="list-disc pl-5">
       <% @instance.errors.each do |item| %>
         <li><strong><%= item.attribute %>: </strong><%= item.message %></li>
       <% end %>
     </ul>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <button type="button" class="flash-close" data-hs-remove-element="#<%= error_id %>">
+      <%= ui_icon("x", classes: "size-3") %>
+    </button>
   </div>
 <% end %>

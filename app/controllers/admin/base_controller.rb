@@ -3,7 +3,7 @@ class Admin::BaseController < ApplicationController
   include Translations::TranslationFlashMessages
   include SidebarConcerns
   include Pundit::Authorization
-  before_action { Pagy::I18n.locale = params[:locale] }
+  #before_action { Pagy::I18n.locale = I18n.locale.to_s.tr("_", "-").sub(/-[a-z]{2}\z/) { |region| region.upcase } }
   before_action :set_menu # SidebarConcerns
   before_action :set_model_class
   before_action :set_instance_and_authorize, only: %i[ show edit update destroy ]
@@ -13,7 +13,7 @@ class Admin::BaseController < ApplicationController
   end
   # GET /admin instance/or /admin.instance/json
   def index
-    @pagy, @instances = pagy(@model.all, limit: 1)
+    @pagy, @instances = pagy(@model.all, limit: 10)
     authorize @instances, policy_class: DogPolicy
   end
 

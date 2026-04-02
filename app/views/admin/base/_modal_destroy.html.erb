@@ -1,18 +1,45 @@
-<!-- Button trigger modal -->
-<div class="modal" id="modal_destroy_<%=instance.id%>">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><%=translate_view_destroy('title_modal', model_name: model_singular_translation.downcase)%></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<% modal_id = "modal_destroy_#{instance.id}" %>
+<% label_id = "modal-destroy-label-#{instance.id}" %>
+
+<div id="<%= modal_id %>" class="hs-overlay hidden fixed inset-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="<%= label_id %>">
+  <div class="m-3 mt-16 flex min-h-[calc(100%-3.5rem)] items-center justify-center">
+    <div class="relative w-full max-w-2xl max-h-full flex flex-col rounded-xl border border-slate-200 bg-white shadow-xl pointer-events-auto">
+      <div class="absolute top-2 end-2">
+        <button type="button" class="inline-flex size-8 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 focus:outline-hidden" aria-label="Close" data-hs-overlay="#<%= modal_id %>">
+          <span class="sr-only">Close</span>
+          <%= ui_icon("x", classes: "size-4") %>
+        </button>
       </div>
-        <div class="modal-body">
-          <p><h4><%=translate_view_destroy('subtitle_modal', model_name: model_singular_translation.downcase)%></h4></p>
+
+      <div class="overflow-y-auto p-4 sm:p-10">
+        <div class="flex gap-x-4 md:gap-x-7">
+          <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full border-4 border-red-100 bg-red-50 text-red-500 sm:h-14 sm:w-14">
+            <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+          </span>
+
+          <div class="grow">
+            <h3 id="<%= label_id %>" class="mb-2 text-xl font-bold text-slate-900">
+              <%= translate_view_destroy('title_modal', model_name: model_singular_translation.downcase) %>
+            </h3>
+            <p class="text-slate-600">
+              <%= translate_view_destroy('subtitle_modal', model_name: model_singular_translation.downcase) %>
+            </p>
+          </div>
         </div>
-        <div class="d-flex justify-content-between modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%=translate_view_shared('cancel')%></button>
-          <%= link_to translate_view_shared('remove'), url, data: { turbo_method: :delete }, class: "btn btn-danger" %>
-        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-x-2 border-t border-slate-200 bg-slate-50 px-4 py-3">
+        <button type="button" class="btn-secondary" data-hs-overlay="#<%= modal_id %>">
+          <%= translate_view_shared('cancel') %>
+        </button>
+
+        <%= link_to translate_view_shared('remove'),
+          url,
+          data: { turbo_method: :delete },
+          class: "inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-red-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-600" %>
+      </div>
     </div>
   </div>
 </div>
