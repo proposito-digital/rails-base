@@ -289,10 +289,18 @@ en:
       user:
         name: "Name"
         email: "E-mail"
+        email_address: "E-mail address"
         password: "Password"
         password_confirmation: "Password Confirmation"
         role: "Role"
         last_sign_in_at: "Last sign in at"
+        created_at: "Created at"
+        updated_at: "Updated at"
+      dog:
+        name: "Name"
+        age: "Age"
+        created_at: "Created at"
+        updated_at: "Updated at"
       role:
         name: "Name"
       permission: 
@@ -380,6 +388,8 @@ en:
         email: "Email"
         password: "Password"
         user_profile:
+          account_menu: "Account menu"
+          signed_as: "Signed in as"
           edit_profile: "Edit profile"
           change_password: "Change password"
           exit: "Logout"
@@ -409,6 +419,10 @@ en:
           new:
             tenant_placeholder: 'Select user tenant'
             role_placeholder: 'Select user role'
+          edit:
+            password_hint: 'Fill both password fields only if you want to change it'
+            password_placeholder: 'Type the new password'
+            password_confirmation_placeholder: 'Confirm the new password'
     
     pages:
       actions:
@@ -459,3 +473,6 @@ en:
   users_admin:
     single: 'Admin'
     plural: 'Admins'
+  dogs:
+    single: 'Dog'
+    plural: 'Dogs'

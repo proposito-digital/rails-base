@@ -275,14 +275,25 @@ pt-br:
       permission: 'Permissão'
       role: 'Perfil'
       entity_category: 'Categoria de Módulos'
+      dog: 
+        one: 'Cachorro'
+        other: 'Cachorros'
     attributes:
       user:
         name: "Nome"
         email: "E-mail"
+        email_address: "Endereço de e-mail"
         password: "Senha"
         password_confirmation: "Confirmação da Senha"
         role: "Perfil"
         last_sign_in_at: "Último login"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+      dog:
+        name: "Nome"
+        age: "Idade"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       role:
         name: "Nome"
       permission: 
@@ -367,6 +378,8 @@ pt-br:
         email: "E-mail"
         password: "Senha"
         user_profile:
+          account_menu: "Menu da conta"
+          signed_as: "Conectado como"
           edit_profile: "Editar perfil"
           change_password: "Alterar senha"
           exit: "Sair"
@@ -396,6 +409,10 @@ pt-br:
           new:
             tenant_placeholder: 'Selecione o tenant do Usuário'
             role_placeholder: 'Selecione o Perfil do Usuário'
+          edit:
+            password_hint: 'Preencha os dois campos apenas se quiser alterar a senha'
+            password_placeholder: 'Digite a nova senha'
+            password_confirmation_placeholder: 'Confirme a nova senha'
     pages:
       actions:
         home:
@@ -445,3 +462,6 @@ pt-br:
   users_admin:
     single: 'Administrador'
     plural: 'Administradores'
+  dogs:
+    single: 'Cachorro'
+    plural: 'Cachorros'
