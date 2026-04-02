@@ -1,32 +1,44 @@
-<header class="navbar navbar-expand-md sticky-top navbar-light flex-md-nowrap p-0 shadow">
-  <div class="container-fluid">
-    <a href="/admin" class="navbar-brand col-md-3 col-lg-2 me-0 px-0">
-      <%= image_tag 'logo-white.png', alt: "[Nome do Projeto]", id: "navbar-logo"%>
-    </a>
-    <!-- # Snippet if you want text title
-     <a href="/admin" class="navbar-brand">
-      RAILS BASE
-    </a>
-    -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#HeaderNavbar" aria-controls="HeaderNavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="HeaderNavbar">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- # Snippet if you want add more nav itens
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li> -->
-        <span class="navbar-text">
-        </span>
-      </ul>
+<header class="sticky top-0 inset-x-0 z-40 flex w-full flex-wrap border-b border-slate-200 bg-white text-sm lg:ps-64">
+  <nav class="flex basis-full items-center px-4 py-2.5 sm:px-6">
+    <div class="me-3 lg:hidden">
+      <button type="button"
+              class="inline-flex size-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="hs-application-sidebar"
+              aria-label="Toggle navigation"
+              data-hs-overlay="#hs-application-sidebar">
+        <span class="sr-only">Toggle Navigation</span>
+        <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+          <path d="M15 3v18"></path>
+          <path d="m8 9 3 3-3 3"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ms-auto flex items-center gap-1.5">
       <%= render partial: 'layouts/admin/language_select' %>
+
+      <button type="button" class="inline-flex size-9 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 md:hidden">
+        <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+
+      <button type="button" class="inline-flex size-9 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100">
+        <%= ui_icon("bell", classes: "size-4") %>
+        <span class="sr-only">Notifications</span>
+      </button>
+
+      <button type="button" class="inline-flex size-9 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100">
+        <%= ui_icon("activity", classes: "size-4") %>
+        <span class="sr-only">Activity</span>
+      </button>
+
       <%= render 'layouts/admin/user_profile' %>
     </div>
-  </div>
+  </nav>
 </header>
-<%#= render partial: 'admin/users/change_password'%>
-

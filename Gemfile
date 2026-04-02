@@ -4,8 +4,8 @@ source "https://rubygems.org"
 # Applications GEMS
 
 # Rails Base GEMS
-# Integrate Dart Sass with the asset pipeline in Rails. [https://github.com/rails/dartsass-rails]
-gem "dartsass-rails", "0.5.1"
+# Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
+gem "tailwindcss-rails", "~> 4.4"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
 gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
@@ -96,3 +96,4 @@ group :test do
   gem "capybara", "3.40.0"
   gem "selenium-webdriver", "4.41.0"
 end
+

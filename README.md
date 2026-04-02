@@ -29,7 +29,7 @@ $ chmod +x ./bin/dev
 this run Procfile.dev fit at root directory and will run:
 
 web: bin/rails server -p 3000
-css: bin/rails dartsass:watch
+css: bin/rails tailwindcss:watch
 
 
 # Infrastructure
@@ -78,13 +78,17 @@ check the file config/importmap.rb
 
 Hotwire is an alternative approach to building modern web applications without using much JavaScript by sending HTML instead of JSON over the wire. This makes for fast first-load pages, keeps template rendering on the server, and allows for a simpler, more productive development experience in any programming language, without sacrificing any of the speed or responsiveness associated with a traditional single-page application.
 
-## Bootstrap 5.3.8 https://getbootstrap.com/
+## Tailwind CSS https://tailwindcss.com/
 
-Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.
+A utility-first CSS framework for quickly building modern interfaces directly in your markup.
 
-## Bootstrap Icons 1.13.1 https://icons.getbootstrap.com/
+## Preline UI https://preline.co/
 
-Free, high quality, open source icon library with over 1,600 icons. Include them anyway you like—SVGs, SVG sprite, or web fonts. Use them with or without Bootstrap in any project.
+A Tailwind CSS component library used in this project for interactive UI patterns like dropdowns, collapse and overlays, initialized through Importmap.
+
+## SVG Icons (ui_icon helper)
+
+Icons are rendered with the `ui_icon` helper in Rails views, keeping the stack focused on Tailwind + Preline without external icon-font dependencies.
 
 # How to use the project
 ## How to Update dependencies
@@ -161,7 +165,7 @@ end
 # app/controllers/concerns/sidebar_concerns.rb
 {
   name: 'Cachorros',
-  icon: 'bi bi-house-heart',
+  icon: 'paw',
   policy: :dog,
   url: { controller: 'dogs', action: 'index' }
 }

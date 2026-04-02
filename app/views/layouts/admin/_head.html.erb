@@ -4,14 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Propósito Digital">
     <meta name="description" content="">
-    
+
     <title>Rails Base! </title>
-    
+
     <%= favicon_link_tag 'favicon.png' %>
 
     <!-- BEGIN STYLES -->
     <!-- LOADING APPLICATION CSS -->
-    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <!-- BEGIN PAGE LEVEL STYLES -->
     <%= yield :stylesheet %>
     <!-- END PAGE LEVEL STYLES -->
@@ -29,4 +29,3 @@
     <%= csrf_meta_tags %>
     <!-- END GLOBAL META TAGS -->
 </head>
-

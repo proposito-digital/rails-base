@@ -1,43 +1,78 @@
-<nav id="sidebar" class="d-md-block bg-light sidebar d-none p-0 vh-91" data-controller="sidebar" style="height: 91vh;">
-  <div class="sidebar-toogle-container d-flex justify-content-end mt-4">
-    <button type="button" id="toggle-sidebar-button" data-action="sidebar#toggle" data-sidebar-target="toggleButton" aria-expanded="true" aria-label="Recolher menu lateral">
-      <i class="bi bi-list button-icon-outline-hidden"></i>
-    </button>
-  </div>
-  <div class="p-4 pt-5 mt-5">
-    <ul class="list-unstyled mb-5">
-      <% @menu.each do |menu_item| %>
-        <% if policy(menu_item[:policy]).menu? %>
-          <li class="nav-item mt-1">
+<div id="hs-application-sidebar"
+     class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full fixed inset-y-0 start-0 z-50 hidden h-full w-64 transform border-e border-slate-200 bg-white transition-all duration-300 lg:block lg:translate-x-0"
+     role="dialog"
+     tabindex="-1"
+     aria-label="Sidebar">
+  <div class="relative flex h-full max-h-full flex-col">
+    <div class="flex items-center border-b border-slate-100 px-6 py-4">
+      <a href="/admin" class="inline-flex items-center" aria-label="Propósito Digital">
+        <%= image_tag 'logo-slogan.png', alt: 'Propósito Digital', class: 'h-9 w-auto object-contain' %>
+      </a>
+    </div>
+
+    <div class="h-full overflow-y-auto p-3 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-300/80">
+      <nav class="hs-accordion-group w-full" data-hs-accordion-always-open>
+        <ul class="flex flex-col space-y-1">
+          <% @menu.each_with_index do |menu_item, index| %>
+            <% next unless policy(menu_item[:policy]).menu? %>
+            <% active_menu = menu_item[:active] %>
+            <% item_classes = active_menu ? 'bg-slate-100 text-slate-900' : 'text-slate-700 hover:bg-slate-100' %>
+
             <% if menu_item.key?(:items) %>
-              <a class="nav-link dropdown-toggle <%= menu_item[:active] ? 'active' : '' %>"  data-bs-toggle="collapse" data-bs-target="#<%= menu_item[:id_collapse] %>" aria-expanded="false" role="button">
-                <i class="bi <%= menu_item[:icon] %>"></i>
-                <span class="item-name"><%= menu_item[:name] %></span>
-              </a>
-              <div class="collapse <%= 'show' if menu_item[:active] %>" id="<%= menu_item[:id_collapse] %>" style="">
-                <ul class="list-unstyled collapse show "  id="pageSubmenu">
-                  <% menu_item[:items].each do |submenu| %>
-                    <% if policy(submenu[:policy]).menu? %>
+              <% accordion_id = "sidebar-accordion-#{index}" %>
+              <% child_id = menu_item[:id_collapse].presence || "#{accordion_id}-child" %>
+
+              <li class="hs-accordion" id="<%= accordion_id %>">
+                <button type="button"
+                        class="hs-accordion-toggle flex w-full items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-start text-sm font-medium transition <%= item_classes %>"
+                        aria-expanded="<%= active_menu ? 'true' : 'false' %>"
+                        aria-controls="<%= child_id %>">
+                  <%= ui_icon(menu_item[:icon], classes: "size-4 shrink-0") %>
+                  <span class="flex-1 truncate"><%= menu_item[:name] %></span>
+
+                  <svg class="hs-accordion-active:block ms-auto hidden size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6"></path>
+                  </svg>
+
+                  <svg class="hs-accordion-active:hidden ms-auto block size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </button>
+
+                <div id="<%= child_id %>"
+                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 <%= active_menu ? '' : 'hidden' %>"
+                     role="region"
+                     aria-labelledby="<%= accordion_id %>">
+                  <ul class="space-y-1 ps-8 pt-1">
+                    <% menu_item[:items].each do |submenu| %>
+                      <% next unless policy(submenu[:policy]).menu? %>
+                      <% active_submenu = submenu[:active] %>
+                      <% submenu_classes = active_submenu ? 'bg-slate-100 text-slate-900' : 'text-slate-700 hover:bg-slate-100' %>
+
                       <li>
-                        <a href="<%= url_for(submenu[:url]) %>" class="nav-link <%= submenu[:active]  ? 'active' : '' %> mt-1">
-                          <i class="bi <%= submenu[:icon] %>"></i>
-                          <span class="item-name"><%= submenu[:name] %></span>
+                        <a href="<%= url_for(submenu[:url]) %>"
+                           class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm transition <%= submenu_classes %>">
+                          <%= ui_icon(submenu[:icon], classes: "size-4 shrink-0") %>
+                          <span class="truncate"><%= submenu[:name] %></span>
                         </a>
                       </li>
                     <% end %>
-                  <% end %>
-                </ul>
-              </div>
+                  </ul>
+                </div>
+              </li>
             <% else %>
-              <a class="nav-link <%= menu_item[:active] ? 'active' : '' %>" aria-current="page" href="<%= url_for(menu_item[:url])  if menu_item[:url].present? %>">
-                <i class="bi <%= menu_item[:icon] %>"></i>
-                <span data-feather="home"></span>
-                <span class="item-name"><%= menu_item[:name] %></span>
-              </a>
+              <li>
+                <a href="<%= url_for(menu_item[:url]) if menu_item[:url].present? %>"
+                   class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm font-medium transition <%= item_classes %>"
+                   aria-current="<%= active_menu ? 'page' : nil %>">
+                  <%= ui_icon(menu_item[:icon], classes: "size-4 shrink-0") %>
+                  <span class="truncate"><%= menu_item[:name] %></span>
+                </a>
+              </li>
             <% end %>
-          </li>
-        <% end %>
-      <% end %>
-    </ul>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
   </div>
-</nav>
+</div>
