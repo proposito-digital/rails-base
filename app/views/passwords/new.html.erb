@@ -1,21 +1,43 @@
-<% content_for :stylesheet do %>
-  <%= stylesheet_link_tag "sessions/style" %>
-<% end %>
-<div class="login-container">
-  <%= render 'partials/messages' %>
-  <div class="text-center">
-    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "logo mb-4", style:"width: 75%;" %>
-    <p class="text-muted">Forgot your password?</p>
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-4 py-10">
+  <div class="w-full max-w-md rounded-xl border border-slate-200 bg-white shadow-xl">
+    <div class="p-5 sm:p-8">
+      <div class="text-center">
+        <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
+        <h1 class="text-2xl font-bold text-slate-800">Forgot password?</h1>
+        <p class="mt-2 text-sm text-slate-500">
+          Remember your password?
+          <%= link_to "Sign in here", new_session_path, class: "font-medium text-[var(--primary)] hover:text-[var(--primary-dark)] hover:underline" %>
+        </p>
+      </div>
+
+      <div class="mt-6">
+        <%= render 'partials/messages' %>
+
+        <%= form_with url: passwords_path, class: "mt-4 space-y-4" do |form| %>
+          <div>
+            <label for="email_address" class="mb-2 block text-sm text-slate-700">Email address</label>
+            <%= form.email_field :email_address,
+              id: "email_address",
+              class: "block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20",
+              required: true,
+              autofocus: true,
+              autocomplete: "username",
+              placeholder: t("views.application.shared.email_placeholder"),
+              value: params[:email_address] %>
+          </div>
+
+          <div class="flex items-center">
+            <input id="remember_me"
+                   name="remember_me"
+                   type="checkbox"
+                   class="h-4 w-4 rounded border-slate-300 text-[var(--primary)] focus:ring-[var(--primary)]/30">
+            <label for="remember_me" class="ml-2 text-sm text-slate-700">Remember me</label>
+          </div>
+
+          <%= form.submit "Reset password",
+            class: "inline-flex w-full items-center justify-center rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <%= form_with url: passwords_path do |form| %>
-    <div clas>
-      <label for="email" class="form-label">E-mail</label>
-      <%= form.email_field :email_address, class: "form-control rounded", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-    </div>
-    <div class="d-flex justify-content-between mb-3 form-text">
-      <a class="link">Don't have an account?</a>
-      <%= link_to "login?", new_session_path %>
-    </div>
-    <%= form.submit "Send E-mail reset instructions", class: "btn btn-primary" %>
-  <% end %>
 </div>
