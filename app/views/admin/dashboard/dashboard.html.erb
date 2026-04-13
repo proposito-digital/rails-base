@@ -2,116 +2,22 @@
   <%#= stylesheet_link_tag 'admin/dashboard' %>
 <% end %>
 
-<%
-  invoices = [
-    { number: '#ADUQ2189H1-0038', amount: 'US $400.00',  status: :paid,     due: '10 Jan 2023', created: '28 Dec, 12:12' },
-    { number: '#ADUQ218ADD-0099', amount: 'US $200.00',  status: :paid,     due: '06 Jan 2023', created: '20 Dec, 09:27' },
-    { number: '#ADUQ218F94-0061', amount: 'US $994.00',  status: :declined, due: '01 Jan 2023', created: '14 Dec, 09:45' },
-    { number: '#ADUQ2138D4-0038', amount: 'US $4,150.00', status: :paid,    due: '29 Dec',      created: '01 Dec, 16:59' },
-    { number: '#ADUQ2138R2-0012', amount: 'US $2,489.00', status: :paid,    due: '29 Dec',      created: '01 Dec, 16:59' },
-    { number: '#ADUQ2131GS-0010', amount: 'US $47.00',   status: :paid,     due: '28 Dec',      created: '28 Nov, 11:00' },
-    { number: '#ADUQ288UUE-3892', amount: 'US $2,220.00', status: :paid,    due: '24 Dec',      created: '20 Dec, 09:27' },
-    { number: '#ADUQ2189C7-3822', amount: 'US $80.00',   status: :declined, due: '29 Nov',      created: '28 Nov, 12:04' },
-    { number: '#ADUQ2138F2-0099', amount: 'US $1,249.00', status: :paid,    due: '29 Nov',      created: '01 Nov, 14:32' }
-  ]
-%>
+<div class="mx-auto w-full max-w-[88rem] space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+  <div class="rounded-2xl border border-slate-200 bg-white px-6 py-8 text-center shadow-sm">
+    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'dashboard-logo', class: 'mx-auto mb-4 w-48 md:w-56' %>
+    <h1 class="text-3xl font-bold text-slate-800">Rails Base</h1>
 
-<div class="mx-auto w-full max-w-[88rem] px-4 py-8 sm:px-6 lg:px-8">
-  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-    <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
-      <div>
-        <h2 class="text-3xl font-semibold text-slate-900">Invoices</h2>
-        <p class="mt-1 text-xl text-slate-600">Create invoices, edit, download and more.</p>
-      </div>
+    <div class="mx-auto mt-4 max-w-2xl">
+      <p class="text-slate-600">
+        <span class="font-semibold text-slate-800"><%= Current.user.email_address %></span>, Bem-vindo ao [Rails Base]
+      </p>
 
-      <div class="inline-flex gap-2">
-        <a href="#" class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-lg font-medium text-slate-700 hover:bg-slate-50">
-          View all
-        </a>
-
-        <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-lg font-medium text-white hover:bg-blue-700">
-          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-          Create
-        </a>
-      </div>
-    </div>
-
-    <div class="border-b border-slate-200 bg-white">
-      <button type="button" class="hs-collapse-toggle flex w-full items-center gap-3 px-6 py-4 text-xl font-semibold text-slate-800 hover:bg-slate-50" id="dashboard-insights-btn" aria-expanded="false" aria-controls="dashboard-insights" data-hs-collapse="#dashboard-insights">
-        <svg class="size-4 transition-transform hs-collapse-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        Insights
-      </button>
-
-      <div id="dashboard-insights" class="hs-collapse hidden" aria-labelledby="dashboard-insights-btn">
-        <div class="px-6 pb-4 text-base text-slate-600">There are no insights for this period.</div>
-      </div>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200">
-        <thead class="bg-slate-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">Invoice Number</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">Amount</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">Status</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">Due</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">Created</th>
-            <th class="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wide text-slate-700"></th>
-          </tr>
-        </thead>
-
-        <tbody class="divide-y divide-slate-200">
-          <% invoices.each do |invoice| %>
-            <tr class="hover:bg-slate-50/80">
-              <td class="px-6 py-3 text-lg">
-                <a href="#" class="font-medium text-blue-600 hover:text-blue-700"><%= invoice[:number] %></a>
-              </td>
-
-              <td class="px-6 py-3 text-lg text-slate-700"><%= invoice[:amount] %></td>
-
-              <td class="px-6 py-3">
-                <% if invoice[:status] == :paid %>
-                  <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-sm font-medium text-emerald-700">
-                    <span class="inline-block size-1.5 rounded-full bg-emerald-600"></span>
-                    Paid
-                  </span>
-                <% else %>
-                  <span class="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-sm font-medium text-red-700">
-                    <span class="inline-block size-1.5 rounded-full bg-red-600"></span>
-                    Declined
-                  </span>
-                <% end %>
-              </td>
-
-              <td class="px-6 py-3 text-lg text-slate-700"><%= invoice[:due] %></td>
-              <td class="px-6 py-3 text-lg text-slate-700"><%= invoice[:created] %></td>
-
-              <td class="px-6 py-3 text-right">
-                <button type="button" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-1.5 text-lg font-medium text-slate-800 hover:bg-slate-50">
-                  <%= ui_icon("receipt", classes: "size-4") %>
-                  View
-                </button>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-6 py-5">
-      <p class="text-2xl text-slate-700"><span class="font-semibold text-slate-900"><%= invoices.size %></span> results</p>
-
-      <div class="inline-flex gap-2">
-        <button type="button" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xl font-medium text-slate-700 hover:bg-slate-50">
-          <%= ui_icon("chevron-left", classes: "size-4") %>
-          Prev
-        </button>
-
-        <button type="button" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xl font-medium text-slate-700 hover:bg-slate-50">
-          Next
-          <%= ui_icon("chevron-right", classes: "size-4") %>
-        </button>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+        <button type="button" class="btn-secondary">Secondary</button>
+        <button type="button" class="btn-primary">Primary button</button>
       </div>
     </div>
   </div>
 </div>
+
+<%#= markdown @readme %>

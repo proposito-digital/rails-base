@@ -2,27 +2,27 @@
   <%#= stylesheet_link_tag 'index' %>
 <% end %>
 
-<div class="space-y-4">
-  <div class="flex flex-wrap items-center justify-between gap-3">
-    <h1 class="text-2xl font-semibold text-slate-800"><%= model_plural_translation %></h1>
-    <a class="btn-primary" href="<%= instance_new_path %>">
-      <%= ui_icon("plus", classes: "mr-2 size-4") %><%= translate_view_shared('add', model_name: model_singular_translation) %>
-    </a>
-  </div>
+<% visible_attributes = model_column_names.excluding("id", "deleted_at", "password_digest").take(5) %>
 
-  <% if @instances.nil? %>
-    <div class="rounded-2xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm">
-      <h2 class="text-3xl font-bold text-slate-800"><%= translate_view_index('no_instances', { model_name: model_plural_translation.downcase }) %></h2>
-      <p class="mx-auto mt-3 max-w-xl text-slate-600"><%= translate_view_index('new_instance', { model_name: model_singular_translation.downcase }) %></p>
-      <div class="mt-6">
-        <a class="btn-primary" href="<%= instance_new_path %>">
-          <%= ui_icon("plus", classes: "mr-2 size-4") %><%= translate_view_index('new_button', model_name: model_singular_translation.downcase) %>
-        </a>
+<div class="mx-auto w-full max-w-[88rem] px-4 py-8 sm:px-6 lg:px-8">
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
+      <div>
+        <h1 class="text-3xl font-semibold text-slate-900"><%= model_plural_translation %></h1>
+        <p class="mt-1 text-sm text-slate-600">
+          <%= translate_view_shared("search_placeholder", model_name: model_plural_translation.downcase) %>
+        </p>
       </div>
+
+      <a class="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)]"
+         href="<%= instance_new_path %>">
+        <%= ui_icon("plus", classes: "size-4") %>
+        <%= translate_view_shared("add", model_name: model_singular_translation) %>
+      </a>
     </div>
-  <% else %>
-    <div class="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-      <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex items-center">
+
+    <div class="border-b border-slate-200 bg-white px-6 py-4">
+      <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex w-full max-w-xl items-center">
         <input type="search"
                id="input-search"
                class="form-control rounded-r-none border-r-0"
@@ -31,56 +31,75 @@
                placeholder="<%= translate_view_shared('search_placeholder', model_name: model_plural_translation.downcase) %>"
                aria-label="Search"
                aria-describedby="Search field">
-        <button type="submit" class="inline-flex h-[42px] w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100" aria-label="Search">
+        <button type="submit"
+                class="inline-flex h-[42px] w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                aria-label="Search">
           <%= ui_icon("search", classes: "size-4") %>
         </button>
       </form>
     </div>
 
-    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-slate-200">
         <thead class="bg-slate-50">
           <tr>
-            <% model_column_names.excluding('id', 'deleted_at', 'password_digest').take(5).each do |attribute| %>
-              <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+            <% visible_attributes.each do |attribute| %>
+              <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">
                 <%= sort_link("#{model_plural_name_to_sort}.#{attribute}", attribute_translation(model_singular_name, attribute)) %>
               </th>
             <% end %>
-            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-600">&nbsp;</th>
+            <th class="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wide text-slate-700">
+              <%= translate_view_shared("actions") %>
+            </th>
           </tr>
         </thead>
 
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-slate-200">
           <% @instances.each do |instance| %>
-            <tr id="tr_<%= "#{instance.class.name}_#{instance.id}" %>" class="hover:bg-slate-50">
-              <% instance.attributes.excluding('id', 'deleted_at', 'password_digest').take(5).each do |name, value| %>
-                <td class="px-4 py-3 text-sm text-slate-700">
-                  <% if value.instance_of?(ActiveSupport::TimeWithZone) %>
-                    <%= translate_datetime_format_default(value, "dt_at") %>
+            <tr id="tr_<%= "#{instance.class.name}_#{instance.id}" %>" class="hover:bg-slate-50/80">
+              <% visible_attributes.each_with_index do |attribute, index| %>
+                <% raw_value = instance.public_send(attribute) %>
+                <% display_value = if raw_value.is_a?(ActiveSupport::TimeWithZone)
+                                     translate_datetime_format_default(raw_value, "dt_at")
+                                   elsif raw_value == true
+                                     translate_view_shared("yes_display")
+                                   elsif raw_value == false
+                                     translate_view_shared("no_display")
+                                   else
+                                     raw_value.presence || "-"
+                                   end %>
+
+                <td class="px-6 py-3 text-sm text-slate-700">
+                  <% if index.zero? %>
+                    <%= link_to display_value, instance_show_path(instance), class: "font-medium text-[var(--primary)] hover:text-[var(--primary-dark)]" %>
                   <% else %>
-                    <%= value %>
+                    <%= display_value %>
                   <% end %>
                 </td>
               <% end %>
 
-              <td class="px-4 py-3">
+              <td class="px-6 py-3">
                 <div class="flex items-center justify-end gap-1">
-                  <%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon: "eye", title: translate_view_shared('show') %>
-                  <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon: "pencil-square", title: translate_view_shared('edit') %>
-                  <%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon: "trash", title: translate_view_shared('remove'), modal_id: "modal_destroy_#{instance.id}" %>
+                  <%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon: "eye", title: translate_view_shared("show") %>
+                  <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon: "pencil-square", title: translate_view_shared("edit") %>
+                  <%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon: "trash", title: translate_view_shared("remove"), modal_id: "modal_destroy_#{instance.id}" %>
                 </div>
               </td>
             </tr>
 
-            <%= render partial: 'modal_destroy', locals: { instance: instance, url: instance_remove_path(instance), model_name: model_singular_translation } %>
+            <%= render partial: "modal_destroy", locals: { instance: instance, url: instance_remove_path(instance), model_name: model_singular_translation } %>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    <div class="mt-3 text-sm text-slate-500"><%== @pagy.info_tag %></div>
-    <div data-controller="pagy-initializer">
-      <%== @pagy.input_nav_js if @pagy.pages > 1 %>
-    </div>
-  <% end %>
+    <% if @instances.present? %>
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-6 py-5">
+        <div class="text-sm text-slate-600"><%== @pagy.info_tag %></div>
+        <div data-controller="pagy-initializer" class="text-sm text-slate-600">
+          <%== @pagy.input_nav_js if @pagy.pages > 1 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
