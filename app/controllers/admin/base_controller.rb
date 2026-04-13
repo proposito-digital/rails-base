@@ -15,7 +15,10 @@ class Admin::BaseController < ApplicationController
 
   # GET /admin instance/or /admin.instance/json
   def index
-    @pagy, @instances = pagy(@model.all, limit: 10)
+    scope = @model.all
+    scope = apply_term_filter(scope)
+
+    @pagy, @instances = pagy(scope, limit: 10)
     authorize @instances, policy_class: DogPolicy
   end
 
@@ -101,6 +104,44 @@ class Admin::BaseController < ApplicationController
 
     def set_model_class
       @model = params[:controller].gsub("admin/", "").classify.constantize
+    end
+
+    def apply_term_filter(scope)
+      term = params[:term].to_s.strip
+      return scope if term.blank?
+
+      columns = normalized_filter_columns
+      return scope if columns.empty?
+
+      quoted_table = @model.connection.quote_table_name(@model.table_name)
+      normalized_term = "%#{term.downcase}%"
+
+      conditions = columns.each_with_index.map do |column, index|
+        quoted_column = @model.connection.quote_column_name(column)
+        "LOWER(CAST(#{quoted_table}.#{quoted_column} AS TEXT)) LIKE :term_#{index}"
+      end
+
+      bindings = columns.each_index.to_h do |index|
+        [ :"term_#{index}", normalized_term ]
+      end
+
+      scope.where(conditions.join(" OR "), bindings)
+    end
+
+    def normalized_filter_columns
+      columns = filter_fields.map { |field| field.to_s.split(".").last }
+      columns = columns.select { |column| @model.column_names.include?(column) }
+      columns = columns.uniq
+
+      columns.presence || default_filter_columns
+    end
+
+    def default_filter_columns
+      @model.column_names - %w[ id deleted_at created_at updated_at password_digest ]
+    end
+
+    def filter_fields
+      default_filter_columns
     end
 
     def default_param_required

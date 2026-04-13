@@ -8,7 +8,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def filter_fields
-    [ "users.name" ]
+    [ "users.email_address" ]
   end
 
   def instance_params
