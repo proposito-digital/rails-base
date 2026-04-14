@@ -88,7 +88,7 @@ A Tailwind CSS component library used in this project for interactive UI pattern
 
 ## SVG Icons (ui_icon helper)
 
-Icons are rendered with the `ui_icon` helper in Rails views, keeping the stack focused on Tailwind + Preline without external icon-font dependencies.
+Icons are rendered with the `ui_icon` helper in Rails views using Lucide SVG paths (https://lucide.dev/icons/), keeping the stack focused on Tailwind + Preline without external icon-font dependencies.
 
 # How to use the project
 ## How to Update dependencies
