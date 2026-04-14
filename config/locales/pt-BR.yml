@@ -282,10 +282,13 @@ pt-br:
       user:
         name: "Nome"
         email: "E-mail"
+        email_address: "Endereço de e-mail"
         password: "Senha"
         password_confirmation: "Confirmação da Senha"
         role: "Perfil"
         last_sign_in_at: "Último login"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       dog:
         name: "Nome"
         age: "Idade"
@@ -362,6 +365,9 @@ pt-br:
         invite: "Convidar"
         copy: 'Copiar'
         actions: 'Ações'
+        results: 'resultados'
+        prev: 'Anterior'
+        next: 'Próximo'
         yes_display: 'Sim'
         no_display: 'Não'
         date_begin_placeholder: 'Data inicial'
@@ -375,6 +381,8 @@ pt-br:
         email: "E-mail"
         password: "Senha"
         user_profile:
+          account_menu: "Menu da conta"
+          signed_as: "Conectado como"
           edit_profile: "Editar perfil"
           change_password: "Alterar senha"
           exit: "Sair"
@@ -389,6 +397,7 @@ pt-br:
           no_instances: Ainda não existem %{model_name} registrados
           new_instance: Clique abaixo para criar um novo %{model_name}
           new_button: "Criar %{model_name}"
+          description: "Crie %{model_name}, edite, baixe e muito mais."
         destroy:
           title_modal: "Remover %{model_name}"
           subtitle_modal: Deseja realmente remover o(a) %{model_name}?
@@ -404,6 +413,10 @@ pt-br:
           new:
             tenant_placeholder: 'Selecione o tenant do Usuário'
             role_placeholder: 'Selecione o Perfil do Usuário'
+          edit:
+            password_hint: 'Preencha os dois campos apenas se quiser alterar a senha'
+            password_placeholder: 'Digite a nova senha'
+            password_confirmation_placeholder: 'Confirme a nova senha'
     pages:
       actions:
         home:

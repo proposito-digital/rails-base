@@ -4,34 +4,34 @@ module SidebarConcerns
   extend ActiveSupport::Concern
   include Translations::TranslationsViewHelper
 
-   included do
+  included do
     def set_menu
       @menu = [
-      {
-        name: translate_view_application_shared("sidebar_menu.home"),
-        icon: "bi bi-house-door",
-        policy: :dashboard,
-        url: { controller: "dashboard", action: "index" },
-        active: controller_path == "admin/dashboard"
-      },
-      {
-        name: t("users.plural"),
-        icon: "bi bi-person",
-        policy: :user,
-        url: { controller: "users", action: "index" },
-        active: controller_path == "admin/users"
-      },
-      {
-        name: t("dogs.plural"),
-        icon: "bi bi-dog",
-        policy: :dog,
-        url: { controller: "dogs", action: "index" },
-        active: controller_path == "admin/dogs"
-      }
+        {
+          name: translate_view_application_shared("sidebar_menu.home"),
+          icon: "home",
+          policy: :dashboard,
+          url: { controller: "dashboard", action: "index" },
+          active: controller_path == "admin/dashboard"
+        },
+        {
+          name: t("users.plural"),
+          icon: "user",
+          policy: :user,
+          url: { controller: "users", action: "index" },
+          active: controller_path == "admin/users"
+        },
+        {
+          name: t("dogs.plural"),
+          icon: "paw",
+          policy: :dog,
+          url: { controller: "dogs", action: "index" },
+          active: controller_path == "admin/dogs"
+        }
         # Submenu Example
         # {
         #   name: translate_view_application_shared("sidebar_menu.home"),
-        #   icon: "bi bi-house-door",
+        #   icon: "home",
         #   policy: :dashboard,
         #   url: { controller: "dashboard", action: "index" },
         #   id_collapse: "tenant-collapse",
@@ -39,14 +39,14 @@ module SidebarConcerns
         #   items: [
         #       {
         #         name: t("users.plural"),
-        #         icon: "bi bi-person",
+        #         icon: "user",
         #         policy: :user,
         #         url: { controller: "users", action: "index" },
         #         active: controller_path == "admin/users"
         #       },
         #       {
         #         name: t("users.plural"),
-        #         icon: "bi bi-person",
+        #         icon: "user",
         #         policy: :user,
         #         url: { controller: "users", action: "index" },
         #         active: controller_path == "admin/users"

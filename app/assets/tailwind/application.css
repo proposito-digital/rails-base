@@ -1,14 +1,11 @@
 @import url("https://fonts.cdnfonts.com/css/segoe-ui-4");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;600&display=swap");
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css");
 @import url("https://cdn.jsdelivr.net/npm/flag-icons@7.3.2/css/flag-icons.min.css");
 @import "tailwindcss";
 
 :root {
   --white: #ffffff;
   --black: #404040;
-  --gray-menu: rgba(255, 255, 255, 0.8);
-  --gray-bottom: rgba(255, 255, 255, 0.1);
 
   --primary: #bc2f2e;
   --primary-dark: #992929;
@@ -23,10 +20,6 @@
   --table: #f4f4f8;
   --table-btn: #888888;
   --bg-footer: #f7f7fb;
-
-  --background-navbar: var(--primary);
-  --background-sidebar: var(--primary);
-  --border-bottom: var(--gray-bottom);
 }
 
 @layer base {
@@ -77,46 +70,14 @@
   }
 }
 
-#navbar-logo {
-  width: 207px;
-  height: 61px;
+#admin-shell header a,
+#admin-shell #hs-application-sidebar a {
+  color: inherit;
 }
 
-#sidebar {
-  min-width: 18rem;
-  background-color: var(--background-sidebar);
-  transition: all 0.15s ease-in-out;
-}
-
-#sidebar .sidebar-link {
-  color: var(--gray-menu);
-  border-bottom: 1px solid var(--border-bottom);
-}
-
-#sidebar .sidebar-link:hover,
-#sidebar .sidebar-link:focus {
-  color: var(--white);
-}
-
-#sidebar .sidebar-link.active {
-  background-color: var(--white);
-  color: var(--primary);
-}
-
-#sidebar #toggle-sidebar-button {
-  background: var(--primary-dark);
-  border-color: var(--primary-dark);
-  color: var(--white);
-}
-
-#sidebar.collapsed {
-  min-width: 5.25rem;
-}
-
-#sidebar.collapsed .item-name,
-#sidebar.collapsed .sidebar-toggle-arrow,
-#sidebar.collapsed .sidebar-submenu {
-  display: none;
+#admin-shell header a:hover,
+#admin-shell #hs-application-sidebar a:hover {
+  color: inherit;
 }
 
 .pagy {

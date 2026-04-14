@@ -1,34 +1,75 @@
 <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-4 py-10">
-  <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
-    <%= render 'partials/messages' %>
+  <div class="w-full max-w-md rounded-xl border border-slate-200 bg-white shadow-xl">
+    <div class="p-5 sm:p-8">
+      <div class="text-center">
+        <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
+        <h1 class="text-2xl font-bold text-slate-800">Sign in</h1>
+        <p class="mt-2 text-sm text-slate-500">
+          Access your account using your credentials.
+        </p>
+      </div>
 
-    <div class="text-center">
-      <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
-      <p class="text-sm text-slate-500">Welcome Back</p>
+      <div class="mt-6">
+        <%= render 'partials/messages' %>
+
+        <%= form_with url: session_path, class: "mt-4 space-y-4" do |form| %>
+          <div>
+            <label for="email_address" class="mb-2 block text-sm text-slate-700"><%= t("views.application.shared.email") %></label>
+            <%= form.email_field :email_address,
+              id: "email_address",
+              class: "block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20",
+              required: true,
+              autofocus: true,
+              autocomplete: "username",
+              placeholder: t("views.application.shared.email_placeholder"),
+              value: params[:email_address] %>
+          </div>
+
+          <div data-controller="password-toggle">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <label for="password" class="block text-sm text-slate-700"><%= t("views.application.shared.password") %></label>
+              <%= link_to "Forgot password?", new_password_path, class: "text-xs font-medium text-[var(--primary)] hover:text-[var(--primary-dark)]" %>
+            </div>
+
+            <div class="relative">
+              <%= form.password_field :password,
+                id: "password",
+                class: "block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 pr-11 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20",
+                data: { password_toggle_target: "input" },
+                spellcheck: false,
+                autocorrect: :off,
+                autocapitalize: :off,
+                required: true,
+                autocomplete: "current-password",
+                placeholder: t("views.application.shared.password_placeholder"),
+                maxlength: 72 %>
+
+              <button type="button"
+                      class="absolute inset-y-0 right-0 inline-flex items-center justify-center px-3 text-slate-500 hover:text-slate-700"
+                      data-action="password-toggle#toggle"
+                      aria-label="Mostrar senha">
+                <span data-password-toggle-target="showIcon">
+                  <%= ui_icon("eye", classes: "size-5") %>
+                </span>
+                <span class="hidden" data-password-toggle-target="hideIcon">
+                  <%= ui_icon("eye-off", classes: "size-5") %>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center">
+            <input id="remember_me"
+                   name="remember_me"
+                   type="checkbox"
+                   class="h-4 w-4 rounded border-slate-300 text-[var(--primary)] focus:ring-[var(--primary)]/30">
+            <label for="remember_me" class="ml-2 text-sm text-slate-700">Remember me</label>
+          </div>
+
+          <%= form.submit "Sign in",
+            class: "inline-flex w-full items-center justify-center rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30" %>
+        <% end %>
+      </div>
     </div>
-
-    <%= form_with url: session_path, class: "mt-6 space-y-4" do |form| %>
-      <div>
-        <label for="email" class="form-label">E-mail</label>
-        <%= form.email_field :email_address, class: "form-control", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %>
-      </div>
-
-      <div data-controller="password-toggle">
-        <label for="password" class="form-label">Password</label>
-        <div class="relative">
-          <%= form.password_field :password, class: "form-control pr-10", data: { password_toggle_target: "input" }, spellcheck: false, autocorrect: :off, autocapitalize: :off, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %>
-
-          <button type="button" class="absolute inset-y-0 right-0 inline-flex items-center justify-center px-3 text-slate-500 hover:text-slate-700" data-action="password-toggle#toggle" aria-label="Mostrar senha"> <i class="bi bi-eye" data-password-toggle-target="icon"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between text-sm">
-        <a class="text-slate-400">Don't have an account?</a>
-        <%= link_to "Forgot password?", new_password_path, class: "font-medium" %>
-      </div>
-
-      <%= form.submit "Sign in", class: "btn-primary w-full" %>
-    <% end %>
   </div>
 </div>

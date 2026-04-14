@@ -6,6 +6,8 @@
         <li><strong><%= item.attribute %>: </strong><%= item.message %></li>
       <% end %>
     </ul>
-    <button type="button" class="flash-close" data-hs-remove-element="#<%= error_id %>"> <i class="bi bi-x-lg text-xs"></i> </button>
+    <button type="button" class="flash-close" data-hs-remove-element="#<%= error_id %>">
+      <%= ui_icon("x", classes: "size-3") %>
+    </button>
   </div>
 <% end %>

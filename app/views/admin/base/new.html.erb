@@ -2,9 +2,9 @@
   <%#= stylesheet_link_tag 'edit' %>
 <% end %>
 
-<div class="mx-auto max-w-5xl space-y-4">
+<div class="w-full space-y-4">
   <%= link_to instances_index_path, class: "inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900" do %>
-    <span class="bi bi-chevron-left"></span>
+    <%= ui_icon("chevron-left", classes: "size-4") %>
     <%= translate_view_shared("back") %>
   <% end %>
 
@@ -17,7 +17,7 @@
       <%= render partial: 'form_errors' %>
 
       <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at').each do |name, _value| %>
+        <% @instance.attributes.excluding('id', 'deleted_at', 'created_at', 'updated_at', 'password_digest').each do |name, _value| %>
           <div>
             <%= f.label name, attribute_translation(model_singular_name_to_translate(@instance), name), class: 'form-label' %>
             <%= f.text_field name, class: 'form-control', id: "#{model_field_id(@instance, name)}" %>

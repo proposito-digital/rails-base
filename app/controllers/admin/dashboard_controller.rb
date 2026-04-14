@@ -6,6 +6,8 @@ class Admin::DashboardController < Admin::BaseController
   def index
     authorize :dashboard, :index?
     skip_policy_scope
+    @users_count = User.count
+    @dogs_count = Dog.count
     @readme = File.read("#{Rails.root}/README.md")
     render "dashboard"
   end

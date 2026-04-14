@@ -1,14 +1,68 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request  do
-  describe "GET /users" do
+RSpec.describe "Users", type: :request do
+  describe "GET /admin/users" do
     before do
-        sign_in_as_a_valid_user
+      sign_in_as_a_valid_user
     end
 
-    it "works! (now write some real specs)" do
+    it "renders the page" do
       get admin_users_path
       expect(response).to have_http_status(200)
+    end
+
+    it "switches to english when locale=en" do
+      get admin_users_path(locale: :en)
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("Logout")
+      expect(response.body).to include("/session?locale=en")
+    end
+
+    it "falls back to default locale when locale is invalid" do
+      get admin_users_path(locale: :es)
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("Sair")
+      expect(response.body).to include("/session?locale=pt-br")
+    end
+  end
+
+  describe "PATCH /admin/users/:id" do
+    let!(:auth_user) { create(:user, password: '123', password_confirmation: '123') }
+    let!(:target_user) { create(:user, password: 'old-pass-123', password_confirmation: 'old-pass-123') }
+
+    before do
+      sign_in(auth_user)
+    end
+
+    it "keeps the current password when password fields are blank" do
+      old_digest = target_user.password_digest
+
+      patch admin_user_path(target_user), params: {
+        user: {
+          email_address: target_user.email_address,
+          password: '',
+          password_confirmation: ''
+        }
+      }
+
+      expect(response).to have_http_status(302)
+      expect(target_user.reload.password_digest).to eq(old_digest)
+      expect(User.authenticate_by(email_address: target_user.email_address, password: 'old-pass-123')).to eq(target_user)
+    end
+
+    it "updates the password when password and confirmation are provided" do
+      patch admin_user_path(target_user), params: {
+        user: {
+          email_address: target_user.email_address,
+          password: 'new-pass-123',
+          password_confirmation: 'new-pass-123'
+        }
+      }
+
+      expect(response).to have_http_status(302)
+      expect(User.authenticate_by(email_address: target_user.email_address, password: 'new-pass-123')).to eq(target_user.reload)
     end
   end
 end

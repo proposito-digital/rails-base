@@ -1,18 +1,31 @@
-<div id="language_select" class="hs-dropdown relative inline-flex [--placement:bottom-right]">
-  <button id="language-dropdown"
+<div id="language_select" class="hs-dropdown [--placement:bottom-right] relative hidden md:inline-flex">
+  <button id="hs-dropdown-language"
           type="button"
-          class="hs-dropdown-toggle inline-flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white">
+          class="hs-dropdown-toggle inline-flex items-center gap-x-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-hidden"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-label="Idioma">
+    <span class="flag-icon <%= get_locale_flag_icon(locale) %>"></span>
     <span><%= get_language_name locale %></span>
-    <i class="bi bi-chevron-down text-xs"></i>
+    <%= ui_icon("chevron-down", classes: "size-4 text-slate-500") %>
   </button>
 
-  <div class="hs-dropdown-menu absolute right-0 z-20 mt-2 hidden min-w-44 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg">
-    <% I18n.available_locales.each do |available_locale| %>
-      <%= link_to url_for(locale: available_locale),
-        class: "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition #{locale == available_locale ? 'bg-slate-100 font-medium text-slate-900' : 'text-slate-700 hover:bg-slate-100'}" do %>
-        <span class="flag-icon <%= get_locale_flag_icon available_locale %>"></span>
-        <span><%= get_language_name available_locale %></span>
+  <div class="hs-dropdown-menu absolute right-0 z-50 mt-2 hidden min-w-48 rounded-lg border border-slate-200 bg-white shadow-md"
+       role="menu"
+       aria-orientation="vertical"
+       aria-labelledby="hs-dropdown-language">
+    <div class="border-b border-slate-100 px-3 py-2 text-xs font-medium text-slate-500">
+      Idioma
+    </div>
+
+    <div class="space-y-0.5 p-1.5">
+      <% I18n.available_locales.each do |available_locale| %>
+        <%= link_to url_for(locale: available_locale),
+          class: "hs-dropdown-close flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition #{locale == available_locale ? 'bg-slate-100 font-medium text-slate-900' : 'text-slate-700 hover:bg-slate-100'}" do %>
+          <span class="flag-icon <%= get_locale_flag_icon available_locale %>"></span>
+          <span><%= get_language_name available_locale %></span>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>

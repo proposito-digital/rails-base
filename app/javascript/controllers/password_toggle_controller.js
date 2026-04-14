@@ -1,19 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "icon"]
+  static targets = ["input", "showIcon", "hideIcon"]
 
   toggle() {
-    if (!this.hasInputTarget || !this.hasIconTarget) return
+    if (!this.hasInputTarget) return
 
-    const hidden = this.inputTarget.type === "password"
-    this.inputTarget.type = hidden ? "text" : "password"
+    const passwordHidden = this.inputTarget.type === "password"
+    this.inputTarget.type = passwordHidden ? "text" : "password"
 
-    this.iconTarget.classList.toggle("bi-eye", !hidden)
-    this.iconTarget.classList.toggle("bi-eye-slash", hidden)
+    if (this.hasShowIconTarget) {
+      this.showIconTarget.classList.toggle("hidden", passwordHidden)
+    }
+
+    if (this.hasHideIconTarget) {
+      this.hideIconTarget.classList.toggle("hidden", !passwordHidden)
+    }
 
     this.element
       .querySelector("button")
-      ?.setAttribute("aria-label", hidden ? "Ocultar senha" : "Mostrar senha")
+      ?.setAttribute("aria-label", passwordHidden ? "Ocultar senha" : "Mostrar senha")
   }
 }

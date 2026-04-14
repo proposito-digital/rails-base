@@ -1,8 +1,7 @@
-<div avatar>
-    <% if Current.user.methods.include? :avatar %>
-        <%= image_tag Current.user.avatar.variant(resize_to_limit: [100, 100]), class: 'image' %>
-    <% else %>
-        <i class="bi bi-person-fill default-image"></i>
-    <% end %>
+<div avatar class="admin-avatar">
+  <% if Current.user.respond_to?(:avatar) && Current.user.avatar.respond_to?(:attached?) && Current.user.avatar.attached? %>
+    <%= image_tag Current.user.avatar.variant(resize_to_limit: [100, 100]), class: 'image', alt: Current.user.email_address %>
+  <% else %>
+    <span class="default-image"><%= Current.user.email_address.to_s.first&.upcase || "U" %></span>
+  <% end %>
 </div>
-

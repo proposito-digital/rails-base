@@ -86,9 +86,9 @@ A utility-first CSS framework for quickly building modern interfaces directly in
 
 A Tailwind CSS component library used in this project for interactive UI patterns like dropdowns, collapse and overlays, initialized through Importmap.
 
-## Bootstrap Icons 1.13.1 https://icons.getbootstrap.com/
+## SVG Icons (ui_icon helper)
 
-Free, high quality, open source icon library with over 1,600 icons. Include them anyway you like—SVGs, SVG sprite, or web fonts.
+Icons are rendered with the `ui_icon` helper in Rails views, keeping the stack focused on Tailwind + Preline without external icon-font dependencies.
 
 # How to use the project
 ## How to Update dependencies
@@ -165,7 +165,7 @@ end
 # app/controllers/concerns/sidebar_concerns.rb
 {
   name: 'Cachorros',
-  icon: 'bi bi-house-heart',
+  icon: 'paw',
   policy: :dog,
   url: { controller: 'dogs', action: 'index' }
 }

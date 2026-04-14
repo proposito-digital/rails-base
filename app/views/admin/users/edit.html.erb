@@ -1,0 +1,52 @@
+<% content_for :stylesheet do %>
+  <%#= stylesheet_link_tag 'edit' %>
+<% end %>
+
+<div class="w-full space-y-4">
+  <%= link_to instances_index_path, class: "inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900" do %>
+    <%= ui_icon("chevron-left", classes: "size-4") %>
+    <%= translate_view_shared("back") %>
+  <% end %>
+
+  <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <h3 class="text-lg font-semibold text-slate-800"><%= "#{model_singular_translation} - #{@instance.id}" %></h3>
+      <%= link_to translate_view_shared("show"), instance_show_path(@instance), class: "btn-secondary" %>
+    </div>
+
+    <%= form_for @instance, url: instance_update_path(@instance), method: 'patch', html: { novalidate: true } do |f| %>
+      <%= render partial: 'admin/base/form_errors' %>
+
+      <div class="mt-4 grid grid-cols-1 gap-4">
+        <div>
+          <%= f.label :email_address, attribute_translation(model_singular_name_to_translate(@instance), :email_address), class: 'form-label' %>
+          <%= f.email_field :email_address, class: 'form-control', id: model_field_id(@instance, :email_address) %>
+        </div>
+
+        <div>
+          <%= f.label :password, attribute_translation(model_singular_name_to_translate(@instance), :password), class: 'form-label' %>
+          <%= f.password_field :password,
+            class: 'form-control',
+            id: model_field_id(@instance, :password),
+            autocomplete: 'new-password',
+            placeholder: translate_view_edit('password_placeholder') %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, attribute_translation(model_singular_name_to_translate(@instance), :password_confirmation), class: 'form-label' %>
+          <%= f.password_field :password_confirmation,
+            class: 'form-control',
+            id: model_field_id(@instance, :password_confirmation),
+            autocomplete: 'new-password',
+            placeholder: translate_view_edit('password_confirmation_placeholder') %>
+          <p class="mt-2 text-xs text-slate-500"><%= translate_view_edit('password_hint') %></p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap justify-end gap-2">
+        <%= link_to translate_view_shared("cancel"), instances_index_path, class: "btn-secondary" %>
+        <%= f.submit translate_view_shared("save"), class: "btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

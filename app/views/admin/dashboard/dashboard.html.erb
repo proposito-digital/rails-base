@@ -2,18 +2,20 @@
   <%#= stylesheet_link_tag 'admin/dashboard' %>
 <% end %>
 
-<div class="rounded-2xl border border-slate-200 bg-white px-6 py-8 text-center shadow-sm">
-  <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'dashboard-logo', class: 'mx-auto mb-4 w-48 md:w-56' %>
-  <h1 class="text-3xl font-bold text-slate-800">Rails Base</h1>
+<div class="w-full space-y-6 py-8">
+  <div class="rounded-2xl border border-slate-200 bg-white px-6 py-8 text-center shadow-sm">
+    <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'dashboard-logo', class: 'mx-auto mb-4 w-48 md:w-56' %>
+    <h1 class="text-3xl font-bold text-slate-800">Rails Base</h1>
 
-  <div class="mx-auto mt-4 max-w-2xl">
-    <p class="text-slate-600">
-      <span class="font-semibold text-slate-800"><%= Current.user.email_address %></span>, Bem-vindo ao [Rails Base]
-    </p>
+    <div class="mx-auto mt-4 max-w-2xl">
+      <p class="text-slate-600">
+        <span class="font-semibold text-slate-800"><%= Current.user.email_address %></span>, Bem-vindo ao [Rails Base]
+      </p>
 
-    <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
-      <button type="button" class="btn-secondary">Secondary</button>
-      <button type="button" class="btn-primary">Primary button</button>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+        <button type="button" class="btn-secondary">Secondary</button>
+        <button type="button" class="btn-primary">Primary button</button>
+      </div>
     </div>
   </div>
 </div>
