@@ -19,7 +19,7 @@ module ApplicationHelper
   end
 
   def app_version
-    file = File.read("VERSION") + Rails.env[0, 3]
+    File.read("VERSION").strip + Rails.env[0, 3]
   end
 
   def action_button(href: nil, style: nil, data_placement: "top", instance: nil, action: nil, title: nil, data_method: nil, icon: nil, context_instance: nil)
