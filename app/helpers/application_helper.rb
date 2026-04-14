@@ -135,25 +135,30 @@ module ApplicationHelper
 
   def normalize_icon_name(name)
     key = name.to_s.strip.tr("_", "-")
+    key = key.delete_prefix("bi-")
 
     {
       "box-arrow-right" => "log-out",
-      "house-door" => "home",
+      "house-door" => "house",
+      "home" => "house",
       "person" => "user",
       "eye-slash" => "eye-off",
       "x-lg" => "x",
-      "dog" => "paw"
+      "dog" => "paw-print",
+      "paw" => "paw-print",
+      "pencil-square" => "square-pen",
+      "receipt" => "receipt-text"
     }.fetch(key, key.presence || "circle")
   end
 
   def icon_paths_for(name)
     case name
     when "activity"
-      [ tag.path(d: "M22 12h-4l-3 9-6-18-3 9H2") ]
+      [ tag.path(d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2") ]
     when "bell"
       [
-        tag.path(d: "M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .53-.21 1.04-.59 1.41L4 17h5"),
-        tag.path(d: "M9 17a3 3 0 0 0 6 0")
+        tag.path(d: "M10.268 21a2 2 0 0 0 3.464 0"),
+        tag.path(d: "M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326")
       ]
     when "chevron-down"
       [ tag.path(d: "m6 9 6 6 6-6") ]
@@ -165,76 +170,72 @@ module ApplicationHelper
       [ tag.path(d: "m18 15-6-6-6 6") ]
     when "eye"
       [
-        tag.path(d: "M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7S3.732 16.057 2.458 12Z"),
+        tag.path(d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"),
         tag.circle(cx: "12", cy: "12", r: "3")
       ]
     when "eye-off"
       [
-        tag.path(d: "m3 3 18 18"),
-        tag.path(d: "M10.73 5.08A10.43 10.43 0 0 1 12 5c4.48 0 8.27 2.94 9.54 7a10.6 10.6 0 0 1-2.35 3.95"),
-        tag.path(d: "M6.61 6.62A10.42 10.42 0 0 0 2.46 12C3.73 16.06 7.52 19 12 19c1.54 0 3-.35 4.3-.97"),
-        tag.path(d: "M9.88 9.88A3 3 0 0 0 14.12 14.12")
+        tag.path(d: "M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"),
+        tag.path(d: "M14.084 14.158a3 3 0 0 1-4.242-4.242"),
+        tag.path(d: "M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"),
+        tag.path(d: "m2 2 20 20")
       ]
-    when "home"
+    when "house"
       [
-        tag.path(d: "M3 10.5 12 3l9 7.5"),
-        tag.path(d: "M5 9.5V21h14V9.5")
+        tag.path(d: "M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"),
+        tag.path(d: "M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z")
       ]
     when "key"
       [
-        tag.circle(cx: "7.5", cy: "15.5", r: "2.5"),
-        tag.path(d: "M10 13l10-10"),
-        tag.path(d: "M17 6l3 3"),
-        tag.path(d: "M14 9l3 3")
+        tag.path(d: "m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"),
+        tag.path(d: "m21 2-9.6 9.6"),
+        tag.circle(cx: "7.5", cy: "15.5", r: "5.5")
       ]
     when "log-out"
       [
-        tag.path(d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"),
-        tag.path(d: "M16 17l5-5-5-5"),
-        tag.path(d: "M21 12H9")
+        tag.path(d: "m16 17 5-5-5-5"),
+        tag.path(d: "M21 12H9"),
+        tag.path(d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4")
       ]
-    when "paw"
+    when "paw-print"
       [
-        tag.path(d: "M4.5 9.5c1.38 0 2.5-1.34 2.5-3s-1.12-3-2.5-3S2 4.84 2 6.5s1.12 3 2.5 3Z"),
-        tag.path(d: "M19.5 9.5c1.38 0 2.5-1.34 2.5-3s-1.12-3-2.5-3-2.5 1.34-2.5 3 1.12 3 2.5 3Z"),
-        tag.path(d: "M8.5 13.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2Z"),
-        tag.path(d: "M15.5 13.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2Z"),
-        tag.path(d: "M12 21c-3 0-5.5-2.5-5.5-4.5 0-2 1.8-3.5 3.5-3.5 1 0 2 .5 2 .5s1-.5 2-.5c1.7 0 3.5 1.5 3.5 3.5S15 21 12 21Z")
+        tag.circle(cx: "11", cy: "4", r: "2"),
+        tag.circle(cx: "18", cy: "8", r: "2"),
+        tag.circle(cx: "20", cy: "16", r: "2"),
+        tag.path(d: "M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z")
       ]
-    when "pencil-square"
+    when "square-pen"
       [
-        tag.path(d: "M12 20h9"),
-        tag.path(d: "M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z")
+        tag.path(d: "M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"),
+        tag.path(d: "M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z")
       ]
     when "plus"
       [
-        tag.path(d: "M12 5v14"),
-        tag.path(d: "M5 12h14")
+        tag.path(d: "M5 12h14"),
+        tag.path(d: "M12 5v14")
       ]
-    when "receipt"
+    when "receipt-text"
       [
-        tag.path(d: "M4 2h16v20l-3-2-2 2-2-2-2 2-2-2-2 2-3-2z"),
-        tag.path(d: "M8 7h8"),
-        tag.path(d: "M8 11h8"),
-        tag.path(d: "M8 15h5")
+        tag.path(d: "M13 16H8"),
+        tag.path(d: "M14 8H8"),
+        tag.path(d: "M16 12H8"),
+        tag.path(d: "M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z")
       ]
     when "search"
       [
-        tag.circle(cx: "11", cy: "11", r: "8"),
-        tag.path(d: "m21 21-4.3-4.3")
+        tag.path(d: "m21 21-4.34-4.34"),
+        tag.circle(cx: "11", cy: "11", r: "8")
       ]
     when "trash"
       [
+        tag.path(d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"),
         tag.path(d: "M3 6h18"),
-        tag.path(d: "M8 6V4h8v2"),
-        tag.path(d: "M19 6l-1 14H6L5 6"),
-        tag.path(d: "M10 11v6"),
-        tag.path(d: "M14 11v6")
+        tag.path(d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2")
       ]
     when "user"
       [
-        tag.circle(cx: "12", cy: "7", r: "4"),
-        tag.path(d: "M4 21a8 8 0 0 1 16 0")
+        tag.path(d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"),
+        tag.circle(cx: "12", cy: "7", r: "4")
       ]
     when "x"
       [
@@ -242,7 +243,7 @@ module ApplicationHelper
         tag.path(d: "m6 6 12 12")
       ]
     else
-      [ tag.circle(cx: "12", cy: "12", r: "9") ]
+      [ tag.circle(cx: "12", cy: "12", r: "10") ]
     end
   end
 end
