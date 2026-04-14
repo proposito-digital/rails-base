@@ -365,6 +365,9 @@ pt-br:
         invite: "Convidar"
         copy: 'Copiar'
         actions: 'Ações'
+        results: 'resultados'
+        prev: 'Anterior'
+        next: 'Próximo'
         yes_display: 'Sim'
         no_display: 'Não'
         date_begin_placeholder: 'Data inicial'
@@ -394,6 +397,7 @@ pt-br:
           no_instances: Ainda não existem %{model_name} registrados
           new_instance: Clique abaixo para criar um novo %{model_name}
           new_button: "Criar %{model_name}"
+          description: "Crie %{model_name}, edite, baixe e muito mais."
         destroy:
           title_modal: "Remover %{model_name}"
           subtitle_modal: Deseja realmente remover o(a) %{model_name}?

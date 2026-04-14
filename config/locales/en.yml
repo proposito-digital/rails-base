@@ -377,6 +377,9 @@ en:
         invite: "Invite"
         copy: 'Copy'
         actions: 'Actions'
+        results: 'results'
+        prev: 'Prev'
+        next: 'Next'
         yes_display: 'Yes'
         no_display: 'No'
         date_begin_placeholder: 'Date begin'
@@ -404,6 +407,7 @@ en:
           no_instances: Don't exist yet %{model_name} registered
           new_instance: Click below to create new %{model_name}
           new_button: "Create %{model_name}"
+          description: "Create %{model_name}, edit, download and more."
         destroy:
           title_modal: "Remove %{model_name}"
           subtitle_modal: Do you really want to remove %{model_name}?
