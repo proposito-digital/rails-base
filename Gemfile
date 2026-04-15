@@ -6,6 +6,8 @@ source "https://rubygems.org"
 # Rails Base GEMS
 # Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails", "~> 4.4"
+# Agnostic icon library for rails [https://github.com/Rails-Designer/rails_icons]
+gem "rails_icons", "~> 1.8"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
 gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
@@ -96,4 +98,3 @@ group :test do
   gem "capybara", "3.40.0"
   gem "selenium-webdriver", "4.41.0"
 end
-
