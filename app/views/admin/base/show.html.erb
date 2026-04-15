@@ -1,6 +1,10 @@
+<% content_for :stylesheet do %>
+  <%#= stylesheet_link_tag 'show' %>
+<% end %>
+
 <div class="w-full space-y-4">
   <%= link_to instances_index_path, class: "inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900" do %>
-    <%= ui_icon("chevron-left", classes: "size-4") %>
+    <%= icon("chevron-left", class: "size-4") %>
     <%= translate_view_shared("back") %>
   <% end %>
 
@@ -8,7 +12,7 @@
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <h3 class="text-lg font-semibold text-slate-800"><%= model_singular_translation %> - <%= @instance.id %></h3>
       <%= link_to instance_edit_path(@instance), class: 'btn-primary' do %>
-        <%= ui_icon("square-pen", classes: "mr-2 size-4") %><%= translate_view_shared("edit") %>
+        <%= icon("square-pen", class: "mr-2 size-4") %><%= translate_view_shared("edit") %>
       <% end %>
     </div>
 
