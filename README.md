@@ -86,9 +86,46 @@ A utility-first CSS framework for quickly building modern interfaces directly in
 
 A Tailwind CSS component library used in this project for interactive UI patterns like dropdowns, collapse and overlays, initialized through Importmap.
 
-## SVG Icons (ui_icon helper)
+## SVG Icons (rails_icons + Lucide)
 
-Icons are rendered with the `ui_icon` helper in Rails views using Lucide SVG paths (https://lucide.dev/icons/), keeping the stack focused on Tailwind + Preline without external icon-font dependencies.
+This project uses [`rails_icons`](https://github.com/Rails-Designer/rails_icons) with `lucide` as the default icon library.
+
+Use icons in views with:
+
+~~~erb
+<%= icon "search", class: "size-4" %>
+~~~
+
+### How to add a new icon
+
+1. Choose an icon name from https://lucide.dev/icons (example: `circle-check`).
+2. Download only that SVG into the project icon folder:
+
+~~~bash
+ICON=circle-check
+curl -Ls "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/${ICON}.svg" \\
+  -o "app/assets/svg/icons/lucide/outline/${ICON}.svg"
+~~~
+
+3. Use it in ERB:
+
+~~~erb
+<%= icon "circle-check", class: "size-4" %>
+~~~
+
+### Notes
+
+- The icon preview route is available at `/rails_icons` and is configured by:
+
+~~~ruby
+# config/routes.rb
+mount RailsIcons::Engine, at: "/rails_icons"
+~~~
+- To sync the full Lucide library again (1500+ files), run:
+
+~~~bash
+bin/rails generate rails_icons:sync --library=lucide
+~~~
 
 # How to use the project
 ## How to Update dependencies
