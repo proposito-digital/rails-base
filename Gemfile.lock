@@ -475,7 +475,7 @@ DEPENDENCIES
   pundit (= 2.5.2)
   pundit-matchers (= 4.0.0)
   rails (= 8.1.2)
-  rails_icons (~> 1.8)
+  rails_icons (= 1.8.0)
   rspec-rails (= 8.0.3)
   rubocop-rails-omakase
   selenium-webdriver (= 4.41.0)
@@ -486,7 +486,7 @@ DEPENDENCIES
   solid_queue
   sqlite3 (= 2.9.0)
   stimulus-rails
-  tailwindcss-rails (~> 4.4)
+  tailwindcss-rails (= 4.4.0)
   thruster
   turbo-rails
   tzinfo-data

@@ -5,9 +5,9 @@ source "https://rubygems.org"
 
 # Rails Base GEMS
 # Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
-gem "tailwindcss-rails", "~> 4.4"
+gem "tailwindcss-rails", "4.4.0"
 # Agnostic icon library for rails [https://github.com/Rails-Designer/rails_icons]
-gem "rails_icons", "~> 1.8"
+gem "rails_icons", "1.8.0"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
 gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
