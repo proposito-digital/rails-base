@@ -9,7 +9,7 @@ module SidebarConcerns
       @menu = [
         {
           name: translate_view_application_shared("sidebar_menu.home"),
-          icon: "home",
+          icon: "house",
           policy: :dashboard,
           url: { controller: "dashboard", action: "index" },
           active: controller_path == "admin/dashboard"
@@ -23,7 +23,7 @@ module SidebarConcerns
         },
         {
           name: t("dogs.plural"),
-          icon: "paw",
+          icon: "paw-print",
           policy: :dog,
           url: { controller: "dogs", action: "index" },
           active: controller_path == "admin/dogs"
@@ -31,7 +31,7 @@ module SidebarConcerns
         # Submenu Example
         # {
         #   name: translate_view_application_shared("sidebar_menu.home"),
-        #   icon: "home",
+        #   icon: "house",
         #   policy: :dashboard,
         #   url: { controller: "dashboard", action: "index" },
         #   id_collapse: "tenant-collapse",

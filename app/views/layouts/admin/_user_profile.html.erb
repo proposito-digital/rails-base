@@ -23,21 +23,21 @@
     <div class="space-y-0.5 p-1.5">
       <a class="hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:outline-hidden"
          href="<%= edit_admin_user_path(Current.user.id) %>">
-        <%= ui_icon("user", classes: "size-4") %>
+        <%= icon("user", class: "size-4") %>
         <%= t("views.application.shared.user_profile.edit_profile") %>
       </a>
 
       <button type="button"
               class="hs-dropdown-close flex w-full items-center gap-x-2 rounded-lg px-3 py-2 text-start text-sm text-slate-700 hover:bg-slate-100 focus:outline-hidden"
               data-hs-overlay="#modal-change-password">
-        <%= ui_icon("key", classes: "size-4") %>
+        <%= icon("key", class: "size-4") %>
         <%= t("views.application.shared.user_profile.change_password") %>
       </button>
 
       <%= link_to session_path,
         data: { turbo_method: :delete },
         class: "hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 focus:outline-hidden" do %>
-        <%= ui_icon("log-out", classes: "size-4") %>
+        <%= icon("log-out", class: "size-4") %>
         <%= t("views.application.shared.user_profile.exit") %>
       <% end %>
     </div>

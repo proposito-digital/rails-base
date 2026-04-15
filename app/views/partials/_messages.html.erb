@@ -5,7 +5,7 @@
       <div id="<%= flash_id %>" class="flex items-start justify-between rounded-xl border px-4 py-3 text-sm <%= flash_banner_class(type) %>" role="alert">
         <div class="pr-2"><%= message %></div>
         <button type="button" class="flash-close" data-hs-remove-element="#<%= flash_id %>">
-          <%= ui_icon("x", classes: "size-3") %>
+          <%= icon("x", class: "size-3") %>
         </button>
       </div>
     <% end %>
@@ -21,7 +21,7 @@
       <% end %>
     </ul>
     <button type="button" class="flash-close" data-hs-remove-element="#<%= error_id %>">
-      <%= ui_icon("x", classes: "size-3") %>
+      <%= icon("x", class: "size-3") %>
     </button>
   </div>
 <% end %>

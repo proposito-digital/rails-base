@@ -16,7 +16,7 @@
       <% if has_instances %>
         <a class="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)]"
            href="<%= instance_new_path %>">
-          <%= ui_icon("plus", classes: "size-4") %>
+          <%= icon("plus", class: "size-4") %>
           <%= translate_view_shared("add", model_name: model_singular_translation) %>
         </a>
       <% end %>
@@ -37,7 +37,7 @@
           <button type="submit"
                   class="inline-flex h-[42px] w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100"
                   aria-label="Search">
-            <%= ui_icon("search", classes: "size-4") %>
+            <%= icon("search", class: "size-4") %>
           </button>
         </form>
       </div>
@@ -84,7 +84,7 @@
                 <td class="px-6 py-3">
                   <div class="flex items-center justify-end gap-1">
                     <%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon: "eye", title: translate_view_shared("show") %>
-                    <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon: "pencil-square", title: translate_view_shared("edit") %>
+                    <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon: "square-pen", title: translate_view_shared("edit") %>
                     <%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon: "trash", title: translate_view_shared("remove"), modal_id: "modal_destroy_#{instance.id}" %>
                   </div>
                 </td>
@@ -105,7 +105,7 @@
     <% else %>
       <div class="mx-auto flex min-h-[26rem] w-full max-w-md flex-col justify-center px-6 py-8">
         <div class="flex size-11 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
-          <%= ui_icon("receipt", classes: "size-6") %>
+          <%= icon("receipt-text", class: "size-6") %>
         </div>
 
         <h2 class="mt-5 text-lg font-semibold text-slate-900">
@@ -118,7 +118,7 @@
         <div class="mt-5">
           <a class="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)]"
              href="<%= instance_new_path %>">
-            <%= ui_icon("plus", classes: "size-4") %>
+            <%= icon("plus", class: "size-4") %>
             <%= empty_state_button_label %>
           </a>
         </div>
@@ -131,13 +131,13 @@
 
         <div class="inline-flex gap-2">
           <button type="button" class="btn-secondary gap-1 opacity-60" disabled>
-            <%= ui_icon("chevron-left", classes: "size-4") %>
+            <%= icon("chevron-left", class: "size-4") %>
             <%= translate_view_shared("prev") %>
           </button>
 
           <button type="button" class="btn-secondary gap-1 opacity-60" disabled>
             <%= translate_view_shared("next") %>
-            <%= ui_icon("chevron-right", classes: "size-4") %>
+            <%= icon("chevron-right", class: "size-4") %>
           </button>
         </div>
       </div>
