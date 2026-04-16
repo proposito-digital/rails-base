@@ -11,6 +11,10 @@ class Admin::UsersController < Admin::BaseController
     [ "users.email_address" ]
   end
 
+  def sort_fields
+    [ "users.email_address" ]
+  end
+
   def instance_params
     safe_params = super
 

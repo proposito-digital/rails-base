@@ -9,6 +9,8 @@ class Admin::BaseController < ApplicationController
   before_action :set_model_class
   before_action :set_instance_and_authorize, only: %i[ show edit update destroy ]
 
+  helper_method :filter_sort_column, :filter_sort_direction, :sortable_column?
+
   def pundit_user
     true
   end
@@ -17,6 +19,7 @@ class Admin::BaseController < ApplicationController
   def index
     scope = @model.all
     scope = apply_term_filter(scope)
+    scope = apply_sort(scope)
 
     @pagy, @instances = pagy(scope, limit: 10)
     authorize @instances, policy_class: DogPolicy
@@ -142,6 +145,66 @@ class Admin::BaseController < ApplicationController
 
     def filter_fields
       default_filter_columns
+    end
+
+    def apply_sort(scope)
+      quoted_table = @model.connection.quote_table_name(@model.table_name)
+      quoted_column = @model.connection.quote_column_name(filter_sort_column)
+      sort_direction = filter_sort_direction.upcase
+
+      scope.reorder(Arel.sql("#{quoted_table}.#{quoted_column} #{sort_direction}"))
+    end
+
+    def sortable_column?(column_name)
+      normalized_sort_columns.include?(column_name.to_s)
+    end
+
+    def normalized_sort_columns
+      @normalized_sort_columns ||= begin
+        columns = sort_fields.map { |field| field.to_s.split(".").last }
+        columns = columns.select { |column| @model.column_names.include?(column) }
+        columns = columns.uniq
+
+        columns.presence || default_sort_fields
+      end
+    end
+
+    def default_sort_fields
+      @model.column_names - %w[ id deleted_at password_digest ]
+    end
+
+    def sort_fields
+      default_sort_fields
+    end
+
+    def filter_params
+      params.permit(:term, :page, :sort_column, :sort_direction)
+    end
+
+    def filter_sort_column
+      requested_column = filter_params[:sort_column].to_s
+      normalized_column = requested_column.split(".").last
+
+      return normalized_column if normalized_sort_columns.include?(normalized_column)
+
+      default_filter_sort_column
+    end
+
+    def filter_sort_direction
+      direction = filter_params[:sort_direction].to_s.downcase
+      return direction if %w[ asc desc ].include?(direction)
+
+      default_filter_sort_direction
+    end
+
+    def default_filter_sort_column
+      return "created_at" if normalized_sort_columns.include?("created_at")
+
+      normalized_sort_columns.first || @model.primary_key.to_s
+    end
+
+    def default_filter_sort_direction
+      "desc"
     end
 
     def default_param_required
