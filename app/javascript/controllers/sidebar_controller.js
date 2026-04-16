@@ -4,6 +4,8 @@ export default class extends Controller {
   static targets = ["toggleButton", "iconExpand", "iconCollapse"]
 
   connect() {
+    this.storageKey = "admin.sidebar.minified"
+    this.restorePersistedState()
     this.syncState()
   }
 
@@ -45,6 +47,7 @@ export default class extends Controller {
     }
 
     this.syncToggleButton(minified)
+    this.persistState(minified)
   }
 
   syncToggleButton(minified = this.isMinified()) {
@@ -55,5 +58,31 @@ export default class extends Controller {
       "aria-label",
       minified ? "Expandir menu lateral" : "Recolher menu lateral"
     )
+  }
+
+  restorePersistedState() {
+    const persistedMinified = this.readPersistedState()
+
+    if (typeof window.HSOverlay !== "undefined") {
+      window.HSOverlay.minify(this.element, persistedMinified)
+    }
+
+    this.element.classList.toggle("minified", persistedMinified)
+  }
+
+  readPersistedState() {
+    try {
+      return window.localStorage.getItem(this.storageKey) === "1"
+    } catch (_error) {
+      return false
+    }
+  }
+
+  persistState(minified) {
+    try {
+      window.localStorage.setItem(this.storageKey, minified ? "1" : "0")
+    } catch (_error) {
+      // Ignore storage errors (private mode, blocked storage, etc.)
+    }
   }
 }
