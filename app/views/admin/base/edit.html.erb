@@ -27,7 +27,7 @@
       </div>
 
       <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-        <%= link_to translate_view_shared("show"), instance_show_path(@instance), class: "btn-secondary w-full sm:w-auto" %>
+        <%= link_to translate_view_shared("cancel"), instances_index_path, class: "btn-secondary w-full sm:w-auto" %>
         <%= f.submit translate_view_shared("save"), class: "btn-primary w-full sm:w-auto" %>
       </div>
     <% end %>
