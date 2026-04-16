@@ -5,52 +5,79 @@ export default class extends Controller {
 
   connect() {
     this.storageKey = "admin.sidebar.minified"
-    this.restorePersistedState()
+    this.preferredMinified = this.readPersistedState()
+    this.desktopMediaQuery = window.matchMedia("(min-width: 1024px)")
+    this.handleBreakpointChange = () => this.syncState()
+
+    if (this.desktopMediaQuery.addEventListener) {
+      this.desktopMediaQuery.addEventListener("change", this.handleBreakpointChange)
+    } else {
+      this.desktopMediaQuery.addListener(this.handleBreakpointChange)
+    }
+
     this.syncState()
+  }
+
+  disconnect() {
+    if (!this.desktopMediaQuery || !this.handleBreakpointChange) return
+
+    if (this.desktopMediaQuery.removeEventListener) {
+      this.desktopMediaQuery.removeEventListener("change", this.handleBreakpointChange)
+    } else {
+      this.desktopMediaQuery.removeListener(this.handleBreakpointChange)
+    }
   }
 
   toggle(event) {
     if (event) event.preventDefault()
 
-    const nextMinified = !this.isMinified()
-
-    if (typeof window.HSOverlay !== "undefined") {
-      window.HSOverlay.minify(this.element, nextMinified)
-    }
-
-    this.element.classList.toggle("minified", nextMinified)
+    this.preferredMinified = !this.preferredMinified
+    this.persistState(this.preferredMinified)
     this.syncState()
   }
 
-  isMinified() {
-    return this.element.classList.contains("minified")
+  isDesktop() {
+    return this.desktopMediaQuery ? this.desktopMediaQuery.matches : window.matchMedia("(min-width: 1024px)").matches
   }
 
   syncState() {
-    const minified = this.isMinified()
+    const desktop = this.isDesktop()
+    const shouldApplyMinifiedLayout = this.preferredMinified && desktop
 
-    this.element.classList.toggle("w-16", minified)
-    this.element.classList.toggle("w-64", !minified)
-    document.body.classList.toggle("hs-overlay-minified", minified)
+    this.element.classList.toggle("minified", shouldApplyMinifiedLayout)
+
+    // Keep desktop width transitions responsive-aware to avoid fighting base mobile width classes.
+    this.element.classList.toggle("lg:w-16", shouldApplyMinifiedLayout)
+    this.element.classList.toggle("lg:w-64", desktop && !shouldApplyMinifiedLayout)
+    this.element.classList.remove("w-16", "w-64")
+
+    if (!desktop) {
+      this.element.classList.remove("lg:w-16", "lg:w-64")
+    }
+
+    if (typeof window.HSOverlay !== "undefined") {
+      window.HSOverlay.minify(this.element, shouldApplyMinifiedLayout)
+    }
+
+    document.body.classList.toggle("hs-overlay-minified", shouldApplyMinifiedLayout)
 
     const adminShell = document.getElementById("admin-shell")
     if (adminShell) {
-      adminShell.classList.toggle("admin-shell-sidebar-minified", minified)
+      adminShell.classList.toggle("admin-shell-sidebar-minified", shouldApplyMinifiedLayout)
     }
 
     if (this.hasIconExpandTarget) {
-      this.iconExpandTarget.classList.toggle("hidden", !minified)
+      this.iconExpandTarget.classList.toggle("hidden", !this.preferredMinified)
     }
 
     if (this.hasIconCollapseTarget) {
-      this.iconCollapseTarget.classList.toggle("hidden", minified)
+      this.iconCollapseTarget.classList.toggle("hidden", this.preferredMinified)
     }
 
-    this.syncToggleButton(minified)
-    this.persistState(minified)
+    this.syncToggleButton(this.preferredMinified)
   }
 
-  syncToggleButton(minified = this.isMinified()) {
+  syncToggleButton(minified = this.preferredMinified) {
     if (!this.hasToggleButtonTarget) return
 
     this.toggleButtonTarget.setAttribute("aria-expanded", String(!minified))
@@ -58,16 +85,6 @@ export default class extends Controller {
       "aria-label",
       minified ? "Expandir menu lateral" : "Recolher menu lateral"
     )
-  }
-
-  restorePersistedState() {
-    const persistedMinified = this.readPersistedState()
-
-    if (typeof window.HSOverlay !== "undefined") {
-      window.HSOverlay.minify(this.element, persistedMinified)
-    }
-
-    this.element.classList.toggle("minified", persistedMinified)
   }
 
   readPersistedState() {
