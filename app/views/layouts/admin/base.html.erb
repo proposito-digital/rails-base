@@ -37,9 +37,9 @@
         </div>
       </div>
 
-      <%= render 'layouts/admin/sidebar' %>
+      <%= render 'layouts/admin/sidebar', menu: @menu %>
 
-      <div class="w-full lg:ps-64">
+      <div class="admin-main-content w-full transition-all duration-300">
         <div class="h-[calc(100vh-3.75rem)] overflow-y-auto p-4 sm:p-6">
           <%= render 'layouts/admin/messages' %>
 

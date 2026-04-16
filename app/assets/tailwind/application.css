@@ -115,3 +115,61 @@
   border: 1px solid #cbd5e1;
   padding: 0.25rem 0.5rem;
 }
+
+
+@layer components {
+  @media (min-width: 1024px) {
+    #admin-shell .admin-main-header,
+    #admin-shell .admin-main-content {
+      padding-inline-start: 16rem;
+    }
+
+    #admin-shell.admin-shell-sidebar-minified .admin-main-header,
+    #admin-shell.admin-shell-sidebar-minified .admin-main-content {
+      padding-inline-start: 4rem;
+    }
+
+    #admin-shell .admin-sidebar.minified {
+      @apply w-16;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-logo-full {
+      @apply hidden;
+    }
+
+    #admin-shell .admin-sidebar:not(.minified) .admin-sidebar-logo-mini {
+      @apply hidden;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-logo-mini {
+      @apply inline-flex;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-label,
+    #admin-shell .admin-sidebar.minified .admin-sidebar-caret,
+    #admin-shell .admin-sidebar.minified .admin-sidebar-submenu {
+      @apply hidden;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-item,
+    #admin-shell .admin-sidebar.minified .admin-sidebar-subitem {
+      @apply justify-center px-2;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-minifier-expand {
+      @apply block;
+    }
+
+    #admin-shell .admin-sidebar.minified .admin-sidebar-minifier-collapse {
+      @apply hidden;
+    }
+  }
+}
+
+@layer components {
+  #admin-shell .admin-sidebar.open,
+  #admin-shell .admin-sidebar.opened {
+    --tw-translate-x: 0;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}

@@ -1,19 +1,59 @@
 <div id="hs-application-sidebar"
-     class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full fixed inset-y-0 start-0 z-50 hidden h-full w-64 transform border-e border-slate-200 bg-white transition-all duration-300 lg:block lg:translate-x-0"
+     class="admin-sidebar hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full fixed inset-y-0 start-0 z-50 hidden h-full w-64 transform overflow-hidden border-e border-slate-200 bg-white transition-all duration-300 lg:block lg:translate-x-0"
      role="dialog"
      tabindex="-1"
-     aria-label="Sidebar">
+     aria-label="Sidebar"
+     data-controller="sidebar">
   <div class="relative flex h-full max-h-full flex-col">
-    <div class="flex items-center border-b border-slate-100 px-6 py-4">
-      <a href="/admin" class="inline-flex items-center" aria-label="Propósito Digital">
-        <%= image_tag 'logo-slogan.png', alt: 'Propósito Digital', class: 'h-9 w-auto object-contain' %>
+    <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+      <a href="/admin" class="inline-flex max-w-full items-center overflow-hidden" aria-label="Propósito Digital">
+        <span class="admin-sidebar-logo-full inline-flex items-center">
+          <%= image_tag 'logo-slogan.png', alt: 'Propósito Digital', class: 'h-9 w-auto object-contain' %>
+        </span>
+        <span class="admin-sidebar-logo-mini hidden size-9 items-center justify-center rounded-lg bg-slate-100 text-sm font-semibold text-slate-700">
+          PD
+        </span>
       </a>
+
+      <div class="flex items-center gap-1">
+        <button type="button"
+                class="hidden size-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:inline-flex"
+                aria-haspopup="dialog"
+                aria-expanded="true"
+                aria-controls="hs-application-sidebar"
+                aria-label="Alternar menu lateral"
+                data-action="click->sidebar#toggle"
+                data-sidebar-target="toggleButton">
+          <svg data-sidebar-target="iconExpand" class="admin-sidebar-minifier-expand hidden size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path d="m8 9 3 3-3 3"></path>
+          </svg>
+          <svg data-sidebar-target="iconCollapse" class="admin-sidebar-minifier-collapse size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path d="m10 15-3-3 3-3"></path>
+          </svg>
+          <span class="sr-only">Alternar sidebar</span>
+        </button>
+
+        <button type="button"
+                class="inline-flex size-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:hidden"
+                data-hs-overlay="#hs-application-sidebar"
+                aria-expanded="true"
+                aria-label="Fechar menu lateral">
+          <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div class="h-full overflow-y-auto p-3 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-300/80">
       <nav class="hs-accordion-group w-full" data-hs-accordion-always-open>
         <ul class="flex flex-col space-y-1">
-          <% @menu.each_with_index do |menu_item, index| %>
+          <% Array(menu).each_with_index do |menu_item, index| %>
             <% next unless policy(menu_item[:policy]).menu? %>
             <% active_menu = menu_item[:active] %>
             <% item_classes = active_menu ? 'bg-slate-100 text-slate-900' : 'text-slate-700 hover:bg-slate-100' %>
@@ -24,23 +64,23 @@
 
               <li class="hs-accordion" id="<%= accordion_id %>">
                 <button type="button"
-                        class="hs-accordion-toggle flex w-full items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-start text-sm font-medium transition <%= item_classes %>"
+                        class="admin-sidebar-item hs-accordion-toggle flex w-full items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-start text-sm font-medium transition <%= item_classes %>"
                         aria-expanded="<%= active_menu ? 'true' : 'false' %>"
                         aria-controls="<%= child_id %>">
                   <%= icon(menu_item[:icon], class: "size-4 shrink-0") %>
-                  <span class="flex-1 truncate"><%= menu_item[:name] %></span>
+                  <span class="admin-sidebar-label flex-1 truncate"><%= menu_item[:name] %></span>
 
-                  <svg class="hs-accordion-active:block ms-auto hidden size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="admin-sidebar-caret hs-accordion-active:block ms-auto hidden size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m18 15-6-6-6 6"></path>
                   </svg>
 
-                  <svg class="hs-accordion-active:hidden ms-auto block size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="admin-sidebar-caret hs-accordion-active:hidden ms-auto block size-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                 </button>
 
                 <div id="<%= child_id %>"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 <%= active_menu ? '' : 'hidden' %>"
+                     class="admin-sidebar-submenu hs-accordion-content w-full overflow-hidden transition-[height] duration-300 <%= active_menu ? '' : 'hidden' %>"
                      role="region"
                      aria-labelledby="<%= accordion_id %>">
                   <ul class="space-y-1 ps-8 pt-1">
@@ -51,9 +91,9 @@
 
                       <li>
                         <a href="<%= url_for(submenu[:url]) %>"
-                           class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm transition <%= submenu_classes %>">
+                           class="admin-sidebar-subitem flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm transition <%= submenu_classes %>">
                           <%= icon(submenu[:icon], class: "size-4 shrink-0") %>
-                          <span class="truncate"><%= submenu[:name] %></span>
+                          <span class="admin-sidebar-label truncate"><%= submenu[:name] %></span>
                         </a>
                       </li>
                     <% end %>
@@ -63,10 +103,10 @@
             <% else %>
               <li>
                 <a href="<%= url_for(menu_item[:url]) if menu_item[:url].present? %>"
-                   class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm font-medium transition <%= item_classes %>"
+                   class="admin-sidebar-item flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm font-medium transition <%= item_classes %>"
                    aria-current="<%= active_menu ? 'page' : nil %>">
                   <%= icon(menu_item[:icon], class: "size-4 shrink-0") %>
-                  <span class="truncate"><%= menu_item[:name] %></span>
+                  <span class="admin-sidebar-label truncate"><%= menu_item[:name] %></span>
                 </a>
               </li>
             <% end %>
