@@ -398,6 +398,7 @@ pt-br:
           new_instance: Clique abaixo para criar um novo %{model_name}
           new_button: "Criar %{model_name}"
           description: "Crie %{model_name}, edite, baixe e muito mais."
+          no_results_search: "Nenhum registro de %{model_name} foi encontrado com essa busca."
         destroy:
           title_modal: "Remover %{model_name}"
           subtitle_modal: Deseja realmente remover o(a) %{model_name}?
