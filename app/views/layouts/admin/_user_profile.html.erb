@@ -4,39 +4,32 @@
 <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
   <button id="hs-dropdown-account"
           type="button"
-          class="hs-dropdown-toggle size-9 inline-flex items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus:outline-hidden"
+          class="hs-dropdown-toggle inline-flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none"
           aria-haspopup="menu"
           aria-expanded="false"
           aria-label="<%= t('views.application.shared.user_profile.account_menu') %>">
     <span class="text-xs font-semibold"><%= user_initial %></span>
   </button>
 
-  <div class="hs-dropdown-menu absolute right-0 z-50 mt-2 hidden min-w-64 rounded-lg border border-slate-200 bg-white shadow-md"
+  <div class="hs-dropdown-menu absolute right-0 z-50 mt-2 hidden w-[min(18rem,calc(100vw-1rem))] rounded-xl border border-slate-200 bg-white shadow-md"
        role="menu"
        aria-orientation="vertical"
        aria-labelledby="hs-dropdown-account">
-    <div class="rounded-t-lg bg-slate-50 px-4 py-3">
+    <div class="rounded-t-xl bg-slate-50 px-4 py-3">
       <p class="text-xs text-slate-500"><%= t("views.application.shared.user_profile.signed_as") %></p>
       <p class="truncate text-sm font-medium text-slate-900"><%= user_email %></p>
     </div>
 
     <div class="space-y-0.5 p-1.5">
-      <a class="hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:outline-hidden"
+      <a class="hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-100 focus:outline-none"
          href="<%= edit_admin_user_path(Current.user.id) %>">
         <%= icon("user", class: "size-4") %>
         <%= t("views.application.shared.user_profile.edit_profile") %>
       </a>
 
-      <button type="button"
-              class="hs-dropdown-close flex w-full items-center gap-x-2 rounded-lg px-3 py-2 text-start text-sm text-slate-700 hover:bg-slate-100 focus:outline-hidden"
-              data-hs-overlay="#modal-change-password">
-        <%= icon("key", class: "size-4") %>
-        <%= t("views.application.shared.user_profile.change_password") %>
-      </button>
-
       <%= link_to session_path,
         data: { turbo_method: :delete },
-        class: "hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 focus:outline-hidden" do %>
+        class: "hs-dropdown-close flex items-center gap-x-2 rounded-lg px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 focus:outline-none" do %>
         <%= icon("log-out", class: "size-4") %>
         <%= t("views.application.shared.user_profile.exit") %>
       <% end %>

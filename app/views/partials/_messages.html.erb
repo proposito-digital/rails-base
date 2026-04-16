@@ -2,8 +2,8 @@
   <div class="mb-4 space-y-3">
     <% flash.each_with_index do |(type, message), index| %>
       <% flash_id = "flash_public_#{type}_#{index}" %>
-      <div id="<%= flash_id %>" class="flex items-start justify-between rounded-xl border px-4 py-3 text-sm <%= flash_banner_class(type) %>" role="alert">
-        <div class="pr-2"><%= message %></div>
+      <div id="<%= flash_id %>" class="flex items-start justify-between gap-2 rounded-xl border px-4 py-3 text-sm <%= flash_banner_class(type) %>" role="alert">
+        <div class="pr-1"><%= message %></div>
         <button type="button" class="flash-close" data-hs-remove-element="#<%= flash_id %>">
           <%= icon("x", class: "size-3") %>
         </button>
@@ -14,7 +14,7 @@
 
 <% if defined?(resource) && resource.errors.full_messages.size != 0 %>
   <% error_id = "flash_public_errors" %>
-  <div id="<%= error_id %>" class="mt-4 flex items-start justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+  <div id="<%= error_id %>" class="mt-4 flex items-start justify-between gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
     <ul class="list-disc pl-5">
       <% resource.errors.each do |item| %>
         <li><strong><%= item.attribute %>: </strong><%= item.message %></li>

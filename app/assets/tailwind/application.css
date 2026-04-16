@@ -50,7 +50,7 @@
   }
 
   .btn-icon {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--table-btn)] transition hover:bg-slate-100 hover:text-[var(--primary)];
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-md text-[var(--table-btn)] transition hover:bg-slate-100 hover:text-[var(--primary)];
   }
 
   .btn-icon.disabled {
@@ -62,11 +62,11 @@
   }
 
   .form-control {
-    @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20;
+    @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20;
   }
 
   .flash-close {
-    @apply ml-3 inline-flex h-6 w-6 items-center justify-center rounded-md text-current/70 hover:bg-black/5 hover:text-current;
+    @apply ml-2 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-current/70 hover:bg-black/5 hover:text-current;
   }
 }
 
@@ -78,6 +78,10 @@
 #admin-shell header a:hover,
 #admin-shell #hs-application-sidebar a:hover {
   color: inherit;
+}
+
+#admin-shell .admin-main-content {
+  overflow-x: hidden;
 }
 
 .pagy {
@@ -163,13 +167,19 @@
     #admin-shell .admin-sidebar.minified .admin-sidebar-minifier-collapse {
       @apply hidden;
     }
+
   }
 }
 
 @layer components {
-  #admin-shell .admin-sidebar.open,
-  #admin-shell .admin-sidebar.opened {
-    --tw-translate-x: 0;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
+  /* Ensure custom mobile sidebar state remains visible above backdrop. */
+  @media (max-width: 1023px) {
+    #hs-application-sidebar.mobile-sidebar-open {
+      display: block !important;
+      visibility: visible !important;
+      z-index: 60 !important;
+      --tw-translate-x: 0;
+      translate: var(--tw-translate-x) var(--tw-translate-y) !important;
+    }
   }
 }

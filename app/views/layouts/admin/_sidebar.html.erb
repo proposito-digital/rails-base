@@ -1,5 +1,5 @@
 <div id="hs-application-sidebar"
-     class="admin-sidebar hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full fixed inset-y-0 start-0 z-50 hidden h-full w-64 transform overflow-hidden border-e border-slate-200 bg-white transition-all duration-300 lg:block lg:translate-x-0"
+     class="admin-sidebar hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full fixed inset-y-0 start-0 z-50 hidden h-full w-[86vw] max-w-72 transform overflow-hidden border-e border-slate-200 bg-white transition-all duration-300 lg:block lg:w-64 lg:translate-x-0"
      role="dialog"
      tabindex="-1"
      aria-label="Sidebar"
@@ -39,7 +39,7 @@
 
         <button type="button"
                 class="inline-flex size-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:hidden"
-                data-hs-overlay="#hs-application-sidebar"
+                data-sidebar-mobile-toggle="true"
                 aria-expanded="true"
                 aria-label="Fechar menu lateral">
           <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <div class="h-full overflow-y-auto p-3 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-300/80">
+    <div class="h-full overflow-y-auto p-2.5 sm:p-3 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-300/80">
       <nav class="hs-accordion-group w-full" data-hs-accordion-always-open>
         <ul class="flex flex-col space-y-1">
           <% Array(menu).each_with_index do |menu_item, index| %>
@@ -64,7 +64,7 @@
 
               <li class="hs-accordion" id="<%= accordion_id %>">
                 <button type="button"
-                        class="admin-sidebar-item hs-accordion-toggle flex w-full items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-start text-sm font-medium transition <%= item_classes %>"
+                        class="admin-sidebar-item hs-accordion-toggle flex w-full items-center gap-x-3.5 rounded-lg px-2.5 py-2.5 text-start text-sm font-medium transition lg:py-2 <%= item_classes %>"
                         aria-expanded="<%= active_menu ? 'true' : 'false' %>"
                         aria-controls="<%= child_id %>">
                   <%= icon(menu_item[:icon], class: "size-4 shrink-0") %>
@@ -91,7 +91,7 @@
 
                       <li>
                         <a href="<%= url_for(submenu[:url]) %>"
-                           class="admin-sidebar-subitem flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm transition <%= submenu_classes %>">
+                           class="admin-sidebar-subitem flex items-center gap-x-3.5 rounded-lg px-2.5 py-2.5 text-sm transition lg:py-2 <%= submenu_classes %>">
                           <%= icon(submenu[:icon], class: "size-4 shrink-0") %>
                           <span class="admin-sidebar-label truncate"><%= submenu[:name] %></span>
                         </a>
@@ -103,7 +103,7 @@
             <% else %>
               <li>
                 <a href="<%= url_for(menu_item[:url]) if menu_item[:url].present? %>"
-                   class="admin-sidebar-item flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm font-medium transition <%= item_classes %>"
+                   class="admin-sidebar-item flex items-center gap-x-3.5 rounded-lg px-2.5 py-2.5 text-sm font-medium transition lg:py-2 <%= item_classes %>"
                    aria-current="<%= active_menu ? 'page' : nil %>">
                   <%= icon(menu_item[:icon], class: "size-4 shrink-0") %>
                   <span class="admin-sidebar-label truncate"><%= menu_item[:name] %></span>

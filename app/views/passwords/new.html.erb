@@ -1,19 +1,19 @@
-<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-4 py-10">
-  <div class="w-full max-w-md rounded-xl border border-slate-200 bg-white shadow-xl">
-    <div class="p-5 sm:p-8">
+<div class="flex min-h-dvh items-center justify-center bg-gradient-to-br from-rose-200 via-rose-100 to-white px-3 py-6 sm:px-4 sm:py-10">
+  <div class="w-full max-w-md rounded-xl border border-slate-200 bg-white shadow-lg sm:rounded-2xl sm:shadow-xl">
+    <div class="p-4 sm:p-8">
       <div class="text-center">
-        <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-56" %>
-        <h1 class="text-2xl font-bold text-slate-800">Forgot password?</h1>
+        <%= image_tag 'logo-slogan.png', alt: "[Nome do Projeto]", id: 'logo', class: "mx-auto mb-4 w-44 sm:w-56" %>
+        <h1 class="text-xl font-bold text-slate-800 sm:text-2xl">Forgot password?</h1>
         <p class="mt-2 text-sm text-slate-500">
           Remember your password?
           <%= link_to "Sign in here", new_session_path, class: "font-medium text-[var(--primary)] hover:text-[var(--primary-dark)] hover:underline" %>
         </p>
       </div>
 
-      <div class="mt-6">
+      <div class="mt-5 sm:mt-6">
         <%= render 'partials/messages' %>
 
-        <%= form_with url: passwords_path, class: "mt-4 space-y-4" do |form| %>
+        <%= form_with url: passwords_path, class: "mt-4 space-y-3.5 sm:space-y-4" do |form| %>
           <div>
             <label for="email_address" class="mb-2 block text-sm text-slate-700">Email address</label>
             <%= form.email_field :email_address,
@@ -35,7 +35,7 @@
           </div>
 
           <%= form.submit "Reset password",
-            class: "inline-flex w-full items-center justify-center rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30" %>
+            class: "inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30" %>
         <% end %>
       </div>
     </div>
