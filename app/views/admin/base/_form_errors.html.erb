@@ -1,6 +1,6 @@
 <% if @instance.errors.any? %>
   <% error_id = "form_errors_#{@instance.class.name.underscore}_#{@instance.id || 'new'}" %>
-  <div id="<%= error_id %>" class="mt-2 flex items-start justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+  <div id="<%= error_id %>" class="mt-2 flex items-start justify-between gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
     <ul class="list-disc pl-5">
       <% @instance.errors.each do |item| %>
         <li><strong><%= item.attribute %>: </strong><%= item.message %></li>

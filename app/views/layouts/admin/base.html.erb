@@ -3,44 +3,12 @@
   <%= render 'layouts/admin/head' %>
 
   <body class="bg-slate-100">
-    <div id="admin-shell" v-cloak class="min-h-screen bg-slate-100">
+    <div id="admin-shell" v-cloak class="min-h-dvh bg-slate-100">
       <%= render 'layouts/admin/navbar' %>
-
-      <div class="-mt-px lg:hidden">
-        <div class="sticky top-0 z-20 border-y border-slate-200 bg-white px-4">
-          <div class="flex items-center py-2">
-            <button type="button"
-                    class="inline-flex size-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100"
-                    aria-haspopup="dialog"
-                    aria-expanded="false"
-                    aria-controls="hs-application-sidebar"
-                    aria-label="Toggle navigation"
-                    data-hs-overlay="#hs-application-sidebar">
-              <span class="sr-only">Toggle Navigation</span>
-              <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                <path d="M15 3v18"></path>
-                <path d="m8 9 3 3-3 3"></path>
-              </svg>
-            </button>
-
-            <ol class="ms-3 flex items-center whitespace-nowrap">
-              <li class="flex items-center text-sm text-slate-600">
-                Application Layout
-                <svg class="mx-3 size-2.5 shrink-0 overflow-visible text-slate-400" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </li>
-              <li class="truncate text-sm font-semibold text-slate-900" aria-current="page"><%= controller_name.humanize %></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-
       <%= render 'layouts/admin/sidebar', menu: @menu %>
 
       <div class="admin-main-content w-full transition-all duration-300">
-        <div class="h-[calc(100vh-3.75rem)] overflow-y-auto p-4 sm:p-6">
+        <div class="min-h-[calc(100dvh-3.75rem)] p-4 sm:p-6">
           <%= render 'layouts/admin/messages' %>
 
           <main class="space-y-4 pt-1">

@@ -4,17 +4,28 @@
 <% empty_state_button_label = translate_view_index("new_button", model_name: model_singular_translation) %>
 <% index_description = translate_view_index("description", model_name: model_plural_translation.downcase) %>
 <% has_instances = @instances.present? %>
+<% format_display_value = lambda do |raw_value|
+     if raw_value.is_a?(ActiveSupport::TimeWithZone)
+       translate_datetime_format_default(raw_value, "dt_at")
+     elsif raw_value == true
+       translate_view_shared("yes_display")
+     elsif raw_value == false
+       translate_view_shared("no_display")
+     else
+       raw_value.presence || "-"
+     end
+   end %>
 
-<div class="w-full py-8">
+<div class="w-full py-4 sm:py-6 lg:py-8">
   <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-    <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
+    <div class="flex flex-col gap-4 border-b border-slate-200 px-4 py-4 sm:px-6 sm:py-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <h1 class="text-3xl font-semibold text-slate-900"><%= model_plural_translation %></h1>
+        <h1 class="text-2xl font-semibold text-slate-900 sm:text-3xl"><%= model_plural_translation %></h1>
         <p class="mt-1 text-sm text-slate-600"><%= index_description %></p>
       </div>
 
       <% if has_instances %>
-        <a class="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)]"
+        <a class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] sm:w-auto"
            href="<%= instance_new_path %>">
           <%= icon("plus", class: "size-4") %>
           <%= translate_view_shared("add", model_name: model_singular_translation) %>
@@ -23,11 +34,11 @@
     </div>
 
     <% if has_instances %>
-      <div class="border-b border-slate-200 bg-white px-6 py-4">
-        <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex w-full max-w-xl items-center">
+      <div class="border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
+        <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex w-full items-center">
           <input type="search"
                  id="input-search"
-                 class="form-control rounded-r-none border-r-0"
+                 class="form-control min-w-0 rounded-r-none border-r-0"
                  name="term"
                  value="<%= params[:term] %>"
                  placeholder="<%= translate_view_shared('search_placeholder', model_name: model_plural_translation.downcase) %>"
@@ -35,14 +46,47 @@
                  aria-describedby="Search field"
                  autocomplete="off">
           <button type="submit"
-                  class="inline-flex h-[42px] w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                  class="inline-flex h-11 w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100"
                   aria-label="Search">
             <%= icon("search", class: "size-4") %>
           </button>
         </form>
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="divide-y divide-slate-200 md:hidden">
+        <% @instances.each do |instance| %>
+          <% primary_attribute = visible_attributes.first %>
+          <% primary_value = primary_attribute.present? ? format_display_value.call(instance.public_send(primary_attribute)) : "##{instance.id}" %>
+
+          <article id="card_<%= instance.class.name %>_<%= instance.id %>" class="space-y-3 px-4 py-4 sm:px-6">
+            <div class="flex items-center justify-between gap-2">
+              <a href="<%= instance_show_path(instance) %>" class="truncate text-sm font-semibold text-[var(--primary)] hover:text-[var(--primary-dark)]">
+                <%= primary_value %>
+              </a>
+
+              <div class="flex items-center justify-end gap-1">
+                <%= action_button href: instance_show_path(instance), instance: instance, action: :show?, icon: "eye", title: translate_view_shared("show") %>
+                <%= action_button href: instance_edit_path(instance), instance: instance, action: :edit?, icon: "square-pen", title: translate_view_shared("edit") %>
+                <%= modal_button href: instance_remove_path(instance), instance: instance, action: :destroy?, icon: "trash", title: translate_view_shared("remove"), modal_id: "modal_destroy_#{instance.id}" %>
+              </div>
+            </div>
+
+            <dl class="space-y-2 text-sm">
+              <% visible_attributes.each do |attribute| %>
+                <% display_value = format_display_value.call(instance.public_send(attribute)) %>
+                <div class="grid grid-cols-[minmax(0,8rem)_1fr] gap-2">
+                  <dt class="truncate text-slate-500"><%= attribute_translation(model_singular_name, attribute) %></dt>
+                  <dd class="break-words text-slate-700"><%= display_value %></dd>
+                </div>
+              <% end %>
+            </dl>
+          </article>
+
+          <%= render partial: "modal_destroy", locals: { instance: instance, url: instance_remove_path(instance), model_name: model_singular_translation } %>
+        <% end %>
+      </div>
+
+      <div class="hidden overflow-x-auto md:block">
         <table class="min-w-full divide-y divide-slate-200">
           <thead class="bg-slate-50">
             <tr>
@@ -61,16 +105,7 @@
             <% @instances.each do |instance| %>
               <tr id="tr_<%= instance.class.name %>_<%= instance.id %>" class="hover:bg-slate-50/80">
                 <% visible_attributes.each_with_index do |attribute, index| %>
-                  <% raw_value = instance.public_send(attribute) %>
-                  <% display_value = if raw_value.is_a?(ActiveSupport::TimeWithZone)
-                                       translate_datetime_format_default(raw_value, "dt_at")
-                                     elsif raw_value == true
-                                       translate_view_shared("yes_display")
-                                     elsif raw_value == false
-                                       translate_view_shared("no_display")
-                                     else
-                                       raw_value.presence || "-"
-                                     end %>
+                  <% display_value = format_display_value.call(instance.public_send(attribute)) %>
 
                   <td class="px-6 py-3 text-sm text-slate-700">
                     <% if index.zero? %>
@@ -89,21 +124,19 @@
                   </div>
                 </td>
               </tr>
-
-              <%= render partial: "modal_destroy", locals: { instance: instance, url: instance_remove_path(instance), model_name: model_singular_translation } %>
             <% end %>
           </tbody>
         </table>
       </div>
 
-      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-6 py-5">
+      <div class="flex flex-col gap-3 border-t border-slate-200 px-4 py-4 sm:px-6 sm:py-5 md:flex-row md:items-center md:justify-between">
         <div class="text-sm text-slate-600"><%== @pagy.info_tag %></div>
         <div data-controller="pagy-initializer" class="text-sm text-slate-600">
           <%== @pagy.input_nav_js if @pagy.pages > 1 %>
         </div>
       </div>
     <% else %>
-      <div class="mx-auto flex min-h-[26rem] w-full max-w-md flex-col justify-center px-6 py-8">
+      <div class="mx-auto flex min-h-[22rem] w-full max-w-md flex-col justify-center px-4 py-8 sm:px-6">
         <div class="flex size-11 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
           <%= icon("receipt-text", class: "size-6") %>
         </div>
@@ -116,7 +149,7 @@
         </p>
 
         <div class="mt-5">
-          <a class="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)]"
+          <a class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] sm:w-auto"
              href="<%= instance_new_path %>">
             <%= icon("plus", class: "size-4") %>
             <%= empty_state_button_label %>
@@ -124,7 +157,7 @@
         </div>
       </div>
 
-      <div class="grid gap-3 border-t border-slate-200 px-6 py-4 md:flex md:items-center md:justify-between">
+      <div class="grid gap-3 border-t border-slate-200 px-4 py-4 sm:px-6 md:flex md:items-center md:justify-between">
         <p class="text-sm text-slate-600">
           <span class="font-semibold text-slate-900">0</span> <%= translate_view_shared("results") %>
         </p>
