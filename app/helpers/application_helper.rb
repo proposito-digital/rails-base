@@ -6,12 +6,18 @@ module ApplicationHelper
   include NameHelper
 
   def sort_link(column, title = nil)
+    column = column.to_s.split(".").last
     title ||= column.titleize
-    icon_name = params[:sort_direction] == "asc" ? "chevron-down" : "chevron-up"
-    sort_direction = params[:sort_direction] == "asc" ? "desc" : "asc"
+
+    current_column = params[:sort_column].to_s.split(".").last
+    current_direction = params[:sort_direction].to_s.downcase
+    current_direction = "desc" unless %w[ asc desc ].include?(current_direction)
+
+    sort_direction = current_column == column && current_direction == "asc" ? "desc" : "asc"
 
     label_parts = [ title ]
-    if params[:sort_column] == column
+    if current_column == column
+      icon_name = current_direction == "asc" ? "chevron-up" : "chevron-down"
       label_parts << icon(icon_name, class: "ml-1 inline-block size-3 align-text-bottom")
     end
 

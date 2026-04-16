@@ -1,30 +1,12 @@
-<% visible_attributes = model_column_names.excluding("id", "deleted_at", "password_digest").take(5) %>
-<% empty_state_title = translate_view_index("no_instances", model_name: model_plural_translation.downcase) %>
-<% empty_state_description = translate_view_index("new_instance", model_name: model_singular_translation.downcase) %>
-<% empty_state_button_label = translate_view_index("new_button", model_name: model_singular_translation) %>
-<% index_description = translate_view_index("description", model_name: model_plural_translation.downcase) %>
-<% has_instances = @instances.present? %>
-<% format_display_value = lambda do |raw_value|
-     if raw_value.is_a?(ActiveSupport::TimeWithZone)
-       translate_datetime_format_default(raw_value, "dt_at")
-     elsif raw_value == true
-       translate_view_shared("yes_display")
-     elsif raw_value == false
-       translate_view_shared("no_display")
-     else
-       raw_value.presence || "-"
-     end
-   end %>
-
 <div class="w-full py-4 sm:py-6 lg:py-8">
   <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
     <div class="flex flex-col gap-4 border-b border-slate-200 px-4 py-4 sm:px-6 sm:py-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
         <h1 class="text-2xl font-semibold text-slate-900 sm:text-3xl"><%= model_plural_translation %></h1>
-        <p class="mt-1 text-sm text-slate-600"><%= index_description %></p>
+        <p class="mt-1 text-sm text-slate-600"><%= admin_index_description %></p>
       </div>
 
-      <% if has_instances %>
+      <% if admin_index_has_instances? %>
         <a class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] sm:w-auto"
            href="<%= instance_new_path %>">
           <%= icon("plus", class: "size-4") %>
@@ -33,30 +15,32 @@
       <% end %>
     </div>
 
-    <% if has_instances %>
+    <% if admin_index_has_instances? || admin_index_search_applied? %>
       <div class="border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
-        <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex w-full items-center">
+        <form id="form_search" action="<%= instances_index_path %>" method="get" class="flex w-full items-center" data-controller="search-form" data-turbo="false">
           <input type="search"
                  id="input-search"
                  class="form-control min-w-0 rounded-r-none border-r-0"
                  name="term"
-                 value="<%= params[:term] %>"
+                 value="<%= admin_index_search_term %>"
                  placeholder="<%= translate_view_shared('search_placeholder', model_name: model_plural_translation.downcase) %>"
                  aria-label="Search"
                  aria-describedby="Search field"
                  autocomplete="off">
-          <button type="submit"
+          <button type="submit" data-action="click->search-form#forceSubmit"
                   class="inline-flex h-11 w-12 items-center justify-center rounded-r-lg border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100"
                   aria-label="Search">
             <%= icon("search", class: "size-4") %>
           </button>
         </form>
       </div>
+    <% end %>
 
+    <% if admin_index_has_instances? %>
       <div class="divide-y divide-slate-200 md:hidden">
         <% @instances.each do |instance| %>
-          <% primary_attribute = visible_attributes.first %>
-          <% primary_value = primary_attribute.present? ? format_display_value.call(instance.public_send(primary_attribute)) : "##{instance.id}" %>
+          <% primary_attribute = admin_index_visible_attributes.first %>
+          <% primary_value = primary_attribute.present? ? admin_index_display_value(instance.public_send(primary_attribute)) : "##{instance.id}" %>
 
           <article id="card_<%= instance.class.name %>_<%= instance.id %>" class="space-y-3 px-4 py-4 sm:px-6">
             <div class="flex items-center justify-between gap-2">
@@ -72,8 +56,8 @@
             </div>
 
             <dl class="space-y-2 text-sm">
-              <% visible_attributes.each do |attribute| %>
-                <% display_value = format_display_value.call(instance.public_send(attribute)) %>
+              <% admin_index_visible_attributes.each do |attribute| %>
+                <% display_value = admin_index_display_value(instance.public_send(attribute)) %>
                 <div class="grid grid-cols-[minmax(0,8rem)_1fr] gap-2">
                   <dt class="truncate text-slate-500"><%= attribute_translation(model_singular_name, attribute) %></dt>
                   <dd class="break-words text-slate-700"><%= display_value %></dd>
@@ -90,9 +74,13 @@
         <table class="min-w-full divide-y divide-slate-200">
           <thead class="bg-slate-50">
             <tr>
-              <% visible_attributes.each do |attribute| %>
+              <% admin_index_visible_attributes.each do |attribute| %>
                 <th class="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-700">
-                  <%= sort_link("#{model_plural_name_to_sort}.#{attribute}", attribute_translation(model_singular_name, attribute)) %>
+                  <% if sortable_column?(attribute) %>
+                    <%= sort_link(attribute, attribute_translation(model_singular_name, attribute)) %>
+                  <% else %>
+                    <%= attribute_translation(model_singular_name, attribute) %>
+                  <% end %>
                 </th>
               <% end %>
               <th class="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wide text-slate-700">
@@ -104,8 +92,8 @@
           <tbody class="divide-y divide-slate-200">
             <% @instances.each do |instance| %>
               <tr id="tr_<%= instance.class.name %>_<%= instance.id %>" class="hover:bg-slate-50/80">
-                <% visible_attributes.each_with_index do |attribute, index| %>
-                  <% display_value = format_display_value.call(instance.public_send(attribute)) %>
+                <% admin_index_visible_attributes.each_with_index do |attribute, index| %>
+                  <% display_value = admin_index_display_value(instance.public_send(attribute)) %>
 
                   <td class="px-6 py-3 text-sm text-slate-700">
                     <% if index.zero? %>
@@ -135,6 +123,10 @@
           <%== @pagy.input_nav_js if @pagy.pages > 1 %>
         </div>
       </div>
+    <% elsif admin_index_search_applied? %>
+      <div class="px-4 py-6 sm:px-6">
+        <p class="text-sm text-slate-700"><%= admin_index_no_results_search_message %></p>
+      </div>
     <% else %>
       <div class="mx-auto flex min-h-[22rem] w-full max-w-md flex-col justify-center px-4 py-8 sm:px-6">
         <div class="flex size-11 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
@@ -142,17 +134,17 @@
         </div>
 
         <h2 class="mt-5 text-lg font-semibold text-slate-900">
-          <%= empty_state_title %>
+          <%= admin_index_empty_state_title %>
         </h2>
         <p class="mt-2 text-sm text-slate-600">
-          <%= empty_state_description %>
+          <%= admin_index_empty_state_description %>
         </p>
 
         <div class="mt-5">
           <a class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-dark)] sm:w-auto"
              href="<%= instance_new_path %>">
             <%= icon("plus", class: "size-4") %>
-            <%= empty_state_button_label %>
+            <%= admin_index_empty_state_button_label %>
           </a>
         </div>
       </div>

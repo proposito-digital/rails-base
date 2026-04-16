@@ -408,6 +408,7 @@ en:
           new_instance: Click below to create new %{model_name}
           new_button: "Create %{model_name}"
           description: "Create %{model_name}, edit, download and more."
+          no_results_search: "No %{model_name} records were found for this search."
         destroy:
           title_modal: "Remove %{model_name}"
           subtitle_modal: Do you really want to remove %{model_name}?
