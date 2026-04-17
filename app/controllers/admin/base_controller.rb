@@ -74,7 +74,6 @@ class Admin::BaseController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to self.send(redirect_to_index), flash: { success: translate_flash("success") } }
-      # format.html { redirect_to cats_path, status: :see_other, notice: "Cat was successfully destroyed." }
       format.json { head :no_content }
     end
   end
