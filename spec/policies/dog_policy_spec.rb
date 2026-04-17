@@ -1,27 +1,38 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe DogPolicy, type: :policy do
-  let(:user) { User.new }
+  let(:actor) { build(:user) }
+  let(:record) { build(:dog) }
 
-  subject { described_class }
+  describe ".scope" do
+    it "returns all dogs" do
+      dog_a = create(:dog, name: "Alpha")
+      dog_b = create(:dog, name: "Beta")
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+      resolved_scope = described_class::Scope.new(actor, Dog).resolve
+
+      expect(resolved_scope).to include(dog_a, dog_b)
+      expect(resolved_scope.count).to eq(Dog.count)
+    end
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  describe "permissions" do
+    subject(:policy) { described_class.new(actor, record) }
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+    it "allows show" do
+      expect(policy.show?).to be(true)
+    end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+    it "allows create" do
+      expect(policy.create?).to be(true)
+    end
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it "allows update" do
+      expect(policy.update?).to be(true)
+    end
+
+    it "allows destroy" do
+      expect(policy.destroy?).to be(true)
+    end
   end
 end

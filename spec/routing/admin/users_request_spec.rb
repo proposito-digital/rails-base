@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.xdescribe Admin::UsersController, type: :routing do
+RSpec.describe Admin::UsersController, type: :routing do
   describe "routing" do
 
     it "routes to #index" do
