@@ -28,6 +28,40 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "POST /admin/users" do
+    let!(:auth_user) { create(:user, password: "123", password_confirmation: "123") }
+
+    before do
+      sign_in(auth_user)
+    end
+
+    it "renders new with unprocessable_entity when HTML params are invalid" do
+      post admin_users_path, params: {
+        user: {
+          email_address: "invalid_user@example.com",
+          password: "new-pass-123",
+          password_confirmation: "different-pass-123"
+        }
+      }
+
+      expect(response).to have_http_status(422)
+    end
+
+    it "returns validation errors with unprocessable_entity when JSON params are invalid" do
+      post admin_users_path(format: :json), params: {
+        user: {
+          email_address: "invalid_json_user@example.com",
+          password: "new-pass-123",
+          password_confirmation: "different-pass-123"
+        }
+      }, as: :json
+
+      expect(response).to have_http_status(422)
+      expect(response.media_type).to eq("application/json")
+      expect(JSON.parse(response.body)).to include("password_confirmation")
+    end
+  end
+
   describe "PATCH /admin/users/:id" do
     let!(:auth_user) { create(:user, password: '123', password_confirmation: '123') }
     let!(:target_user) { create(:user, password: 'old-pass-123', password_confirmation: 'old-pass-123') }
@@ -63,6 +97,32 @@ RSpec.describe "Users", type: :request do
 
       expect(response).to have_http_status(302)
       expect(User.authenticate_by(email_address: target_user.email_address, password: 'new-pass-123')).to eq(target_user.reload)
+    end
+
+    it "renders edit with unprocessable_entity when HTML params are invalid" do
+      patch admin_user_path(target_user), params: {
+        user: {
+          email_address: target_user.email_address,
+          password: "new-pass-123",
+          password_confirmation: "different-pass-123"
+        }
+      }
+
+      expect(response).to have_http_status(422)
+    end
+
+    it "returns validation errors with unprocessable_entity when JSON params are invalid" do
+      patch admin_user_path(target_user, format: :json), params: {
+        user: {
+          email_address: target_user.email_address,
+          password: "new-pass-123",
+          password_confirmation: "different-pass-123"
+        }
+      }, as: :json
+
+      expect(response).to have_http_status(422)
+      expect(response.media_type).to eq("application/json")
+      expect(JSON.parse(response.body)).to include("password_confirmation")
     end
   end
 end
