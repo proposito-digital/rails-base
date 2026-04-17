@@ -3,6 +3,13 @@ require 'rails_helper'
 describe "integration teste for user", type: :feature do
   let(:user) { create(:user, email_address: "auth@example.com") }
 
+  around do |example|
+    previous_locale = I18n.locale
+    I18n.locale = :"pt-br"
+    example.run
+    I18n.locale = previous_locale
+  end
+
   before(:each) do
     sign_in_via_ui user
   end
@@ -18,8 +25,8 @@ describe "integration teste for user", type: :feature do
     within("#new_user") do
       fill_in "user[email_address]", with: "new_user@example.com"
       fill_in "user[password]", with: "123"
+      find("[type='submit']").click
     end
-    click_button "Salvar"
     expect(page).to have_content "foi criado com sucesso."
     expect(page).to have_content "new_user@example.com"
   end
@@ -32,8 +39,8 @@ describe "integration teste for user", type: :feature do
     end
     within(".edit_user") do
       fill_in "user[email_address]", with: "edited_user@example.com"
+      find("[type='submit']").click
     end
-    click_button "Salvar"
     expect(page).to have_content "foi atualizado com sucesso."
     expect(page).to have_content "edited_user@example.com"
   end
