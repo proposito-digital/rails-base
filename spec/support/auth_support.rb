@@ -9,10 +9,11 @@ module AuthSupport
   end
 
   def sign_in_via_ui(user)
-    visit new_session_path
+    visit new_session_path(locale: I18n.locale)
     fill_in "email_address", with: user.email_address
-    fill_in "password", with: "123"
-    click_button type: "submit"
+    fill_in "password", with: (user.password || "123")
+    click_button "Sign in"
+    expect(page).to have_current_path(root_path, ignore_query: true)
   end
 
   def sign_out
