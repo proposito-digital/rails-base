@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :dogs
-    resources :cats
     get "/" => "dashboard#index"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

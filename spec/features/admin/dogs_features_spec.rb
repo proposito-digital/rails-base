@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "integration teste for dog", type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, email_address: "auth@example.com") }
 
   before(:each) do
     sign_in_via_ui user
@@ -14,93 +14,89 @@ describe "integration teste for dog", type: :feature do
   end
 
   it "create dog" do
-    visit admin_dogs_path
-    click_link 'Adicionar'
+    visit new_admin_dog_path(locale: I18n.locale)
     within("#new_dog") do
-      fill_in 'dog[name]', with: '#change_here'
-      fill_in 'dog[age]', with: '#change_here'
+      fill_in "dog[name]", with: "Bolt"
+      fill_in "dog[age]", with: "5"
     end
-    click_button 'Salvar'
-    expect(page).to have_content 'foi criado com sucesso.'
+    click_button "Salvar"
+    expect(page).to have_content "foi criado com sucesso."
+    expect(page).to have_content "Bolt"
   end
 
   it "edit dog" do
     dog = create(:dog)
     visit admin_dogs_path
     within("#tr_Dog_#{dog.id}") do
-      click_link 'Editar'
+      click_link "Editar"
     end
     within(".edit_dog") do
-      fill_in 'dog[name]', with: '#change_here'
-      fill_in 'dog[age]', with: '#change_here'
+      fill_in "dog[name]", with: "Scooby"
+      fill_in "dog[age]", with: "7"
     end
-    click_button 'Salvar'
-    expect(page).to have_content 'foi atualizado com sucesso.'
+    click_button "Salvar"
+    expect(page).to have_content "foi atualizado com sucesso."
+    expect(page).to have_content "Scooby"
   end
 
   it "show dog" do
     dog = create(:dog)
     visit admin_dogs_path
     within("#tr_Dog_#{dog.id}") do
-      click_link 'Visualizar'
+      click_link "Visualizar"
     end
-    expect(page).to have_xpath("//input[@value='#{dog.name}']")
+    expect(page).to have_field("dog_name", with: dog.name, disabled: true)
   end
 
   it "delete dog" do
-    create_list(:dog, 2)
-    dogs = Dog.all()
+    deleted_dog = create(:dog, name: "Bolt")
+    kept_dog = create(:dog, name: "Rex")
     visit admin_dogs_path
-    within("#tr_Dog_#{dogs.first.id}") do
-      find("a[title='Remover']").click
-    end
-    within("#modal_destroy_#{dogs.first.id}") do
-      click_link('Remover')
-    end
-    expect(page).to have_content 'foi removido com sucesso.'
+    page.execute_script("document.querySelector('#modal_destroy_#{deleted_dog.id} a[data-turbo-method=\\\"delete\\\"]').click()")
+    expect(page).to have_content "foi removido com sucesso."
+    expect(page).to have_no_content deleted_dog.name
+    expect(page).to have_content kept_dog.name
   end
 
-  xit "filter dog" do
-    Capybara.current_driver = :poltergeist
-    create_list(:dog, 3)
-    dogs = Dog.all()
+  it "filter dog" do
+    visible_dog = create(:dog, name: "DOG_FILTER_VISIBLE")
+    hidden_dog = create(:dog, name: "DOG_FILTER_HIDDEN")
+
     visit admin_dogs_path
     within("#form_search") do
-      fill_in 'term', with: dogs.last.name
+      fill_in "term", with: visible_dog.name
+      find("button[type='submit']").click
     end
-    find("input[name=term]").native.send_keys :enter
-    expect(page).to have_no_content dogs.first.name
-    Capybara.use_default_driver
+
+    expect(page).to have_css("table tbody tr", text: visible_dog.name)
+    expect(page).to have_no_css("table tbody tr", text: hidden_dog.name)
   end
 
   it "paginate dog" do
     create_list(:dog, 11)
-    dogs = Dog.all()
+    total_dogs = Dog.count
 
     visit admin_dogs_path
+    expect(page).to have_css("table tbody tr", count: 10)
 
-    find('#page_next').click
-    expect(page).to have_content dogs.first.name
-
-    find('#page_previous').click
-    expect(page).to have_no_content dogs.first.name
+    visit admin_dogs_path(page: 2)
+    expect(page).to have_css("table tbody tr", count: total_dogs - 10)
   end
 
   it "ordenation dog" do
-    names = ('a'..'j').to_a.map { |letter| { name: letter } }
-    names.map { |name| create(:dog, name) }
-    dogs = Dog.all()
+    names = ("a".."j").to_a
+    names.each { |name| create(:dog, name: name) }
 
     visit admin_dogs_path
 
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j")
 
-    click_link 'Name' # change_here
-    expect(page).to have_current_path(admin_dogs_path(sort_direction: 'asc', sort_column: 'dogs.name'))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'a')
+    find("a[href*='sort_column=name'][href*='sort_direction=asc']").click
+    expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "asc", sort_column: "name"))
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "a")
 
-    click_link 'Name' # change_here
-    expect(page).to have_current_path(admin_dogs_path(sort_direction: 'desc', sort_column: 'dogs.name'))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
+    find("a[href*='sort_column=name'][href*='sort_direction=desc']").click
+    expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "desc", sort_column: "name"))
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j")
   end
 end

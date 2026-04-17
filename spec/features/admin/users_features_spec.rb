@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 describe "integration teste for user", type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, email_address: "auth@example.com") }
+
+  around do |example|
+    previous_locale = I18n.locale
+    I18n.locale = :"pt-br"
+    example.run
+    I18n.locale = previous_locale
+  end
 
   before(:each) do
     sign_in_via_ui user
@@ -10,95 +17,91 @@ describe "integration teste for user", type: :feature do
   it "access index page" do
     user = create(:user)
     visit admin_users_path
-    expect(page).to have_content user.name
+    expect(page).to have_content user.email_address
   end
 
   it "create user" do
-    visit admin_users_path
-    click_link 'Adicionar'
+    visit new_admin_user_path(locale: I18n.locale)
     within("#new_user") do
-      fill_in 'user[name]', with: '#change_here'
+      fill_in "user[email_address]", with: "new_user@example.com"
+      fill_in "user[password]", with: "123"
+      find("[type='submit']").click
     end
-    click_button 'Salvar'
-    expect(page).to have_content 'foi criado com sucesso.'
+    expect(page).to have_content "foi criado com sucesso."
+    expect(page).to have_content "new_user@example.com"
   end
 
   it "edit user" do
     user = create(:user)
     visit admin_users_path
     within("#tr_User_#{user.id}") do
-      click_link 'Editar'
+      click_link "Editar"
     end
     within(".edit_user") do
-      fill_in 'user[name]', with: '#change_here'
+      fill_in "user[email_address]", with: "edited_user@example.com"
+      find("[type='submit']").click
     end
-    click_button 'Salvar'
-    expect(page).to have_content 'foi atualizado com sucesso.'
+    expect(page).to have_content "foi atualizado com sucesso."
+    expect(page).to have_content "edited_user@example.com"
   end
 
   it "show user" do
     user = create(:user)
     visit admin_users_path
     within("#tr_User_#{user.id}") do
-      click_link 'Visualizar'
+      click_link "Visualizar"
     end
-    expect(page).to have_xpath("//input[@value='#{user.name}']")
+    expect(page).to have_field("user_email_address", with: user.email_address, disabled: true)
   end
 
   it "delete user" do
     create_list(:user, 2)
-    users = User.all()
+    users = User.order(:id).to_a
     visit admin_users_path
-    within("#tr_User_#{users.first.id}") do
-      find("a[title='Remover']").click
-    end
-    within("#modal_destroy_#{users.first.id}") do
-      click_link('Remover')
-    end
-    expect(page).to have_content 'foi removido com sucesso.'
+    page.execute_script("document.querySelector('#modal_destroy_#{users.first.id} a[data-turbo-method=\\\"delete\\\"]').click()")
+    expect(page).to have_content "foi removido com sucesso."
+    expect(page).to have_no_content users.first.email_address
   end
 
-  xit "filter user" do
-    Capybara.current_driver = :poltergeist
-    create_list(:user, 3)
-    users = User.all()
+  it "filter user" do
+    visible_user = create(:user, email_address: "filter-visible@example.com")
+    hidden_user = create(:user, email_address: "filter-hidden@example.com")
+
     visit admin_users_path
     within("#form_search") do
-      fill_in 'term', with: users.last.name
+      fill_in "term", with: visible_user.email_address
+      find("button[type='submit']").click
     end
-    find("input[name=term]").native.send_keys :enter
-    expect(page).to have_no_content users.first.name
-    Capybara.use_default_driver
+
+    expect(page).to have_css("table tbody tr", text: visible_user.email_address)
+    expect(page).to have_no_css("table tbody tr", text: hidden_user.email_address)
   end
 
   it "paginate user" do
     create_list(:user, 11)
-    users = User.all()
+    total_users = User.count
 
     visit admin_users_path
+    expect(page).to have_css("table tbody tr", count: 10)
 
-    find('#page_next').click
-    expect(page).to have_content users.first.name
-
-    find('#page_previous').click
-    expect(page).to have_no_content users.first.name
+    visit admin_users_path(page: 2)
+    expect(page).to have_css("table tbody tr", count: total_users - 10)
   end
 
   it "ordenation user" do
-    names = ('a'..'j').to_a.map { |letter| { name: letter } }
-    names.map { |name| create(:user, name) }
-    users = User.all()
+    emails = ("a".."j").to_a.map { |letter| "#{letter}@example.com" }
+    emails.each { |email| create(:user, email_address: email) }
 
     visit admin_users_path
 
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j@example.com")
 
-    click_link 'Name' # change_here
-    expect(page).to have_current_path(admin_users_path(sort_direction: 'asc', sort_column: 'users.name'))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'a')
+    find("a[href*='sort_column=email_address'][href*='sort_direction=asc']").click
+    expect(page).to have_current_path(admin_users_path(locale: I18n.locale, sort_direction: "asc", sort_column: "email_address"))
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "a@example.com")
 
-    click_link 'Name' # change_here
-    expect(page).to have_current_path(admin_users_path(sort_direction: 'desc', sort_column: 'users.name'))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: 'j')
+    find("a[href*='sort_column=email_address'][href*='sort_direction=desc']").click
+    expect(page).to have_current_path(admin_users_path(locale: I18n.locale, sort_direction: "desc", sort_column: "email_address"))
+    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j@example.com")
   end
 end

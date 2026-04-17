@@ -75,11 +75,16 @@ RSpec.configure do |config|
 
   # -=-=-=-=-=-= DATABASE CLEANER -=-=-=-=-=-=-=-=-=-=
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
   end
 
+  config.before(:each, type: :feature) do
+    Rails.cache.clear
+  end
+
   config.around(:each) do |example|
+    DatabaseCleaner.strategy = example.metadata[:type] == :feature ? :truncation : :transaction
+
     DatabaseCleaner.cleaning do
       example.run
     end
