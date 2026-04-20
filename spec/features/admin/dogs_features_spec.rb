@@ -89,14 +89,14 @@ describe "integration teste for dog", type: :feature do
 
     visit admin_dogs_path
 
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j")
+    expect(page).to have_css("table tbody tr:first-child", text: "j")
 
     find("a[href*='sort_column=name'][href*='sort_direction=asc']").click
     expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "asc", sort_column: "name"))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "a")
+    expect(page).to have_css("table tbody tr:first-child", text: "a")
 
     find("a[href*='sort_column=name'][href*='sort_direction=desc']").click
     expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "desc", sort_column: "name"))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j")
+    expect(page).to have_css("table tbody tr:first-child", text: "j")
   end
 end

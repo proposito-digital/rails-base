@@ -94,14 +94,14 @@ describe "integration teste for user", type: :feature do
 
     visit admin_users_path
 
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j@example.com")
+    expect(page).to have_css("table tbody tr:first-child", text: "j@example.com")
 
     find("a[href*='sort_column=email_address'][href*='sort_direction=asc']").click
     expect(page).to have_current_path(admin_users_path(locale: I18n.locale, sort_direction: "asc", sort_column: "email_address"))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "a@example.com")
+    expect(page).to have_css("table tbody tr:first-child", text: "a@example.com")
 
     find("a[href*='sort_column=email_address'][href*='sort_direction=desc']").click
     expect(page).to have_current_path(admin_users_path(locale: I18n.locale, sort_direction: "desc", sort_column: "email_address"))
-    expect(page).to have_css("table tbody tr:first-child td:first-child", text: "j@example.com")
+    expect(page).to have_css("table tbody tr:first-child", text: "j@example.com")
   end
 end
