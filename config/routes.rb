@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsIcons::Engine, at: '/rails_icons'
+  mount RailsIcons::Engine, at: "/rails_icons"
   resource :session
   resources :passwords, param: :token
   root "admin/dashboard#index"
