@@ -1,0 +1,103 @@
+require 'rails_helper'
+
+<%- resource_index_helper = index_helper.to_s.sub(/\Aadmin_/, "") -%>
+<%- admin_index_path_helper = "admin_#{resource_index_helper}_path" -%>
+<%- admin_new_path_helper = "new_admin_#{resource_index_helper.singularize}_path" -%>
+
+describe "integration teste for <%= singular_table_name %>", :type => :feature do
+  let(:user) { create(:user, email_address: "auth@example.com") }
+
+  before(:each) do
+    sign_in_via_ui user
+  end
+
+  it "access index page" do
+    <%= singular_table_name %> = create(:<%= singular_table_name %>)
+    visit <%= admin_index_path_helper %>  
+    expect(page).to have_content <%= singular_table_name %>.<%= attributes_names.first %>
+  end
+
+  it "create <%= singular_table_name %>" do
+    visit <%= admin_new_path_helper %>(locale: I18n.locale)
+    within("#new_<%= singular_table_name %>") do
+      <%= attributes_names.reject{|name| name.in?(['deleted_at'])}.map { |name| "fill_in '" + singular_table_name + "[#{name}]'" +", with: '#change_here'" }.join("\n      ") %>
+    end
+    click_button 'Salvar'
+    expect(page).to have_content 'foi criado com sucesso.'
+  end
+
+  it "edit <%= singular_table_name %>" do
+    <%= singular_table_name %> = create(:<%= singular_table_name %>)
+    visit <%= admin_index_path_helper %>
+    within("table tbody tr", text: <%= singular_table_name %>.<%= attributes_names.first %>) do
+      click_link 'Editar'
+    end
+    within(".edit_<%= singular_table_name %>") do
+      <%= attributes_names.reject{|name| name.in?(['deleted_at'])}.map { |name| "fill_in'" + singular_table_name + "[#{name}]'" +", with: '#change_here'" }.join("\n      ") %>
+    end    
+    click_button 'Salvar'
+    expect(page).to have_content 'foi atualizado com sucesso.'
+  end
+
+  it "show <%= singular_table_name %>" do
+    <%= singular_table_name %> = create(:<%= singular_table_name %>)
+    visit <%= admin_index_path_helper %>
+    within("table tbody tr", text: <%= singular_table_name %>.<%= attributes_names.first %>) do
+      click_link 'Visualizar'
+    end
+    expect(page).to have_xpath("//input[@value='#{<%= singular_table_name %>.<%= attributes_names.first %>}']") 
+  end
+
+  it "delete <%= singular_table_name %>" do
+    create_list(:<%= singular_table_name %>, 2)
+    <%= plural_table_name %> = <%= class_name %>.all()
+    visit <%= admin_index_path_helper %>
+    page.execute_script("document.querySelector('#modal_destroy_#{<%= plural_table_name %>.first.id} a[data-turbo-method=\\\"delete\\\"]').click()")
+    expect(page).to have_content 'foi removido com sucesso.'
+  end
+
+  it "filter <%= singular_table_name %>" do
+    visible_<%= singular_table_name %> = create(:<%= singular_table_name %>, <%= attributes_names.first %>: "FILTER_VISIBLE")
+    hidden_<%= singular_table_name %> = create(:<%= singular_table_name %>, <%= attributes_names.first %>: "FILTER_HIDDEN")
+
+    visit <%= admin_index_path_helper %>
+    within("#form_search") do
+      fill_in "term", with: visible_<%= singular_table_name %>.<%= attributes_names.first %>
+      find("button[type='submit']").click
+    end
+
+    expect(page).to have_css("table tbody tr", text: visible_<%= singular_table_name %>.<%= attributes_names.first %>)
+    expect(page).to have_no_css("table tbody tr", text: hidden_<%= singular_table_name %>.<%= attributes_names.first %>)
+  end
+
+  it "paginate <%= singular_table_name %>" do
+    create_list(:<%= singular_table_name %>, 11)
+    total_<%= plural_table_name %> = <%= class_name %>.count
+
+    visit <%= admin_index_path_helper %>
+
+    expect(page).to have_css("table tbody tr", count: 10)
+
+    visit <%= admin_index_path_helper %>(page: 2)
+    expect(page).to have_css("table tbody tr", count: total_<%= plural_table_name %> - 10)
+  end
+
+  it "ordenation <%= singular_table_name %>" do
+    <%= attributes_names.first %>s = ("a".."j").to_a
+    <%= attributes_names.first %>s.each { |<%= attributes_names.first %>| create(:<%= singular_table_name %>, <%= attributes_names.first %>: <%= attributes_names.first %>) }
+
+    visit <%= admin_index_path_helper %>
+
+    expect(page).to have_css("table tbody tr:first-child", text: "j")
+
+    find("a[href*='sort_column=<%= attributes_names.first %>'][href*='sort_direction=asc']").click
+    expect(page).to have_current_path(<%= admin_index_path_helper %>(locale: I18n.locale, sort_direction: "asc", sort_column: "<%= attributes_names.first %>"))
+    expect(page).to have_css("table tbody tr:first-child", text: "a")
+    
+    find("a[href*='sort_column=<%= attributes_names.first %>'][href*='sort_direction=desc']").click
+    expect(page).to have_current_path(<%= admin_index_path_helper %>(locale: I18n.locale, sort_direction: "desc", sort_column: "<%= attributes_names.first %>"))
+    expect(page).to have_css("table tbody tr:first-child", text: "j")
+    
+  end
+
+end

@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+<% module_namespacing do -%>
+module Admin::<%= class_name.pluralize.sub(/\AAdmin::/, "") %>Helper
+  include Admin::BaseHelper
+end
+<% end -%>
