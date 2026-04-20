@@ -1,0 +1,38 @@
+require '<%= File.exist?('spec/rails_helper.rb') ? 'rails_helper' : 'spec_helper' %>'
+
+RSpec.describe <%= class_name %>Policy, type: :policy do
+  let(:actor) { build(:user) }
+  let(:record) { :<%= file_name %> }
+
+  describe ".scope" do
+    it "returns all records from the provided scope" do
+      first_user = create(:user, email_address: "scope_one_<%= file_name %>@example.com")
+      second_user = create(:user, email_address: "scope_two_<%= file_name %>@example.com")
+
+      resolved_scope = described_class::Scope.new(actor, User).resolve
+
+      expect(resolved_scope).to include(first_user, second_user)
+      expect(resolved_scope.count).to eq(User.count)
+    end
+  end
+
+  describe "permissions" do
+    subject(:policy) { described_class.new(actor, record) }
+
+    it "allows show" do
+      expect(policy.show?).to be(true)
+    end
+
+    it "allows create" do
+      expect(policy.create?).to be(true)
+    end
+
+    it "allows update" do
+      expect(policy.update?).to be(true)
+    end
+
+    it "allows destroy" do
+      expect(policy.destroy?).to be(true)
+    end
+  end
+end
