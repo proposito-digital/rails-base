@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Admin::DogsHelper, type: :helper do
+  describe "#instance_new_path" do
+    it "builds the helper path for admin dogs" do
+      allow(helper).to receive(:params).and_return(ActionController::Parameters.new(controller: "admin/dogs"))
+
+      expect(helper.instance_new_path).to eq(helper.new_admin_dog_path)
+    end
+  end
+
   describe "#admin_index_display_value" do
     it "translates booleans using shared labels" do
       expect(helper).to receive(:translate_view_shared).with("yes_display").and_return("Sim")

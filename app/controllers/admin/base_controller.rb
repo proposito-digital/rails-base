@@ -81,7 +81,8 @@ class Admin::BaseController < ApplicationController
   protected
 
     def underscore_model_class
-      @instance.class.name.underscore.pluralize
+      klass = @instance&.class || @model
+      klass.model_name.element.pluralize
     end
 
   private
@@ -105,7 +106,19 @@ class Admin::BaseController < ApplicationController
     end
 
     def set_model_class
-      @model = params[:controller].gsub("admin/", "").classify.constantize
+      candidates = model_class_candidates
+
+      @model = candidates.lazy
+        .map { |candidate| candidate.safe_constantize }
+        .find(&:present?)
+
+      raise NameError, "uninitialized constant #{candidates.first}" if @model.nil?
+    end
+
+    def model_class_candidates
+      namespaced_model = params[:controller].to_s.classify
+
+      [ namespaced_model, namespaced_model.demodulize ].uniq
     end
 
     def apply_term_filter(scope)

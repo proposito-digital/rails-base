@@ -4,7 +4,7 @@ module NameHelper
   end
 
   def singular_model_name
-    singularize(plural_model_name)
+    plural_model_name.singularize
   end
 
   def build_namespace
@@ -12,11 +12,17 @@ module NameHelper
   end
 
   def model_singular_name
+    model_name_source = @model.respond_to?(:model_name) ? @model : @model.class
+    return model_name_source.model_name.element if model_name_source.respond_to?(:model_name)
+
     @model.to_s.underscore
   end
 
   def model_singular_name_to_translate(instance)
-    instance.class.name.to_s.underscore.gsub("::", "/")
+    model_name_source = instance.class
+    return model_name_source.model_name.element if model_name_source.respond_to?(:model_name)
+
+    model_name_source.name.to_s.underscore
   end
 
   def model_plural_name
