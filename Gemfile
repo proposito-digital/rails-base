@@ -13,15 +13,15 @@ gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
 gem "discard", "1.4.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
-gem "pagy", "43.3.0"
+gem "pagy", "43.5.3"
 # Rails default GEMS
-gem "rails", "8.1.2"
+gem "rails", "8.1.3"
 # Ruby on Rails [https://rubyonrails.org/]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "2.9.0"
+gem "sqlite3", "2.9.3"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "7.2.0"
+gem "puma", "8.0.1"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -31,7 +31,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-gem "bcrypt", "3.1.21"
+gem "bcrypt", "3.1.22"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem [https://github.com/tzinfo/tzinfo]
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -57,7 +57,7 @@ group :development, :test do
   # factory_bot is a fixtures replacement with a straightforward definition syntax. [https://github.com/thoughtbot/factory_bot_rails]
   gem "factory_bot_rails", "6.5.1"
   # Faker helps you generate realistic test data. [https://github.com/faker-ruby/faker]
-  gem "faker", "3.6.0"
+  gem "faker", "3.8.0"
   # Rails default GEMS
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -83,7 +83,7 @@ group :test do
   # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
   gem "simplecov", "0.22.0"
   # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
-  gem "rspec-rails", "8.0.3"
+  gem "rspec-rails", "8.0.4"
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
   gem "shoulda-matchers", "7.0.1"
   # A set of RSpec matchers for testing Pundit policies. [https://github.com/pundit-community/pundit-matchers]
@@ -96,5 +96,5 @@ group :test do
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "3.40.0"
-  gem "selenium-webdriver", "4.41.0"
+  gem "selenium-webdriver", "4.43.0"
 end
