@@ -1,13 +1,16 @@
 require 'rails_helper'
 
+<%- resource_index_helper = index_helper.to_s.sub(/\Aadmin_/, "") -%>
+<%- admin_index_path_helper = "admin_#{resource_index_helper}_path" -%>
+
 RSpec.describe "<%= class_name.pluralize %>", type: :request  do
-  describe "GET /<%= table_name %>" do
+  describe "GET /admin/<%= controller_file_name %>" do
   	before do
         sign_in_as_a_valid_user
     end
     
     it "works! (now write some real specs)" do
-      get admin_<%= index_helper %>_path
+      get <%= admin_index_path_helper %>
       expect(response).to have_http_status(200)
     end
   end

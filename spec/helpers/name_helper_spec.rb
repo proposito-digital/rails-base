@@ -43,4 +43,13 @@ RSpec.describe NameHelper, type: :helper do
       expect(helper.model_column_names_only(%w[email_address password_digest])).to match_array(%w[email_address password_digest])
     end
   end
+
+  describe "#model_singular_name_to_translate" do
+    it "falls back to underscored class name when model_name is unavailable" do
+      legacy_class = Class.new
+      stub_const("LegacyEntity", legacy_class)
+
+      expect(helper.model_singular_name_to_translate(LegacyEntity.new)).to eq("legacy_entity")
+    end
+  end
 end
