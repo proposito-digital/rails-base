@@ -13,7 +13,7 @@ gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
 gem "discard", "1.4.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
-gem "pagy", "43.5.3"
+gem "pagy", "43.5.4"
 # Rails default GEMS
 gem "rails", "8.1.3"
 # Ruby on Rails [https://rubyonrails.org/]
