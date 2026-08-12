@@ -1,190 +1,132 @@
-README
-===
+# Rails Base
 
 ![Propósito Digital logo](app/assets/images/logo-proposito.png)
 
-This is a project of [Propósito Digital](http://www.proposito.digital) that uses the Ruby on Rails framework with its customizations and its development methodology that serves as the basis for the projects developed by the company
+A reusable Ruby on Rails foundation for starting new Propósito Digital applications. It includes authentication, an administrative area, authorization, internationalization, testing, a Hotwire/Tailwind interface, and a quality pipeline integrated with GitHub Actions.
 
-# Roadmap
+## Table of contents
 
-## Changing for Clickup
+- [Included](#included)
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [Development](#development)
+- [Local access](#local-access)
+- [Creating an administrative CRUD](#creating-an-administrative-crud)
+- [Icons](#icons)
+- [Quality and local validation](#quality-and-local-validation)
+- [Infrastructure and deployment](#infrastructure-and-deployment)
+- [Updating dependencies and version](#updating-dependencies-and-version)
+- [References](#references)
 
-# Devcontainer
-This project use Devcontainer, just open the project folder in a VS Code and open in Devcontainer mode.
+## Included
 
-# Run the project
+- Ruby 3.4.8 and Rails 8.1.3.
+- SQLite, Solid Cache, Solid Queue, and Solid Cable.
+- Session-based authentication and password reset.
+- An administrative area with CRUD, pagination, search, and sorting.
+- Pundit for authorization and Pagy for pagination.
+- RSpec, FactoryBot, Capybara, and SimpleCov for testing.
+- Hotwire, Importmap, Tailwind CSS, Preline, and Lucide icons.
+- Dev Container, Docker, Kamal, GitHub Actions, Dependabot, RuboCop, and Brakeman.
 
-In terminal use run the project for development with this command:
+## Prerequisites
 
-~~~bash
-$ ./bin/dev
-~~~
+The recommended way to work on this project is with the VS Code Dev Container. It installs Ruby, system dependencies, SQLite, and Selenium.
 
-If the command above fails with a "Permission denied" error, run the command below to fix the permissions and try again:
+1. Open the project folder in VS Code.
+2. Select **Reopen in Container** when VS Code prompts you.
+3. Wait for `bin/setup --skip-server` to finish.
 
-~~~bash
-$ chmod +x ./bin/dev
-~~~
+> Without the Dev Container, install the Ruby version specified in `.ruby-version`, Bundler, SQLite, Google Chrome, and the dependencies required to compile native gems.
 
-this run Procfile.dev fit at root directory and will run:
+## Quick start
 
-~~~
+Inside the Dev Container, prepare or update the environment:
+
+```bash
+bin/setup --skip-server
+```
+
+Start the development server and the CSS watcher:
+
+```bash
+bin/dev
+```
+
+The command runs `Procfile.dev`:
+
+```text
 web: bin/rails server -p 3000
 css: bin/rails tailwindcss:watch
-~~~
+```
 
-# Infrastructure
-## Docker https://www.docker.com/
+The application is available at `http://localhost:3000`.
 
-Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development – desktop and cloud. Docker’s comprehensive end to end platform includes UIs, CLIs, APIs and security that are engineered to work together across the entire application delivery lifecycle.
+## Development
 
-## Bumpversion 
+### Database and sample data
 
-works with a file called VERSION in the current directory, the contents of which should be a semantic version number such as "1.2.3 this script will display the current version, automatically suggest a "minor" version update, and ask for input to use the suggestion, or a newly entered value once the new version number is determined, the script will pull a list of changes from git history, prepend this to a file called CHANGES (under the title of the new version number) and create a GIT tag. 
+To create, migrate, and seed the development database:
 
-~~~bash
-$ . bumpversion.sh
-~~~
+```bash
+bin/rails proposito:db:init
+```
 
-# Core
-## Ruby 3.4.8 https://www.ruby-lang.org/en/
+The development seed creates the users documented below. To apply migrations only, run:
 
-A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write.
+```bash
+bin/rails db:migrate
+```
 
-## Ruby on Rails 8.1.2 https://rubyonrails.org/
+### Local access
 
-Rails has united and cultivated a strong tribe around a wide set of heretical thoughts about the nature of programming and programmers. Understanding these thoughts will help you understand the design of the framework.
+The administrative area is available at `http://localhost:3000/admin`.
 
-## The bests Ruby Gems https://rubygems.org/
+| Email | Password |
+| --- | --- |
+| `test@test.com` | `test@123` |
+| `dev@dev.com` | `test@123` |
 
-RubyGems.org is the Ruby community’s gem hosting service. Instantly publish your gems and then install them. Use the API to find out more about available gems. Become a contributor and improve the site yourself.
+These credentials exist only in development. Never use them in production.
 
-See Gemfile at root of project.
+## Creating an administrative CRUD
 
-## Importmaps https://github.com/rails/importmap-rails
+The project automatically configures the `my_scaffold_controller` generator, which creates controllers in the administrative area and their related test files.
 
-Import maps let you import JavaScript modules using logical names that map to versioned/digested files – directly from the browser. So you can build modern JavaScript applications using JavaScript libraries made for ES modules (ESM) without the need for transpiling or bundling. This frees you from needing Webpack, Yarn, npm, or any other part of the JavaScript toolchain. All you need is the asset pipeline that's already included in Rails.
+### 1. Generate the entity
 
-how to import a js npm library example:
+Use only the entity name, without a namespace:
 
-~~~bash
-$ importmap pin vue@2.6.11
-~~~
+```bash
+bin/rails generate scaffold Bird name:string age:integer deleted_at:datetime:index
+```
 
-check the file config/importmap.rb
+Avoid `admin/bird`: it creates namespaced models and factories and adds unnecessary maintenance. The command above generates, among other files:
 
-# Frontend and Interface
+- a migration and model;
+- an `Admin` controller and helper;
+- a Pundit policy;
+- factory and model, policy, feature, request, helper, and routing specs.
 
-## Hotwired https://hotwired.dev/
+### 2. Run the migration
 
-Hotwire is an alternative approach to building modern web applications without using much JavaScript by sending HTML instead of JSON over the wire. This makes for fast first-load pages, keeps template rendering on the server, and allows for a simpler, more productive development experience in any programming language, without sacrificing any of the speed or responsiveness associated with a traditional single-page application.
+```bash
+bin/rails db:migrate
+```
 
-## Tailwind CSS https://tailwindcss.com/
+The generator normalizes the route into the administrative area:
 
-A utility-first CSS framework for quickly building modern interfaces directly in your markup.
-
-## Preline UI https://preline.co/
-
-A Tailwind CSS component library used in this project for interactive UI patterns like dropdowns, collapse and overlays, initialized through Importmap.
-
-## SVG Icons (rails_icons + Lucide)
-
-This project uses [`rails_icons`](https://github.com/Rails-Designer/rails_icons) with `lucide` as the default icon library.
-
-Use icons in views with:
-
-~~~erb
-<%= icon "search", class: "size-4" %>
-~~~
-
-### How to add a new icon
-
-1. Choose an icon name from https://lucide.dev/icons (example: `circle-check`).
-2. Download only that SVG into the project icon folder:
-
-    ~~~bash
-    ICON=circle-check
-    curl -Ls "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/${ICON}.svg" \\
-      -o "app/assets/svg/icons/lucide/outline/${ICON}.svg"
-    ~~~
-
-3. Use it in ERB:
-
-    ~~~erb
-    <%= icon "circle-check", class: "size-4" %>
-    ~~~
-
-### Notes
-
-- The icon preview route is available at `/rails_icons` and is configured by:
-
-~~~ruby
-# config/routes.rb
-mount RailsIcons::Engine, at: "/rails_icons"
-~~~
-- To sync the full Lucide library again (1500+ files), run:
-
-~~~bash
-bin/rails generate rails_icons:sync --library=lucide
-~~~
-
-# How to use the project
-## How to Update dependencies
-
-~~~bash
-$ bundle install
-~~~
-
-## How to create a new entity (CRUD admin)
-
-### 1) Initialize database and seed data
-~~~bash
-$ bin/rails proposito:db:init
-~~~
-
-### 2) Generate scaffold (without namespace)
-~~~bash
-$ bin/rails generate scaffold Bird name:string age:integer deleted_at:datetime:index
-~~~
-
-Use only the entity name (`Dog`, `Bird`, `User`, etc.).  
-Do **not** generate with namespace (avoid `admin/bird`), because that creates namespaced models/factories (`app/models/admin/bird.rb`, `app/models/admin.rb`, `spec/factories/admin/...`) and increases maintenance complexity.
-
-This project uses `my_scaffold_controller` automatically (`config/application.rb`), so the scaffold is wired to the admin area.
-
-### 3) Run migration
-~~~bash
-$ bin/rails db:migrate
-~~~
-
-### 4) What is generated by scaffold here
-Running scaffold for `Bird` generates, among others:
-
-- `db/migrate/*_create_birds.rb`
-- `app/models/bird.rb`
-- `app/controllers/admin/birds_controller.rb`
-- `app/helpers/admin/birds_helper.rb`
-- `app/policies/bird_policy.rb`
-- `spec/factories/birds.rb`
-- `spec/models/bird_spec.rb`
-- `spec/policies/bird_policy_spec.rb`
-- `spec/features/admin/birds_features_spec.rb`
-- `spec/requests/admin/birds_request_spec.rb`
-- `spec/helpers/admin/birds_helper_spec.rb`
-- `spec/routing/admin/birds_request_spec.rb`
-
-Routes are normalized by generator to stay in admin namespace:
-
-~~~ruby
+```ruby
 namespace :admin do
   resources :birds
 end
-~~~
+```
 
-### 5) Add translations required by CRUD
-Minimum translation keys:
+### 3. Add translations
 
-~~~yml
+Add the entity name and its attributes in `config/locales/pt-BR.yml` and `config/locales/en.yml`:
+
+```yml
 # config/locales/pt-BR.yml
 pt-br:
   birds:
@@ -195,9 +137,9 @@ pt-br:
       bird:
         name: "Nome"
         age: "Idade"
-~~~
+```
 
-~~~yml
+```yml
 # config/locales/en.yml
 en:
   birds:
@@ -208,18 +150,15 @@ en:
       bird:
         name: "Name"
         age: "Age"
-~~~
+```
 
-Notes:
+Sidebar labels use `birds.plural`; form and table fields use `activerecord.attributes.bird.<attribute>`.
 
-- Sidebar labels use `t("<plural>.plural")` (example: `t("birds.plural")`).
-- Form/table labels use `activerecord.attributes.<model>.<attribute>`.
-- Generic view texts and flash messages already have base fallbacks in `views.application.*` and `controllers.generic.*`.
+### 4. Add the menu item
 
-### 6) Add item to sidebar (with icon and policy)
 Edit `app/controllers/concerns/sidebar_concerns.rb`:
 
-~~~ruby
+```ruby
 {
   name: t("birds.plural"),
   icon: "bird",
@@ -227,83 +166,112 @@ Edit `app/controllers/concerns/sidebar_concerns.rb`:
   url: { controller: "birds", action: "index" },
   active: controller_path == "admin/birds"
 }
-~~~
+```
 
-Important:
+The policy must exist because the menu checks `policy(menu_item[:policy]).menu?` before rendering the item.
 
-- `icon` must be a valid Lucide icon name used by `rails_icons`.
-- `policy(menu_item[:policy]).menu?` is checked in sidebar rendering, so keep a valid policy (example: `BirdPolicy`).
+### 5. Review generated files
 
-### 7) How to add icon specifically for sidebar
-1. Choose icon name in https://lucide.dev/icons (example: `bird`, `paw-print`, `square-pen`).
-2. If icon is not available in project, download SVG:
+Before finishing, review the factory, policy, permitted parameters, feature specs, and translations. Feature templates include `#change_here` markers for form-specific adjustments.
 
-    ~~~bash
-    ICON=bird
-    curl -Ls "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/${ICON}.svg" \
-      -o "app/assets/svg/icons/lucide/outline/${ICON}.svg"
-    ~~~
+## Icons
 
-3. Use this name in sidebar item (`icon: "bird"`).
-4. Preview icon library in `/rails_icons`.
+The project uses `rails_icons` with the Lucide library:
 
-### 8) Review generated tests and factories
-- Update generated factory values in `spec/factories/*`.
-- Feature template has placeholders (`#change_here`) for manual adjustments in form filling.
-- Keep request/routing/helper specs generated by scaffold.
+```erb
+<%= icon "search", class: "size-4" %>
+```
 
-### 9) Run tests
-~~~bash
-$ bundle exec rspec
-~~~
+To add a single icon, download its SVG to the local library:
+
+```bash
+ICON=circle-check
+curl -Ls "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/${ICON}.svg" \
+  -o "app/assets/svg/icons/lucide/outline/${ICON}.svg"
+```
+
+The icon preview is available at `/rails_icons`. To synchronize the entire Lucide library, run:
+
+```bash
+bin/rails generate rails_icons:sync --library=lucide
+```
 
 ## Quality and local validation
 
-Run these commands inside the Dev Container before opening a pull request. They mirror the checks run by GitHub Actions.
-
-### Prepare the environment
-~~~bash
-$ bin/setup --skip-server
-~~~
+Run the following commands inside the Dev Container before opening a pull request. They mirror the GitHub Actions checks.
 
 ### Code style
-~~~bash
-$ bin/rubocop
-~~~
+
+```bash
+bin/rubocop
+```
 
 ### Security
-~~~bash
-$ bin/brakeman --no-pager
-$ bin/importmap audit
-~~~
+
+```bash
+bin/brakeman --no-pager
+bin/importmap audit
+```
 
 ### Build assets and run tests
-~~~bash
-$ bin/rails tailwindcss:build
-$ bin/rails db:prepare
-$ bundle exec rspec
-~~~
 
-### Run all checks
-~~~bash
-$ bin/rubocop && \
+```bash
+bin/rails tailwindcss:build
+bin/rails db:prepare
+bundle exec rspec
+```
+
+### Run every check
+
+```bash
+bin/rubocop && \
   bin/brakeman --no-pager && \
   bin/importmap audit && \
   bin/rails tailwindcss:build && \
   bin/rails db:prepare && \
   bundle exec rspec
-~~~
+```
 
-Pull requests can be merged only after these checks pass in GitHub Actions.
+The `main` branch is protected: pull requests can be merged only after the security, lint, and test checks pass in GitHub Actions.
 
-### 10) Access admin page
-~~~
-url: localhost:3000/admin
-user: test@test.com
-password: test@123
-or
-user: dev@dev.com
-password: test@123
-~~~
+## Infrastructure and deployment
 
-If you have any question send e-mail to contact@proposito.digital .
+- `Dockerfile` defines the production image.
+- `.devcontainer/` contains the reproducible development environment.
+- `config/deploy.yml` contains the Kamal configuration.
+- `.kamal/secrets` defines the secret names required for deployment.
+
+Before the first deployment, configure the service name, image, servers, and domain in `config/deploy.yml`. Configure `RAILS_MASTER_KEY` and any other credentials through the production environment's secret manager.
+
+The default configuration uses SQLite on a persistent volume. Before deploying, define a backup and restore strategy; for applications needing higher concurrency or high availability, evaluate PostgreSQL.
+
+## Updating dependencies and version
+
+To install the versions declared in the Gemfile:
+
+```bash
+bundle install
+```
+
+To update a specific dependency:
+
+```bash
+bundle update gem-name
+```
+
+To create a new semantic version, update `CHANGES`, and create a Git tag:
+
+```bash
+. bumpversion.sh
+```
+
+## References
+
+- [Ruby](https://www.ruby-lang.org/)
+- [Ruby on Rails](https://rubyonrails.org/)
+- [Hotwire](https://hotwired.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Importmap](https://github.com/rails/importmap-rails)
+- [Kamal](https://kamal-deploy.org/)
+
+Questions: contact@proposito.digital.
