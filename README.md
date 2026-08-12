@@ -257,6 +257,45 @@ Important:
 $ bundle exec rspec
 ~~~
 
+## Quality and local validation
+
+Run these commands inside the Dev Container before opening a pull request. They mirror the checks run by GitHub Actions.
+
+### Prepare the environment
+~~~bash
+$ bin/setup --skip-server
+~~~
+
+### Code style
+~~~bash
+$ bin/rubocop
+~~~
+
+### Security
+~~~bash
+$ bin/brakeman --no-pager
+$ bin/importmap audit
+~~~
+
+### Build assets and run tests
+~~~bash
+$ bin/rails tailwindcss:build
+$ bin/rails db:prepare
+$ bundle exec rspec
+~~~
+
+### Run all checks
+~~~bash
+$ bin/rubocop && \
+  bin/brakeman --no-pager && \
+  bin/importmap audit && \
+  bin/rails tailwindcss:build && \
+  bin/rails db:prepare && \
+  bundle exec rspec
+~~~
+
+Pull requests can be merged only after these checks pass in GitHub Actions.
+
 ### 10) Access admin page
 ~~~
 url: localhost:3000/admin
