@@ -1,5 +1,4 @@
 module Translations::TranslationsViewHelper
-  
   def base_translate_view(path, params = {})
     t("views.#{path}.", **params)
   end
@@ -13,7 +12,7 @@ module Translations::TranslationsViewHelper
   end
 
   def translate_view(path, params = {})
-    translation = base_translate_view_controller_path(path, params.merge(default: ''))
+    translation = base_translate_view_controller_path(path, params.merge(default: ""))
     unless translation.present?
       return base_translate_view_application_path(path, params)
     end

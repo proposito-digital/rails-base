@@ -6,32 +6,32 @@ RSpec.describe Admin::<%= controller_class_name.sub(/\AAdmin::/, "") %>Controlle
 
 <% unless options[:singleton] -%>
     it "routes to #index" do
-      expect(:get => "/admin/<%= controller_file_name %>").to route_to("admin/<%= controller_file_name %>#index")
+      expect(get: "/admin/<%= controller_file_name %>").to route_to("admin/<%= controller_file_name %>#index")
     end
 
 <% end -%>
     it "routes to #new" do
-      expect(:get => "/admin/<%= controller_file_name %>/new").to route_to("admin/<%= controller_file_name %>#new")
+      expect(get: "/admin/<%= controller_file_name %>/new").to route_to("admin/<%= controller_file_name %>#new")
     end
 
     it "routes to #show" do
-      expect(:get => "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#show", :id => "1")
+      expect(get: "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#show", id: "1")
     end
 
     it "routes to #edit" do
-      expect(:get => "/admin/<%= controller_file_name %>/1/edit").to route_to("admin/<%= controller_file_name %>#edit", :id => "1")
+      expect(get: "/admin/<%= controller_file_name %>/1/edit").to route_to("admin/<%= controller_file_name %>#edit", id: "1")
     end
 
     it "routes to #create" do
-      expect(:post => "/admin/<%= controller_file_name %>").to route_to("admin/<%= controller_file_name %>#create")
+      expect(post: "/admin/<%= controller_file_name %>").to route_to("admin/<%= controller_file_name %>#create")
     end
 
     it "routes to #update" do
-      expect(:put => "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#update", :id => "1")
+      expect(put: "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#update", id: "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#destroy", :id => "1")
+      expect(delete: "/admin/<%= controller_file_name %>/1").to route_to("admin/<%= controller_file_name %>#destroy", id: "1")
     end
 
   end
