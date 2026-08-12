@@ -19,7 +19,7 @@ module Translations::DatetimeHelper
         if date.present?
             return date.strftime(translate_date("formats.#{path}.", params))
         end
-        return ""
+        ""
     end
 
     def translate_time_format(path, params = {})
@@ -36,20 +36,20 @@ module Translations::DatetimeHelper
 
     def translate_date_format_long(date)
         translate_date_format("long", date, {
-            month_name: translate_month_name(date.mon), 
+            month_name: translate_month_name(date.mon)
         })
     end
 
     def translate_date_format_long_week(date)
         translate_date_format("longw", date, {
             week_name: translate_day_week_name(date.wday),
-            month_name: translate_month_name(date.mon), 
+            month_name: translate_month_name(date.mon)
         })
     end
 
     def translate_date_format_short(date)
         translate_date_format("short", date, {
-            month_name: translate_month_name(date.mon),
+            month_name: translate_month_name(date.mon)
         })
     end
 
@@ -60,7 +60,7 @@ module Translations::DatetimeHelper
                 time: translate_hour(date)
             })
         end
-        return ""
+        ""
     end
 
     def translate_datetime_format_long(date, dt_type)
@@ -70,7 +70,7 @@ module Translations::DatetimeHelper
                 time: translate_hour(date)
             })
         end
-        return ""
+        ""
     end
 
     def translate_datetime_format_long_week(date, dt_type)
@@ -80,7 +80,7 @@ module Translations::DatetimeHelper
                 time: translate_hour(date)
             })
         end
-        return ""
+        ""
     end
 
     alias_method :t_date, :translate_date
