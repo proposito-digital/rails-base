@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 module SidebarHelper
   def menu_active?(current_menu, text = false)
     if controller_name.to_sym == current_menu[:url][:controller].to_sym
       return "active" if text
 
-      return true
+      true
     end
   end
 

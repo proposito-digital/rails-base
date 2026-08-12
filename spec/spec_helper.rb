@@ -24,14 +24,19 @@ require 'capybara/rspec'
 # NEED TO REGISTER A NEW DRIVER, BECAUSE DEFAULT CHROME DRIVES CRASH
 # FROM https://stackoverflow.com/a/58573004
 Capybara.register_driver :headless_chrome do |app|
-  url = ENV.fetch("SELENIUM_REMOTE_URL", "http://selenium:4444/wd/hub")
+  remote_url = ENV["SELENIUM_REMOTE_URL"]
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('--no-sandbox')
-  options.add_argument('--headless=new')
-  options.add_argument('--disable-gpu')
-  options.add_argument('--window-size=1024,786')
-  options.add_argument('--disable-features=VizDisplayCompositor')
-  Capybara::Selenium::Driver.new(app, browser: :remote, capabilities: options, url: url)
+  options.add_argument("--no-sandbox")
+  options.add_argument("--headless=new")
+  options.add_argument("--disable-gpu")
+  options.add_argument("--window-size=1024,786")
+  options.add_argument("--disable-features=VizDisplayCompositor")
+
+  if remote_url
+    Capybara::Selenium::Driver.new(app, browser: :remote, capabilities: options, url: remote_url)
+  else
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
 end
 
 Capybara.register_driver :headless_chrome_logging do |app|
@@ -47,9 +52,9 @@ Capybara.register_driver :headless_chrome_logging do |app|
   Capybara::Selenium::Driver.new(app, browser: :remote, capabilities: options, desired_capabilities: capabilities, url: url)
 end
 
-Capybara.server_host = "0.0.0.0"
+Capybara.server_host = ENV.fetch("CAPYBARA_SERVER_HOST", "0.0.0.0")
 Capybara.server_port = 3019
-Capybara.app_host = "http://rails-app:3019"
+Capybara.app_host = ENV.fetch("CAPYBARA_APP_HOST", "http://rails-app:3019")
 Capybara.javascript_driver = :headless_chrome
 Capybara.default_driver = :headless_chrome
 Capybara.default_max_wait_time = 5
