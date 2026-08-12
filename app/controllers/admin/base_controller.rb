@@ -160,11 +160,7 @@ class Admin::BaseController < ApplicationController
     end
 
     def apply_sort(scope)
-      quoted_table = @model.connection.quote_table_name(@model.table_name)
-      quoted_column = @model.connection.quote_column_name(filter_sort_column)
-      sort_direction = filter_sort_direction.upcase
-
-      scope.reorder(Arel.sql("#{quoted_table}.#{quoted_column} #{sort_direction}"))
+      scope.reorder(filter_sort_column => filter_sort_direction)
     end
 
     def sortable_column?(column_name)
