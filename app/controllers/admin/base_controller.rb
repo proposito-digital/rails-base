@@ -12,7 +12,7 @@ class Admin::BaseController < ApplicationController
   helper_method :filter_sort_column, :filter_sort_direction, :sortable_column?
 
   def pundit_user
-    true
+    Current.user
   end
 
   # GET /admin instance/or /admin.instance/json
