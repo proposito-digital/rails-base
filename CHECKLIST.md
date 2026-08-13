@@ -19,9 +19,9 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 - [x] Passar `Current.user` para o Pundit em vez de um valor fixo.
 - [x] Alterar a política-base para negar ações por padrão.
 - [x] Definir o modelo inicial de acesso, por exemplo administrador e usuário comum.
-- [ ] Remover a dependência fixa de `DogPolicy` do controller administrativo genérico.
-- [ ] Habilitar verificações de autorização e escopo do Pundit nos controllers.
-- [ ] Cobrir cenários autorizados e não autorizados com testes.
+- [x] Remover a dependência fixa de `DogPolicy` do controller administrativo genérico.
+- [x] Habilitar verificações de autorização e escopo do Pundit nos controllers.
+- [x] Cobrir cenários autorizados e não autorizados com testes.
 
 **Concluído quando:** usuários sem permissão não conseguem acessar, listar ou modificar recursos administrativos.
 

@@ -4,6 +4,9 @@ class Admin::BaseController < ApplicationController
   include SidebarConcerns
   include Pundit::Authorization
 
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: :index
+
   before_action :set_pagy_locale
   before_action :set_menu # SidebarConcerns
   before_action :set_model_class
