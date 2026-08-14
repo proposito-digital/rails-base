@@ -49,9 +49,9 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 
 ### Limpeza de referências herdadas
 
-- [ ] Remover ou generalizar textos, traduções e conceitos específicos de outros produtos.
-- [ ] Revisar exemplos de entidades, menus, seeds e imagens que não pertencem ao núcleo da base.
-- [ ] Manter exemplos mínimos que ilustrem o CRUD administrativo sem impor regras de domínio.
+- [x] Remover ou generalizar textos, traduções e conceitos específicos de outros produtos.
+- [x] Revisar exemplos de entidades, menus, seeds e imagens que não pertencem ao núcleo da base.
+- [x] Manter exemplos mínimos que ilustrem o CRUD administrativo sem impor regras de domínio.
 
 **Concluído quando:** o repositório comunica apenas os conceitos realmente oferecidos pelo template.
 

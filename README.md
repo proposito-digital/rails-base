@@ -75,7 +75,7 @@ The application is available at `http://localhost:3000`.
 To create, migrate, and seed the development database:
 
 ```bash
-bin/rails proposito:db:init
+bin/rails rails_base:db:init
 ```
 
 The development seed creates the users documented below. To apply migrations only, run:

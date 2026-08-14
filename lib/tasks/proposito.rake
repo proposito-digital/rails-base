@@ -7,7 +7,7 @@
 #                   | |                                          __/ |
 #                   |_|                                         |___/
 
-namespace :proposito do
+namespace :rails_base do
   namespace :api do
     desc "Creates an api key"
     task generate_key: :environment do
@@ -16,7 +16,7 @@ namespace :proposito do
     end
   end
   namespace :db do
-    desc "Initialize database project: rake proposito:db:init"
+    desc "Initialize database project: rake rails_base:db:init"
     task init: :environment do
       p "[DB:CREATE]"
       Rake::Task["db:create"].invoke
@@ -29,16 +29,16 @@ namespace :proposito do
       # p '[DB:SEED][APP]'
       # Rake::Task["db:seed:app"].invoke
     end
-    desc "Recreate project database: rake proposito:db:reset"
+    desc "Recreate project database: rake rails_base:db:reset"
     task reset: :environment do
       p "[DB:DROP]"
       Rake::Task["db:drop:_unsafe"].invoke
       p "[DB:INIT]"
-      Rake::Task["proposito:db:init"].invoke
+      Rake::Task["rails_base:db:init"].invoke
     end
   end
   namespace :deploy do
-    desc "Run pre deployment taks: rake proposito:deploy:pre"
+    desc "Run pre deployment taks: rake rails_base:deploy:pre"
     task pre: :environment do
       p "[DB:MIGRATE]"
       Rake::Task["db:migrate"].invoke

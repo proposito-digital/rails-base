@@ -73,7 +73,7 @@ bin/rails db:seed
 The project also provides a development initialization task:
 
 ```bash
-bin/rails proposito:db:init
+bin/rails rails_base:db:init
 ```
 
 It creates, migrates, and seeds the local database. The seeded accounts are documented in the main [README](../README.md).
