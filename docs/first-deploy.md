@@ -23,9 +23,9 @@ Use this checklist before deploying a new Rails Base application to production w
 
 - [ ] Choose the production database strategy: SQLite on a persistent volume or an external PostgreSQL database. Review [SQLite in production](sqlite-production.md) before choosing SQLite.
 - [ ] If using SQLite, set a unique persistent-volume name in `config/deploy.yml`.
-- [ ] Configure backups outside the server for the persistent volume.
-- [ ] Test restoring a backup in a non-production environment.
-- [ ] Confirm migrations complete successfully against the production database.
+- [ ] Configure backups outside the server for the persistent volume. Follow [backing up and restoring SQLite production data](sqlite-backup-and-restore.md).
+- [ ] Test restoring a backup in a non-production environment and record the result.
+- [ ] Confirm migrations complete successfully against the production database. If using PostgreSQL, follow [the migration guide](sqlite-to-postgresql.md).
 
 ## Build and deploy
 

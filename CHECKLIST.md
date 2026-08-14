@@ -68,10 +68,10 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 
 ### Infraestrutura e dados
 
-- [ ] Documentar quando SQLite é adequado para produção.
-- [ ] Documentar o caminho recomendado para PostgreSQL em projetos que exigem maior concorrência ou alta disponibilidade.
-- [ ] Documentar backup e restauração do volume persistente de produção.
-- [ ] Substituir exemplos pendentes de host, domínio e imagem no Kamal por instruções claras de configuração.
+- [x] Documentar quando SQLite é adequado para produção.
+- [x] Documentar o caminho recomendado para PostgreSQL em projetos que exigem maior concorrência ou alta disponibilidade.
+- [x] Documentar backup e restauração do volume persistente de produção.
+- [x] Substituir exemplos pendentes de host, domínio e imagem no Kamal por instruções claras de configuração.
 - [ ] Testar o processo de deploy em um ambiente de homologação.
 
 **Concluído quando:** o caminho de produção, recuperação e evolução do banco está explícito.

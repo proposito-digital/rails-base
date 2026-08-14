@@ -63,4 +63,4 @@ Use SQLite only after confirming:
 - [ ] A restore has been tested outside production.
 - [ ] The team has agreed on the conditions that trigger a PostgreSQL migration.
 
-For the full launch sequence, use the [first deployment checklist](first-deploy.md).
+For the full launch sequence, use the [first deployment checklist](first-deploy.md). See [backing up and restoring SQLite production data](sqlite-backup-and-restore.md) for the operational recovery procedure, and [migrating from SQLite to PostgreSQL](sqlite-to-postgresql.md) for the recommended migration path.

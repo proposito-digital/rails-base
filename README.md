@@ -14,6 +14,8 @@ A reusable Ruby on Rails foundation for starting new Propósito Digital applicat
 - [Configure credentials and email](docs/configuration.md)
 - [Set up local development](docs/development.md)
 - [Decide whether SQLite is suitable for production](docs/sqlite-production.md)
+- [Back up and restore SQLite production data](docs/sqlite-backup-and-restore.md)
+- [Migrate from SQLite to PostgreSQL](docs/sqlite-to-postgresql.md)
 - [First deployment checklist](docs/first-deploy.md)
 - [New project delivery checklist](docs/project-delivery.md)
 - [Development](#development)
