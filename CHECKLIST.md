@@ -59,10 +59,10 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 
 ### Segurança padrão
 
-- [ ] Configurar uma Content Security Policy compatível com Importmap e os recursos usados pela interface.
-- [ ] Revisar configuração de hosts, HTTPS, cookies e cabeçalhos de segurança em produção.
-- [ ] Documentar o gerenciamento de `RAILS_MASTER_KEY` e demais segredos.
-- [ ] Manter Brakeman e auditoria de dependências ativos na CI.
+- [x] Configurar uma Content Security Policy compatível com Importmap e os recursos usados pela interface.
+- [x] Revisar configuração de hosts, HTTPS, cookies e cabeçalhos de segurança em produção.
+- [x] Documentar o gerenciamento de `RAILS_MASTER_KEY` e demais segredos.
+- [x] Manter Brakeman e auditoria de dependências ativos na CI.
 
 **Concluído quando:** novos projetos iniciam com configurações seguras e segredos não dependem de passos implícitos.
 

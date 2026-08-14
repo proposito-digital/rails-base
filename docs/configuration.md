@@ -35,6 +35,7 @@ The current deployment configuration expects these secrets:
 | `RAILS_MASTER_KEY` | Decrypts Rails credentials in production. | `.kamal/secrets` and `config/deploy.yml` |
 | `KAMAL_REGISTRY_PASSWORD` | Authenticates the container registry. | `.kamal/secrets` |
 | `RAILS_LOG_LEVEL` | Optional production log verbosity. | `config/deploy.yml` |
+| `APP_HOST` | Production domain used for allowed hosts and mailer links. | `config/deploy.yml` |
 
 Use encrypted credentials for application secrets that Rails reads. Use environment variables for deployment-provided values and operational configuration. Document every new variable in this file or the project's deployment documentation.
 

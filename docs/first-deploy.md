@@ -5,7 +5,7 @@ Use this checklist before deploying a new Rails Base application to production w
 ## Application identity
 
 - [ ] Rename the Rails module, Kamal service, Docker image, Dev Container, and PWA metadata.
-- [ ] Replace the placeholder server address and domain in `config/deploy.yml`.
+- [ ] Replace the placeholder server address, `APP_HOST`, and domain in `config/deploy.yml`.
 - [ ] Set the container registry username and image name.
 - [ ] Confirm the DNS record for the production domain points to the deployment server.
 - [ ] Confirm the proxy and certificate configuration matches the hosting provider.
