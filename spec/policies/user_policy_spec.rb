@@ -1,38 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy, type: :policy do
-  let(:actor) { build(:user) }
   let(:record) { build(:user) }
 
-  describe ".scope" do
-    it "returns all users" do
+  it_behaves_like 'admin-only policy'
+
+  describe '.scope' do
+    it 'returns all users for an admin' do
       user_a = create(:user)
       user_b = create(:user)
 
-      resolved_scope = described_class::Scope.new(actor, User).resolve
+      resolved_scope = described_class::Scope.new(build(:user, :admin), User).resolve
 
       expect(resolved_scope).to include(user_a, user_b)
-      expect(resolved_scope.count).to eq(User.count)
-    end
-  end
-
-  describe "permissions" do
-    subject(:policy) { described_class.new(actor, record) }
-
-    it "allows show" do
-      expect(policy.show?).to be(true)
     end
 
-    it "allows create" do
-      expect(policy.create?).to be(true)
-    end
+    it 'returns no users for a regular user' do
+      create(:user)
 
-    it "allows update" do
-      expect(policy.update?).to be(true)
-    end
+      resolved_scope = described_class::Scope.new(build(:user), User).resolve
 
-    it "allows destroy" do
-      expect(policy.destroy?).to be(true)
+      expect(resolved_scope).to be_empty
     end
   end
 end

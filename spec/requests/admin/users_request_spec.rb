@@ -29,7 +29,7 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "POST /admin/users" do
-    let!(:auth_user) { create(:user, password: "123", password_confirmation: "123") }
+    let!(:auth_user) { create(:user, :admin, password: "123", password_confirmation: "123") }
 
     before do
       sign_in(auth_user)
@@ -63,7 +63,7 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "PATCH /admin/users/:id" do
-    let!(:auth_user) { create(:user, password: '123', password_confirmation: '123') }
+    let!(:auth_user) { create(:user, :admin, password: '123', password_confirmation: '123') }
     let!(:target_user) { create(:user, password: 'old-pass-123', password_confirmation: 'old-pass-123') }
 
     before do

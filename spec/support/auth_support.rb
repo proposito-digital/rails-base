@@ -4,7 +4,7 @@ module AuthSupport
   end
 
   def sign_in_as_a_valid_user
-    user = FactoryBot.create(:user)
+    user = FactoryBot.create(:user, :admin)
     post session_path, params: { email_address: user.email_address, password: user.password }
   end
 

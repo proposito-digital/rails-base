@@ -9,19 +9,19 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 - [x] Definir o RSpec como a única suíte de testes oficial.
 - [x] Migrar ou remover os testes Minitest legados em `test/`.
 - [x] Atualizar a GitHub Actions para executar `bundle exec rspec`.
-- [ ] Garantir que Brakeman, RuboCop e RSpec sejam obrigatórios em pull requests.
-- [ ] Documentar os comandos locais de qualidade: setup, lint, segurança e testes.
+- [x] Garantir que Brakeman, RuboCop e RSpec sejam obrigatórios em pull requests.
+- [x] Documentar os comandos locais de qualidade: setup, lint, segurança e testes.
 
 **Concluído quando:** um pull request só fica verde depois de todas as verificações passarem, e a CI executa a mesma suíte usada no desenvolvimento.
 
 ### Autorização
 
-- [ ] Passar `Current.user` para o Pundit em vez de um valor fixo.
-- [ ] Alterar a política-base para negar ações por padrão.
-- [ ] Definir o modelo inicial de acesso, por exemplo administrador e usuário comum.
-- [ ] Remover a dependência fixa de `DogPolicy` do controller administrativo genérico.
-- [ ] Habilitar verificações de autorização e escopo do Pundit nos controllers.
-- [ ] Cobrir cenários autorizados e não autorizados com testes.
+- [x] Passar `Current.user` para o Pundit em vez de um valor fixo.
+- [x] Alterar a política-base para negar ações por padrão.
+- [x] Definir o modelo inicial de acesso, por exemplo administrador e usuário comum.
+- [x] Remover a dependência fixa de `DogPolicy` do controller administrativo genérico.
+- [x] Habilitar verificações de autorização e escopo do Pundit nos controllers.
+- [x] Cobrir cenários autorizados e não autorizados com testes.
 
 **Concluído quando:** usuários sem permissão não conseguem acessar, listar ou modificar recursos administrativos.
 

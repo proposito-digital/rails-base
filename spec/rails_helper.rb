@@ -15,6 +15,7 @@ require 'pundit/matchers'
 require 'support/auth_support'
 require 'support/selectors_support'
 require 'support/pundit_support'
+require 'support/policy_examples'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

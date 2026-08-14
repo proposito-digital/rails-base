@@ -2,25 +2,24 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    # raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
     @user = user
     @record = record
   end
 
   def menu?
-    true
+    false
   end
 
   def index?
-    true
+    false
   end
 
   def show?
-    true
+    false
   end
 
   def create?
-    true
+    false
   end
 
   def new?
@@ -28,7 +27,7 @@ class ApplicationPolicy
   end
 
   def update?
-    true
+    false
   end
 
   def edit?
@@ -36,20 +35,19 @@ class ApplicationPolicy
   end
 
   def destroy?
-    true
+    false
   end
 
   class Scope
-    attr_reader :user, :scope, :instances
+    attr_reader :user, :scope
 
     def initialize(user, scope)
-      # raise Pundit::NotAuthorizedError, "Por favor faça o login" unless user
       @user = user
       @scope = scope
     end
 
     def resolve
-      scope.all
+      scope.none
     end
   end
 end

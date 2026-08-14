@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include Authentication
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   before_action :set_locale
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
@@ -14,6 +16,13 @@ class ApplicationController < ActionController::Base
 
     def set_locale
       I18n.locale = extract_locale_from_params || I18n.default_locale
+    end
+
+    def user_not_authorized
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: t("pundit.default") }
+        format.json { head :forbidden }
+      end
     end
 
     def extract_locale_from_params

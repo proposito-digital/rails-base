@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "integration teste for user", type: :feature do
-  let(:user) { create(:user, email_address: "auth@example.com") }
+  let(:user) { create(:user, :admin, email_address: "auth@example.com") }
 
   around do |example|
     previous_locale = I18n.locale

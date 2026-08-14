@@ -1,8 +1,9 @@
 class DashboardPolicy < ApplicationPolicy
   def menu?
-    true
+    user.present?
   end
+
   def index?
-    true
+    user.present?
   end
 end

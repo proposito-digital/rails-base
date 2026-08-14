@@ -4,6 +4,9 @@ class Admin::BaseController < ApplicationController
   include SidebarConcerns
   include Pundit::Authorization
 
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: :index
+
   before_action :set_pagy_locale
   before_action :set_menu # SidebarConcerns
   before_action :set_model_class
@@ -12,17 +15,17 @@ class Admin::BaseController < ApplicationController
   helper_method :filter_sort_column, :filter_sort_direction, :sortable_column?
 
   def pundit_user
-    true
+    Current.user
   end
 
   # GET /admin instance/or /admin.instance/json
   def index
-    scope = @model.all
+    scope = policy_scope(@model)
     scope = apply_term_filter(scope)
     scope = apply_sort(scope)
 
     @pagy, @instances = pagy(scope, limit: 10)
-    authorize @instances, policy_class: DogPolicy
+    authorize @model
   end
 
   # GET /admin/instance/1 or /admin/instance/1.json

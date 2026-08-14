@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "integration teste for dog", type: :feature do
-  let(:user) { create(:user, email_address: "auth@example.com") }
+  let(:user) { create(:user, :admin, email_address: "auth@example.com") }
 
   before(:each) do
     sign_in_via_ui user
