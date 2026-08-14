@@ -79,7 +79,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.before(:each, type: :feature) do
+  config.before(:each) do
     Rails.cache.clear
   end
 

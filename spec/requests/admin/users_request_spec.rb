@@ -125,4 +125,35 @@ RSpec.describe "Users", type: :request do
       expect(JSON.parse(response.body)).to include("password_confirmation")
     end
   end
+
+  describe "DELETE /admin/users/:id" do
+    let!(:auth_user) { create(:user, :admin, password: "123", password_confirmation: "123") }
+
+    before do
+      sign_in(auth_user)
+    end
+
+    it "deactivates the user and terminates their sessions" do
+      target_user = create(:user, password: "123", password_confirmation: "123")
+      target_user.sessions.create!(user_agent: "Test", ip_address: "127.0.0.1")
+
+      expect do
+        delete admin_user_path(target_user)
+      end.not_to change(User, :count)
+
+      expect(response).to redirect_to(admin_users_path(locale: I18n.locale))
+      expect(target_user.reload.deleted_at).to be_present
+      expect(target_user.sessions).to be_empty
+    end
+
+    it "does not allow an administrator to deactivate their own account" do
+      expect do
+        delete admin_user_path(auth_user)
+      end.not_to change(User, :count)
+
+      expect(response).to redirect_to(admin_users_path(locale: I18n.locale))
+      expect(auth_user.reload.deleted_at).to be_nil
+      expect(flash[:alert]).to eq(I18n.t("authentication.users.cannot_deactivate_self"))
+    end
+  end
 end

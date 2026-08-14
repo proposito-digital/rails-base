@@ -27,7 +27,38 @@ RSpec.describe "Sessions", type: :request do
       end.not_to change(Session, :count)
 
       expect(response).to redirect_to(new_session_path(locale: I18n.locale))
-      expect(flash[:alert]).to eq("Try another email address or password.")
+      expect(flash[:alert]).to eq(I18n.t("authentication.sessions.invalid_credentials"))
+    end
+
+    it "does not create a session for a deactivated user" do
+      user.update!(deleted_at: Time.current)
+
+      expect do
+        post session_path, params: { email_address: user.email_address, password: "123" }
+      end.not_to change(Session, :count)
+
+      expect(response).to redirect_to(new_session_path(locale: I18n.locale))
+      expect(flash[:alert]).to eq(I18n.t("authentication.sessions.invalid_credentials"))
+    end
+
+    it "returns a user to the requested page after sign in" do
+      admin = create(:user, :admin, password: "123", password_confirmation: "123")
+
+      get admin_dogs_path
+      post session_path, params: { email_address: admin.email_address, password: "123" }
+
+      expect(response.headers["Location"]).to include("/admin/dogs")
+    end
+
+    it "temporarily limits repeated sign in attempts" do
+      10.times do
+        post session_path, params: { email_address: user.email_address, password: "wrong-password" }
+      end
+
+      post session_path, params: { email_address: user.email_address, password: "wrong-password" }
+
+      expect(response).to redirect_to(new_session_path(locale: I18n.locale))
+      expect(flash[:alert]).to eq(I18n.t("authentication.sessions.rate_limited"))
     end
   end
 

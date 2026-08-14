@@ -6,13 +6,14 @@ RSpec.describe UserPolicy, type: :policy do
   it_behaves_like 'admin-only policy'
 
   describe '.scope' do
-    it 'returns all users for an admin' do
-      user_a = create(:user)
-      user_b = create(:user)
+    it 'returns active users for an admin' do
+      active_user = create(:user)
+      deactivated_user = create(:user, deleted_at: Time.current)
 
       resolved_scope = described_class::Scope.new(build(:user, :admin), User).resolve
 
-      expect(resolved_scope).to include(user_a, user_b)
+      expect(resolved_scope).to include(active_user)
+      expect(resolved_scope).not_to include(deactivated_user)
     end
 
     it 'returns no users for a regular user' do
