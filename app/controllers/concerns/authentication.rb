@@ -1,4 +1,6 @@
 module Authentication
+  SESSION_DURATION = 30.days
+
   extend ActiveSupport::Concern
 
   included do
@@ -21,7 +23,6 @@ module Authentication
       resume_session || request_authentication
     end
 
-
     def resume_session
       Current.session ||= find_session_by_cookie
     end
@@ -29,7 +30,6 @@ module Authentication
     def find_session_by_cookie
       Session.find_by(id: cookies.signed[:session_id])
     end
-
 
     def request_authentication
       session[:return_to_after_authenticating] = request.url
@@ -40,11 +40,15 @@ module Authentication
       session.delete(:return_to_after_authenticating) || root_url
     end
 
-
     def start_new_session_for(user)
       user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
         Current.session = session
-        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+        cookies.signed[:session_id] = {
+          value: session.id,
+          expires: SESSION_DURATION.from_now,
+          httponly: true,
+          same_site: :lax
+        }
       end
     end
 

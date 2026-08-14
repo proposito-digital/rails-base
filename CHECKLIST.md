@@ -30,9 +30,9 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 ### Autenticação e usuários
 
 - [ ] Revisar os fluxos de criação, edição e remoção de usuários.
-- [ ] Decidir se perfis/papéis fazem parte do padrão do Rails Base.
-- [ ] Cobrir login, logout, recuperação de senha e permissões com testes de integração.
-- [ ] Revisar mensagens, limites de tentativas e comportamento de sessão.
+- [x] Decidir se perfis/papéis fazem parte do padrão do Rails Base.
+- [x] Cobrir login, logout, recuperação de senha e permissões com testes de integração.
+- [x] Revisar mensagens, limites de tentativas e comportamento de sessão.
 
 **Concluído quando:** os fluxos essenciais de acesso têm comportamento definido e cobertura automatizada.
 

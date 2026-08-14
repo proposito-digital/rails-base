@@ -49,6 +49,17 @@ RSpec.describe "Sessions", type: :request do
 
       expect(response.headers["Location"]).to include("/admin/dogs")
     end
+
+    it "temporarily limits repeated sign in attempts" do
+      10.times do
+        post session_path, params: { email_address: user.email_address, password: "wrong-password" }
+      end
+
+      post session_path, params: { email_address: user.email_address, password: "wrong-password" }
+
+      expect(response).to redirect_to(new_session_path(locale: I18n.locale))
+      expect(flash[:alert]).to eq(I18n.t("authentication.sessions.rate_limited"))
+    end
   end
 
   describe "DELETE /session" do
