@@ -25,7 +25,9 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      user&.admin? ? scope.all : scope.none
+      return scope.none unless user&.admin?
+
+      scope.where(deleted_at: nil)
     end
   end
 

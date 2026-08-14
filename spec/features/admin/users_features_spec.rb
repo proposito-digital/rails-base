@@ -54,13 +54,13 @@ describe "integration teste for user", type: :feature do
     expect(page).to have_field("user_email_address", with: user.email_address, disabled: true)
   end
 
-  it "delete user" do
+  it "deactivate user" do
+    target_user = create(:user)
     create_list(:user, 2)
-    users = User.order(:id).to_a
     visit admin_users_path
-    page.execute_script("document.querySelector('#modal_destroy_#{users.first.id} a[data-turbo-method=\\\"delete\\\"]').click()")
+    page.execute_script("document.querySelector('#modal_destroy_#{target_user.id} a[data-turbo-method=\"delete\"]').click()")
     expect(page).to have_content "foi removido com sucesso."
-    expect(page).to have_no_content users.first.email_address
+    expect(page).to have_no_content target_user.email_address
   end
 
   it "filter user" do

@@ -8,3 +8,5 @@ en:
       reset_success: "Password has been reset."
       mismatch: "Passwords did not match."
       invalid_or_expired_link: "Password reset link is invalid or has expired."
+    users:
+      cannot_deactivate_self: "You cannot deactivate your own account."
