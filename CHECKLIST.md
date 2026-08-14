@@ -29,7 +29,7 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 
 ### Autenticação e usuários
 
-- [ ] Revisar os fluxos de criação, edição e remoção de usuários.
+- [x] Revisar os fluxos de criação, edição e remoção de usuários.
 - [x] Decidir se perfis/papéis fazem parte do padrão do Rails Base.
 - [x] Cobrir login, logout, recuperação de senha e permissões com testes de integração.
 - [x] Revisar mensagens, limites de tentativas e comportamento de sessão.
@@ -38,12 +38,12 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 
 ### Guia de uso do template
 
-- [ ] Documentar como criar um novo projeto a partir desta base.
-- [ ] Documentar como renomear a aplicação, serviço Kamal e imagem Docker.
-- [ ] Documentar credenciais, variáveis de ambiente e configuração de e-mail.
-- [ ] Documentar setup local, Dev Container e comandos de desenvolvimento.
-- [ ] Adicionar checklist de primeiro deploy.
-- [ ] Adicionar checklist de revisão antes da entrega de um projeto novo.
+- [x] Documentar como criar um novo projeto a partir desta base.
+- [x] Documentar como renomear a aplicação, serviço Kamal e imagem Docker.
+- [x] Documentar credenciais, variáveis de ambiente e configuração de e-mail.
+- [x] Documentar setup local, Dev Container e comandos de desenvolvimento.
+- [x] Adicionar checklist de primeiro deploy.
+- [x] Adicionar checklist de revisão antes da entrega de um projeto novo.
 
 **Concluído quando:** uma pessoa consegue iniciar, configurar e publicar um projeto sem conhecimento informal da equipe.
 
