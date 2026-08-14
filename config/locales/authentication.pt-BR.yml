@@ -1,0 +1,10 @@
+pt-br:
+  authentication:
+    sessions:
+      invalid_credentials: "Tente outro e-mail ou senha."
+      rate_limited: "Tente novamente mais tarde."
+    passwords:
+      instructions_sent: "As instruções de redefinição de senha foram enviadas, caso exista uma conta com esse e-mail."
+      reset_success: "A senha foi redefinida."
+      mismatch: "As senhas não conferem."
+      invalid_or_expired_link: "O link de redefinição de senha é inválido ou expirou."
