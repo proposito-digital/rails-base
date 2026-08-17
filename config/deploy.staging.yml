@@ -2,7 +2,7 @@
 
 service: rails_base_staging
 
-image: ghcr.io/proposito-digital/rails-base-staging
+image: proposito-digital/rails-base-staging
 
 servers:
   web:
