@@ -16,6 +16,8 @@ gem "discard", "1.4.0"
 gem "pagy", "43.5.3"
 # Rails default GEMS
 gem "rails", "8.1.3"
+# Keep the YAML parser on the Ruby 3.4-compatible release line.
+gem "psych", "~> 5.2.2"
 # Ruby on Rails [https://rubyonrails.org/]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record

@@ -10,13 +10,22 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/rails/devcontainer/features/activestorage": {},
-   // "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
     "ghcr.io/rails/devcontainer/features/sqlite3": {}
   },
 
   "containerEnv": {
     "SELENIUM_REMOTE_URL": "http://selenium:4444/wd/hub",
-    "KAMAL_REGISTRY_PASSWORD": "$KAMAL_REGISTRY_PASSWORD"
+    "KAMAL_REGISTRY_PASSWORD": "${localEnv:KAMAL_REGISTRY_PASSWORD}"
+  },
+
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh/agent.sock,target=/ssh-agent,type=bind"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

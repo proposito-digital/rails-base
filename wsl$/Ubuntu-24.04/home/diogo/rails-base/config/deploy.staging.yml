@@ -1,0 +1,26 @@
+# Staging-specific overrides. Run Kamal with: bin/kamal setup -d staging
+
+service: rails_base_staging
+
+# Replace the registry namespace before the first deploy.
+image: YOUR_REGISTRY_NAMESPACE/rails_base_staging
+
+servers:
+  web:
+    - 159.89.184.133
+
+proxy:
+  ssl: true
+  host: base.proposito.digital
+
+registry:
+  # Replace this with the account that owns the container image.
+  username: YOUR_REGISTRY_USERNAME
+
+env:
+  clear:
+    APP_HOST: base.proposito.digital
+
+# Keep staging data isolated from production and from other projects.
+volumes:
+  - "rails_base_staging_storage:/rails/storage"
