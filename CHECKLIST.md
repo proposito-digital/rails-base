@@ -81,8 +81,8 @@ Este checklist reúne as melhorias prioritárias para manter o Rails Base como u
 ### Versões e dependências
 
 - [x] Alinhar versões de Ruby e Rails entre README, Gemfile, Dockerfile e arquivos de configuração.
-- [ ] Avaliar a atualização de `config.load_defaults` para a versão atual do Rails.
-- [ ] Definir política de atualização de dependências e revisão dos pull requests do Dependabot.
+- [x] Avaliar a atualização de `config.load_defaults` para a versão atual do Rails.
+- [] Definir política de atualização de dependências e revisão dos pull requests do Dependabot.
 - [ ] Registrar atualizações relevantes no changelog.
 
 **Concluído quando:** documentação, ambiente de desenvolvimento, CI e produção usam a mesma linha-base tecnológica.
