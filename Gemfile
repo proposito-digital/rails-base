@@ -17,7 +17,7 @@ gem "pagy", "43.6.1"
 # Rails default GEMS
 gem "rails", "8.1.3.1"
 # Keep the YAML parser on the Ruby 3.4-compatible release line.
-gem "psych", "5.2.2"
+gem "psych", "5.4.0"
 # Ruby on Rails [https://rubyonrails.org/]
 gem "propshaft", "1.3.2"
 # Use sqlite3 as the database for Active Record
