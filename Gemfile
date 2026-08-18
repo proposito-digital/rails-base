@@ -83,7 +83,7 @@ group :test do
   # Applications GEMS
   # Rails Base GEMS
   # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
-  gem "simplecov", "0.22.0"
+  gem "simplecov", "1.1.1"
   # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
   gem "rspec-rails", "8.0.4"
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
