@@ -1,0 +1,25 @@
+# Staging-specific overrides. Run Kamal with: bin/kamal setup -d staging
+
+service: rails_base_staging
+
+image: proposito-digital/rails-base-staging
+
+servers:
+  web:
+    - 159.89.184.133
+
+proxy:
+  ssl: true
+  host: base.proposito.digital
+
+registry:
+  server: ghcr.io
+  username: proposito-digital
+
+env:
+  clear:
+    APP_HOST: base.proposito.digital
+
+# Keep staging data isolated from production and from other projects.
+volumes:
+  - "rails_base_staging_storage:/rails/storage"

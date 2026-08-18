@@ -25,7 +25,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config curl libjemalloc2 libvips libyaml-dev sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -46,12 +46,18 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
+# Required at runtime by the Psych YAML extension compiled in the build stage.
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y libyaml-0-2 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN groupadd --system --gid 1000 rails && \
+RUN chmod +x /rails/bin/docker-entrypoint /rails/bin/thrust && \
+    groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
