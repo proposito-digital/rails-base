@@ -11,7 +11,7 @@ gem "rails_icons", "1.8.0"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
 gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
-gem "discard", "1.4.0"
+gem "discard", "2.0.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
 gem "pagy", "43.5.3"
 # Rails default GEMS
