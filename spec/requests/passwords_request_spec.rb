@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Passwords", type: :request do
   include ActiveJob::TestHelper
+  include ActiveSupport::Testing::TimeHelpers
 
   before do
     ActiveJob::Base.queue_adapter = :test
@@ -25,7 +26,7 @@ RSpec.describe "Passwords", type: :request do
       end.to have_enqueued_mail(PasswordsMailer, :reset).with(user)
 
       expect(response).to redirect_to(new_session_path(locale: I18n.locale))
-      expect(flash[:notice]).to eq("Password reset instructions sent (if user with that email address exists).")
+      expect(flash[:notice]).to eq(I18n.t("authentication.passwords.instructions_sent"))
     end
 
     it "does not enqueue reset email when user does not exist" do
@@ -34,7 +35,7 @@ RSpec.describe "Passwords", type: :request do
       end.not_to have_enqueued_mail(PasswordsMailer, :reset)
 
       expect(response).to redirect_to(new_session_path(locale: I18n.locale))
-      expect(flash[:notice]).to eq("Password reset instructions sent (if user with that email address exists).")
+      expect(flash[:notice]).to eq(I18n.t("authentication.passwords.instructions_sent"))
     end
   end
 
@@ -51,7 +52,18 @@ RSpec.describe "Passwords", type: :request do
       get edit_password_path("invalid-token")
 
       expect(response).to redirect_to(new_password_path(locale: I18n.locale))
-      expect(flash[:alert]).to eq("Password reset link is invalid or has expired.")
+      expect(flash[:alert]).to eq(I18n.t("authentication.passwords.invalid_or_expired_link"))
+    end
+
+    it "rejects an expired reset token" do
+      token = user.password_reset_token
+
+      travel 16.minutes do
+        get edit_password_path(token)
+      end
+
+      expect(response).to redirect_to(new_password_path(locale: I18n.locale))
+      expect(flash[:alert]).to eq(I18n.t("authentication.passwords.invalid_or_expired_link"))
     end
   end
 
@@ -63,7 +75,7 @@ RSpec.describe "Passwords", type: :request do
       patch password_path(reset_token), params: { password: "new-password", password_confirmation: "new-password" }
 
       expect(response).to redirect_to(new_session_path(locale: I18n.locale))
-      expect(flash[:notice]).to eq("Password has been reset.")
+      expect(flash[:notice]).to eq(I18n.t("authentication.passwords.reset_success"))
       expect(User.authenticate_by(email_address: user.email_address, password: "new-password")).to eq(user.reload)
     end
 
@@ -71,7 +83,7 @@ RSpec.describe "Passwords", type: :request do
       patch password_path(reset_token), params: { password: "new-password", password_confirmation: "mismatch" }
 
       expect(response).to redirect_to(edit_password_path(reset_token, locale: I18n.locale))
-      expect(flash[:alert]).to eq("Passwords did not match.")
+      expect(flash[:alert]).to eq(I18n.t("authentication.passwords.mismatch"))
       expect(User.authenticate_by(email_address: user.email_address, password: "123")).to eq(user.reload)
     end
   end

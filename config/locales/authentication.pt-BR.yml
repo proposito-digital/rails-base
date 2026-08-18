@@ -1,0 +1,12 @@
+pt-br:
+  authentication:
+    sessions:
+      invalid_credentials: "Tente outro e-mail ou senha."
+      rate_limited: "Tente novamente mais tarde."
+    passwords:
+      instructions_sent: "As instru��es de redefini��o de senha foram enviadas, caso exista uma conta com esse e-mail."
+      reset_success: "A senha foi redefinida."
+      mismatch: "As senhas n�o conferem."
+      invalid_or_expired_link: "O link de redefini��o de senha � inv�lido ou expirou."
+    users:
+      cannot_deactivate_self: "Voc� n�o pode desativar sua pr�pria conta."

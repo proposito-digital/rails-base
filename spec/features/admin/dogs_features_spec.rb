@@ -14,12 +14,12 @@ describe "integration teste for dog", type: :feature do
   end
 
   it "create dog" do
-    visit new_admin_dog_path(locale: I18n.locale)
+    visit new_admin_dog_path(locale: :"pt-br")
     within("#new_dog") do
       fill_in "dog[name]", with: "Bolt"
       fill_in "dog[age]", with: "5"
     end
-    click_button "Salvar"
+    find("input[type='submit']").click
     expect(page).to have_content "foi criado com sucesso."
     expect(page).to have_content "Bolt"
   end
@@ -34,7 +34,7 @@ describe "integration teste for dog", type: :feature do
       fill_in "dog[name]", with: "Scooby"
       fill_in "dog[age]", with: "7"
     end
-    click_button "Salvar"
+    find("input[type='submit']").click
     expect(page).to have_content "foi atualizado com sucesso."
     expect(page).to have_content "Scooby"
   end
@@ -92,11 +92,11 @@ describe "integration teste for dog", type: :feature do
     expect(page).to have_css("table tbody tr:first-child", text: "j")
 
     find("a[href*='sort_column=name'][href*='sort_direction=asc']").click
-    expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "asc", sort_column: "name"))
+    expect(page).to have_current_path(admin_dogs_path(locale: :"pt-br", sort_direction: "asc", sort_column: "name"))
     expect(page).to have_css("table tbody tr:first-child", text: "a")
 
     find("a[href*='sort_column=name'][href*='sort_direction=desc']").click
-    expect(page).to have_current_path(admin_dogs_path(locale: I18n.locale, sort_direction: "desc", sort_column: "name"))
+    expect(page).to have_current_path(admin_dogs_path(locale: :"pt-br", sort_direction: "desc", sort_column: "name"))
     expect(page).to have_css("table tbody tr:first-child", text: "j")
   end
 end

@@ -1,0 +1,12 @@
+en:
+  authentication:
+    sessions:
+      invalid_credentials: "Try another email address or password."
+      rate_limited: "Try again later."
+    passwords:
+      instructions_sent: "Password reset instructions sent (if a user with that email address exists)."
+      reset_success: "Password has been reset."
+      mismatch: "Passwords did not match."
+      invalid_or_expired_link: "Password reset link is invalid or has expired."
+    users:
+      cannot_deactivate_self: "You cannot deactivate your own account."

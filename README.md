@@ -9,6 +9,15 @@ A reusable Ruby on Rails foundation for starting new Propósito Digital applicat
 - [Included](#included)
 - [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
+- [Bootstrap a new project](docs/bootstrap.md)
+- [Rename a project](docs/renaming.md)
+- [Configure credentials and email](docs/configuration.md)
+- [Set up local development](docs/development.md)
+- [Decide whether SQLite is suitable for production](docs/sqlite-production.md)
+- [Back up and restore SQLite production data](docs/sqlite-backup-and-restore.md)
+- [Migrate from SQLite to PostgreSQL](docs/sqlite-to-postgresql.md)
+- [First deployment checklist](docs/first-deploy.md)
+- [New project delivery checklist](docs/project-delivery.md)
 - [Development](#development)
 - [Local access](#local-access)
 - [Creating an administrative CRUD](#creating-an-administrative-crud)
@@ -69,7 +78,7 @@ The application is available at `http://localhost:3000`.
 To create, migrate, and seed the development database:
 
 ```bash
-bin/rails proposito:db:init
+bin/rails rails_base:db:init
 ```
 
 The development seed creates the users documented below. To apply migrations only, run:
@@ -243,7 +252,7 @@ The `main` branch is protected: pull requests can be merged only after the secur
 
 Before the first deployment, configure the service name, image, servers, and domain in `config/deploy.yml`. Configure `RAILS_MASTER_KEY` and any other credentials through the production environment's secret manager.
 
-The default configuration uses SQLite on a persistent volume. Before deploying, define a backup and restore strategy; for applications needing higher concurrency or high availability, evaluate PostgreSQL.
+The default configuration uses SQLite on a persistent volume. Before deploying, define a backup and restore strategy; for applications needing higher concurrency or high availability, evaluate PostgreSQL. See [SQLite in production](docs/sqlite-production.md) for decision criteria, backup expectations, and migration signals.
 
 ## Updating dependencies and version
 
