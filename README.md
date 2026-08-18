@@ -270,15 +270,14 @@ bundle update gem-name
 
 ### Dependabot pull request policy
 
-Dependabot checks Bundler and GitHub Actions dependencies daily. Review its pull requests using the following policy:
+Dependabot checks Bundler and GitHub Actions dependencies every Monday at 09:00 in the America/Sao_Paulo time zone. Each ecosystem can have up to five open Dependabot pull requests.
 
 - Treat security updates as urgent: review and merge them on the same business day when the quality checks pass.
 - Review non-security updates at least weekly. Close or defer a pull request only with a short explanation so that the remaining risk is visible.
-- Keep patch updates separate when practical. Review minor and major updates individually, including release notes and any required Rails, Ruby, database, or deployment changes.
+- Dependabot groups patch and minor version updates per ecosystem. Review each group's release notes and compatibility impact before merging.
+- Major version updates remain individual pull requests and require review of release notes and any Rails, Ruby, database, or deployment changes.
 - Before merging, confirm the GitHub Actions security, lint, and test checks pass. For application dependencies, also run the [local quality checks](#quality-and-local-validation) when the change needs investigation.
 - Do not merge an update simply because it is automated. Resolve failing checks, compatibility notes, and configuration changes in a dedicated follow-up pull request when they are outside the dependency update's scope.
-
-The repository accepts up to ten open Dependabot pull requests for each configured ecosystem. Adjust that limit or introduce grouping only when the review cadence becomes difficult to maintain; grouped updates should remain limited to low-risk patch releases in the same ecosystem.
 
 To create a new semantic version, update `CHANGES`, and create a Git tag:
 

@@ -1,6 +1,9 @@
 Version 2.1.0:
-
-
-Version 0.0.1:
+- Standardized automated quality checks on RSpec, RuboCop, and Brakeman, with required pull-request checks.
+- Added role-based authorization: administrators manage administrative resources and regular users access the dashboard only.
+- Expanded bootstrap, development, configuration, deployment, database, backup, and delivery documentation.
+- Strengthened production defaults for content security, host authorization, HTTPS, cookies, and security headers.
+- Documented and validated a staging deployment workflow with Kamal and a persistent SQLite volume.
+- Added a weekly Dependabot review policy for Bundler and GitHub Actions updates.
 
 
