@@ -98,5 +98,5 @@ group :test do
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "3.40.0"
-  gem "selenium-webdriver", "4.43.0"
+  gem "selenium-webdriver", "4.47.0"
 end
