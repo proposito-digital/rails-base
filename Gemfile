@@ -5,25 +5,25 @@ source "https://rubygems.org"
 
 # Rails Base GEMS
 # Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
-gem "tailwindcss-rails", "4.4.0"
+gem "tailwindcss-rails", "4.6.0"
 # Agnostic icon library for rails [https://github.com/Rails-Designer/rails_icons]
-gem "rails_icons", "1.8.0"
+gem "rails_icons", "1.9.0"
 # Object oriented authorization for Rails applications. [https://github.com/varvet/pundit]
 gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
-gem "discard", "1.4.0"
+gem "discard", "2.0.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
-gem "pagy", "43.5.3"
+gem "pagy", "43.6.1"
 # Rails default GEMS
-gem "rails", "8.1.3"
+gem "rails", "8.1.3.1"
 # Keep the YAML parser on the Ruby 3.4-compatible release line.
 gem "psych", "5.2.2"
 # Ruby on Rails [https://rubyonrails.org/]
-gem "propshaft"
+gem "propshaft", "1.3.2"
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "2.9.3"
+gem "sqlite3", "2.9.6"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "8.0.1"
+gem "puma", "8.0.2"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -31,7 +31,7 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+gem "jbuilder", "2.15.1"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "3.1.22"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem [https://github.com/tzinfo/tzinfo]
@@ -43,11 +43,11 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb [https://github.com/Shopify/bootsnap]
-gem "bootsnap", require: false
+gem "bootsnap", "1.25.0", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
+gem "kamal", "2.12.0", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem "thruster", require: false
+gem "thruster", "0.1.25", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -83,11 +83,11 @@ group :test do
   # Applications GEMS
   # Rails Base GEMS
   # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
-  gem "simplecov", "0.22.0"
+  gem "simplecov", "1.1.1"
   # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
   gem "rspec-rails", "8.0.4"
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
-  gem "shoulda-matchers", "7.0.1"
+  gem "shoulda-matchers", "8.0.1"
   # A set of RSpec matchers for testing Pundit policies. [https://github.com/pundit-community/pundit-matchers]
   gem "pundit-matchers", "4.0.0"
   # Adds realtime console.log output to Capybara + Selenium + Chromedriver
@@ -98,5 +98,5 @@ group :test do
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "3.40.0"
-  gem "selenium-webdriver", "4.43.0"
+  gem "selenium-webdriver", "4.47.0"
 end
