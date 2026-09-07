@@ -43,7 +43,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb [https://github.com/Shopify/bootsnap]
-gem "bootsnap", "1.25.0", require: false
+gem "bootsnap", "1.26.0", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", "2.12.0", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
