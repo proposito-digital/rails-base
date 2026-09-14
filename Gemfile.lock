@@ -91,7 +91,7 @@ GEM
     bcrypt_pbkdf (1.1.2)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.25.0)
+    bootsnap (1.26.0)
       msgpack (~> 1.5)
     brakeman (8.0.6)
       racc
@@ -197,7 +197,7 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    msgpack (1.8.0)
+    msgpack (1.8.5)
     net-imap (0.6.3)
       date
       net-protocol
@@ -360,9 +360,9 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
-    rubyzip (3.5.0)
+    rubyzip (3.6.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.48.0)
+    selenium-webdriver (4.49.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -370,7 +370,7 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
-    simplecov (1.1.1)
+    simplecov (1.2.0)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -454,7 +454,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (= 3.1.22)
-  bootsnap (= 1.25.0)
+  bootsnap (= 1.26.0)
   brakeman
   byebug (= 13.0.0)
   capybara (= 3.40.0)
@@ -478,9 +478,9 @@ DEPENDENCIES
   rails_icons (= 1.9.0)
   rspec-rails (= 8.0.4)
   rubocop-rails-omakase
-  selenium-webdriver (= 4.48.0)
+  selenium-webdriver (= 4.49.0)
   shoulda-matchers (= 8.0.1)
-  simplecov (= 1.1.1)
+  simplecov (= 1.2.0)
   solid_cable
   solid_cache
   solid_queue

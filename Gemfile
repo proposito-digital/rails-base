@@ -43,7 +43,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb [https://github.com/Shopify/bootsnap]
-gem "bootsnap", "1.25.0", require: false
+gem "bootsnap", "1.26.0", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", "2.12.0", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
@@ -83,7 +83,7 @@ group :test do
   # Applications GEMS
   # Rails Base GEMS
   # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
-  gem "simplecov", "1.1.1"
+  gem "simplecov", "1.2.0"
   # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
   gem "rspec-rails", "8.0.4"
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
@@ -98,5 +98,5 @@ group :test do
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "3.40.0"
-  gem "selenium-webdriver", "4.48.0"
+  gem "selenium-webdriver", "4.49.0"
 end
