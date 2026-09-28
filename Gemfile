@@ -13,9 +13,9 @@ gem "pundit", "2.5.2"
 # Soft deletes for ActiveRecord done right. [https://github.com/jhawthorn/discard]
 gem "discard", "2.0.0"
 # Agnostic pagination in plain ruby. It does it all. Better. [https://github.com/ddnexus/pagy]
-gem "pagy", "43.6.2"
+gem "pagy", "43.6.3"
 # Rails default GEMS
-gem "rails", "8.1.3.1"
+gem "rails", "8.1.4"
 # Keep the YAML parser on the Ruby 3.4-compatible release line.
 gem "psych", "5.5.0"
 # Ruby on Rails [https://rubyonrails.org/]
@@ -43,7 +43,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb [https://github.com/Shopify/bootsnap]
-gem "bootsnap", "1.25.0", require: false
+gem "bootsnap", "1.26.0", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", "2.12.0", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
@@ -83,7 +83,7 @@ group :test do
   # Applications GEMS
   # Rails Base GEMS
   # SimpleCov is a code coverage analysis tool for Ruby. [https://github.com/simplecov-ruby/simplecov]
-  gem "simplecov", "1.1.1"
+  gem "simplecov", "1.3.1"
   # rspec-rails integrates the Rails testing helpers into RSpec. [https://github.com/rspec/rspec-rails]
   gem "rspec-rails", "8.0.4"
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
@@ -98,5 +98,5 @@ group :test do
   # Rails default GEMS
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "3.40.0"
-  gem "selenium-webdriver", "4.48.0"
+  gem "selenium-webdriver", "4.49.0"
 end
